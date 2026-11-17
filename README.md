@@ -176,8 +176,8 @@ La lista completa y al día está en [`CHORES.md`](CHORES.md). Resumen:
 1. **`/api/ticker`:** el ticker del header pide precios a `/api/ticker`, que en
    beta es un backend aparte. Acá no existe: el pedido da 404 y quedan los
    precios fijos del markup. Al deployar junto a beta, funciona solo.
-2. **Placeholders:** las 4 cards de Research muestran "Placeholder" porque el
-   artifact todavía no tiene esas capturas.
+2. **Capturas de Research:** las 4 cards ya tienen su captura (`public/images/v2/jd1…jd4`);
+   no son del artifact, así que hay que subirlas también allá.
 3. **Analytics:** GA4 (`G-J386F4YV1J`) y Clarity, los mismos IDs de beta, sólo
    en `npm run build`. Si se publica en un dominio de prueba, sacarlos o pasar
    `noindex` en el Layout.
