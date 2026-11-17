@@ -967,7 +967,7 @@ section[tabindex="-1"]:focus{outline:none}
 /* plan head on phones and portrait tablets, where the plans stack: who it's for, the name and the
    description on the left; the price and its note on the right. The rest of the card spans both. */
 @media (max-width:900px){
-  .tier{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:16px;row-gap:24px}
+  .tier{display:grid;grid-template-columns:minmax(min-content,1fr) auto;column-gap:16px;row-gap:24px} /* the left column never gets narrower than its longest word ("Alexandria") */
   .tier>*{grid-column:1/-1}
   .tier>:first-child{grid-column:1;grid-row:1}
   .tier>.desc{grid-column:1;grid-row:2;margin-top:-12px}
@@ -980,3 +980,10 @@ section[tabindex="-1"]:focus{outline:none}
 
 /* the plan description and the note under the price read at the same size (16/24) in every card */
 .tier .desc,.tier .pnote{font-size:16px;line-height:24px}
+
+/* phones: the price column takes up to 44% of the width so its note wraps less, and the plan cards give
+   back 8px of side padding so the left column keeps its room */
+@media (max-width:599px){
+  .tier{padding:32px 24px}
+  .tier>:nth-child(3){max-width:min(44vw,260px)}
+}
