@@ -100,6 +100,9 @@ El artifact es la fuente del diseño y del copy. Cuando cambia:
 - **Jerarquía** (misma revisión; bloque "Hierarchy review" al final de `global.css`):
   - escala única: título de sección 41 · título de card 24 · título chico 18 ·
     bajada de sección 18 · cuerpo de card 16 · meta 14;
+  - los nombres de las personas son título chico (18), no título de card; las bajadas de
+    sección usan el mismo tamaño en todas por debajo de 1001 px; los callouts superpuestos de
+    Portfolio en tablet van a 16/14;
   - hero: el botón principal se ve a 18 px (antes 13,5 px, porque escalaba con la
     mesa de trabajo); el link "Are you a creator?" y el badge bajan a 14 px;
   - Plans: el plan destacado es Premium (gratis en beta), con el badge "Free in beta".
