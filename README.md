@@ -85,6 +85,18 @@ El artifact es la fuente del diseño y del copy. Cuando cambia:
   mail es un link `mailto:`.
 - **Links a otras landings** (`/creators`, `/investors`): existen en beta y no
   en este repo todavía (el artifact hoy sólo publica la Home).
+- **Accesibilidad** (revisión del 17/11/2026; conviene llevarlo también al artifact):
+  - los botones "Get started with X" tienen el logo con `alt="X"`;
+  - el "Φne" del cierre se lee "One for values." (texto `.sr-only`);
+  - los "Learn more" del hero dicen a dónde llevan y las flechas `→` no se leen;
+  - en el hero, los links de capas que están invisibles salen del orden de tabulación
+    (`focusable()` en `landing.js`);
+  - `--muted` pasa de `#6b7884` a `#63707c` y el texto de `.pbadge` a `#0067b1`,
+    para llegar a 4,5:1 de contraste;
+  - el selector Investor/Creator sigue el patrón de pestañas completo (ids,
+    `aria-controls`, flechas, Home/End);
+  - la decoración de Valuations y los conectores de Portfolio llevan `aria-hidden`;
+  - hay un link "Skip to content", y los links internos mueven el foco a su sección.
 
 ## Pendientes conocidos
 

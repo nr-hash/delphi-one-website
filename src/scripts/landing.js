@@ -30,6 +30,9 @@ function setupStages(){
   fitStages();
 }
 
+/* a faded-out layer keeps its links out of the tab order, so keyboard focus never lands on something invisible (a11y) */
+function focusable(layer,on){ layer.querySelectorAll("a,button").forEach(a=>{ if(on) a.removeAttribute("tabindex"); else a.setAttribute("tabindex","-1") }) }
+
 /* ---------- hero: scroll-driven like beta.delphi.one (eased progress, lerp .11) ---------- */
 function setupHero(){
   const hero=document.getElementById("hero"), stageEl=document.getElementById("heroStage"), art=document.getElementById("art");
@@ -57,16 +60,17 @@ function setupHero(){
     return;
   }
   function paint(p){
-    if(mobile()){[copy,winEl,cta,hint,bgA,bgB,stars,...cards].forEach(e=>{e.style.opacity="";e.style.transform=""});return}
+    if(mobile()){[copy,winEl,cta,hint,bgA,bgB,stars,...cards].forEach(e=>{e.style.opacity="";e.style.transform="";focusable(e,true)});return}
     const out=ease(cl((p-.04)/.3));
     copy.style.opacity=1-out; copy.style.transform=`translateY(${-140*out}px)`; copy.style.pointerEvents=out>.6?"none":"";
+    focusable(copy,out<=.6);
     const hk=ease(cl((p-.42)/.22)); hint.style.opacity=hk; hint.style.transform=`translateY(${(1-hk)*30}px)`;
     const w=ease(cl((p-.08)/.55));
     winEl.style.transform=`translateY(${(1-w)*900}px) scale(${1.18-.18*w})`;
     const b=cl((p-.18)/.45); bgA.style.opacity=1-b; bgB.style.opacity=b; stars.style.opacity=b;
     bgB.style.transform=`scale(${1.04+.04*(1-b)})`;
-    cards.forEach((c,i)=>{const k=ease(cl((p-.5-i*.06)/.22)); c.style.opacity=k; c.style.transform=`translate(${(1-k)*100*c.dataset.side}px,${(1-k)*30}px)`; c.style.pointerEvents=k>.5?"":"none"});
-    const k=ease(cl((p-.74)/.16)); cta.style.opacity=k; cta.style.transform=`translate(-50%,${(1-k)*30}px)`; cta.style.pointerEvents=k>.5?"":"none";
+    cards.forEach((c,i)=>{const k=ease(cl((p-.5-i*.06)/.22)); c.style.opacity=k; c.style.transform=`translate(${(1-k)*100*c.dataset.side}px,${(1-k)*30}px)`; c.style.pointerEvents=k>.5?"":"none"; focusable(c,k>.5)});
+    const k=ease(cl((p-.74)/.16)); cta.style.opacity=k; cta.style.transform=`translate(-50%,${(1-k)*30}px)`; cta.style.pointerEvents=k>.5?"":"none"; focusable(cta,k>.5);
   }
   function tick(){const d=target-cur; if(Math.abs(d)<4e-4){cur=target;paint(cur);raf=null;return} cur+=d*.11; paint(cur); raf=requestAnimationFrame(tick)}
   function onScroll(){
@@ -137,9 +141,12 @@ function setupRails(){
 function setupCaseSwitch(){
   const cs=document.getElementById("caseSwitch"); if(!cs) return;
   const btns=[...cs.querySelectorAll(".cs-opt")], panes=[...document.querySelectorAll(".cs-pane")];
-  const pick=i=>{cs.style.setProperty("--x",i); btns.forEach((b,j)=>b.setAttribute("aria-selected",j===i)); panes.forEach((p,j)=>{p.classList.toggle("on",j===i); p.hidden=j!==i}); document.querySelectorAll(".case-lab").forEach((l,j)=>{l.hidden=j!==i})};
+  const pick=i=>{cs.style.setProperty("--x",i); btns.forEach((b,j)=>{b.setAttribute("aria-selected",j===i); b.tabIndex=j===i?0:-1}); panes.forEach((p,j)=>{p.classList.toggle("on",j===i); p.hidden=j!==i}); document.querySelectorAll(".case-lab").forEach((l,j)=>{l.hidden=j!==i})};
   pick(0);
-  btns.forEach((b,i)=>b.addEventListener("click",()=>pick(i)));
+  btns.forEach((b,i)=>{
+    b.addEventListener("click",()=>pick(i));
+    b.addEventListener("keydown",e=>{ const n=btns.length, to={ArrowRight:(i+1)%n,ArrowLeft:(i-1+n)%n,Home:0,End:n-1}[e.key]; if(to===undefined) return; e.preventDefault(); pick(to); btns[to].focus() });
+  });
 }
 
 /* ---------- reveal on scroll ---------- */
@@ -168,7 +175,7 @@ function setupHeaderMenu(){
     const a=e.target.closest("a[href]"); if(!a||a.target==="_blank"||a.origin!==location.origin||a.pathname!==location.pathname) return;
     const t=a.hash&&document.getElementById(decodeURIComponent(a.hash.slice(1))); if(a.hash&&!t) return;
     e.preventDefault(); const behavior=REDUCE?"auto":"smooth";
-    if(t){ t.scrollIntoView({behavior,block:"start"}); history.replaceState(null,"",a.hash) } else scrollTo({top:0,behavior});
+    if(t){ t.scrollIntoView({behavior,block:"start"}); history.replaceState(null,"",a.hash); if(!t.hasAttribute("tabindex")) t.setAttribute("tabindex","-1"); t.focus({preventScroll:true}) } else scrollTo({top:0,behavior});
     setOpen(false);
   });
 }

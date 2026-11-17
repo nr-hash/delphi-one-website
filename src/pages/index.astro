@@ -13,8 +13,9 @@ import Footer from '../components/Footer.astro';
 ---
 
 <Layout>
+  <a class="skip" href="#main">Skip to content</a>
   <Header />
-  <main id="main" class="pg-home2 pg-site">
+  <main id="main" class="pg-home2 pg-site" tabindex="-1">
     <Hero />
     <Research />
     <Valuations />
