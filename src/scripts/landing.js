@@ -51,7 +51,7 @@ function setupHero(){
   function scale(){ if(mobile()){art.style.removeProperty("--s");art.style.removeProperty("--hy");return}
     const s=Math.min(stageEl.clientWidth/1920,stageEl.clientHeight/1080); art.style.setProperty("--s",s.toFixed(4));
     if(hint&&cta){ const sr=stageEl.getBoundingClientRect(), top=hdr.offsetHeight+hdr.offsetTop, at=art.getBoundingClientRect().top-sr.top;
-      const hy=((top+sr.height-2*at)/s-(328-64/s-hint.offsetHeight)-((PAGE==="home2"?808:843)+cta.offsetHeight))/2; art.style.setProperty("--hy",hy.toFixed(1)+"px") } }
+      const hg=parseFloat(getComputedStyle(art).getPropertyValue("--hg"))||64, hy=((top+sr.height-2*at)/s-(328-hg/s-hint.offsetHeight)-((PAGE==="home2"?776+hg/s:843)+cta.offsetHeight))/2; art.style.setProperty("--hy",hy.toFixed(1)+"px") } }
   if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{ if(document.getElementById("heroStage")===stageEl) scale() });
   function progress(){const r=hero.getBoundingClientRect(); const run=hero.offsetHeight-stageEl.offsetHeight; return run<=0?0:cl(-r.top/run)}
   if(hero.classList.contains("static")){

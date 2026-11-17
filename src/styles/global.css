@@ -677,8 +677,8 @@ section[tabindex="-1"]:focus{outline:none}
 /* ---------- Hierarchy review (17-nov) ----------
    One step per role, the same everywhere: section title 41 · card title 24 · small title 18 ·
    section intro 18 · card body 16 · meta 14. The primary action is the loudest thing after the title. */
-/* card titles: rails, plans and personas share one size */
-.fcard .ftext h3,.tier .name,.phead h3{font-size:24px;line-height:30px;font-weight:700}
+/* card titles: rails, plans and personas share one size, all semibold like the small titles */
+.fcard .ftext h3,.tier .name,.phead h3{font-size:24px;line-height:30px;font-weight:600}
 /* card body sits one step under the section intro, so the intro leads */
 .fcard .ftext p,.pcard p{font-size:16px;line-height:24px}
 .pdesc{font-size:14px;line-height:20px}
@@ -693,6 +693,12 @@ section[tabindex="-1"]:focus{outline:none}
   .pg-site .h-alt{font-size:calc(14px / var(--s,1));line-height:calc(20px / var(--s,1))}
   .pg-site .h-badge{font-size:calc(14px / var(--s,1));line-height:calc(20px / var(--s,1));padding:calc(8px / var(--s,1)) calc(16px / var(--s,1));gap:calc(8px / var(--s,1))}
   .pg-site .h-badge img{width:calc(18px / var(--s,1));height:calc(20px / var(--s,1))}
+  /* hero, last frame: the title block, the app window and the button sit the same --hg apart (56px on screen),
+     and the cards keep --cg off the window (40px on screen, less on narrow windows so they stay inside) */
+  .pg-site .art{--hg:56px;--cg:min(calc(40px / var(--s,1)),64px)}
+  @media (max-height:760px){.pg-site .art{--hg:40px}}
+  .pg-site .h-hint{bottom:calc(752px + var(--hg) / var(--s,1) - var(--hy,0px))}
+  .pg-home2.pg-site .h-cta2{top:calc(776px + var(--hg) / var(--s,1) + var(--hy,0px))}
   /* hero hint: the paragraph sets in two balanced lines (a single line is ~1220px on screen) */
   .pg-site .h-hint p{max-width:calc(760px / var(--s,1))}
 }

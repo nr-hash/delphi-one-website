@@ -105,6 +105,11 @@ El artifact es la fuente del diseño y del copy. Cuando cambia:
   - Plans: el plan destacado es Premium (gratis en beta), con el badge "Free in beta".
     Free pierde el badge "Start here". Los badges de estado ("Coming soon") pasan a
     gris neutro, para no confundirse con la recomendación.
+  - todos los títulos de card (carruseles, planes, personas, callouts, cards del hero)
+    van en semibold (600);
+  - final del hero: título, pantalla y botón separados por `--hg` (56 px en pantalla;
+    40 px en ventanas de hasta 760 px de alto), y las cards a `--cg` de la pantalla
+    (40 px, menos en ventanas angostas). El script usa `--hg` para centrar el conjunto.
 
 ## Pendientes conocidos
 
