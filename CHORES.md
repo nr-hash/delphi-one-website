@@ -25,8 +25,9 @@ Pendientes del sitio, al 17/11/2026 (actualizado en la revisión final). Marcar 
       existen en beta pero no en este repo. Beta además tiene `/faq/`, `/privacy/` y
       `/terms/`.
 - [ ] **Capturas de Research.** "Good judgment is small data" ya tiene su captura
-      (`jd1_good_judgment.webp`, 2000×1135). Faltan "Pick your analysts" (Leaderboard),
-      "Chair your investment committee" y "John Maven AI, at your service".
+      (`jd1_good_judgment.webp`, 2000×1135) y "Pick your analysts" también
+      (`jd2_leaderboard.webp`, 2000×1138). Faltan "Chair your investment committee" y
+      "John Maven AI, at your service".
 - [ ] **Redes del footer.** El artifact tenía "Discord" sin URL; se puso YouTube, como en
       beta. Confirmar cuál va.
 
