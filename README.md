@@ -135,6 +135,9 @@ El artifact es la fuente del diseño y del copy. Cuando cambia:
   - el menú abierto termina con "Get started with X" (`.nav-cta`) por debajo de 640 px, donde el
     botón del header se oculta;
   - el logo es una zona táctil de 44 px.
+  - Valuations (≤999 px): versión chica de la composición. 4 marcadores grandes sobre los bordes de
+    la ventana (View 1, View 2, Post 1, Article) y el cursor arrastrando el Article hacia el texto,
+    como en escritorio. Los marcadores llevan `data-chip` en `Valuations.astro`.
 
 ## Pendientes conocidos
 

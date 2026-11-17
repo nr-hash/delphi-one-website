@@ -660,7 +660,7 @@ main{transition:opacity .25s, transform .25s}
 /* design copy: no editing tools */
 
 /* the hero artboard stays hidden until its scale is set (class added by an inline script in the Layout), as on beta */
-.hero-loading .art{visibility:hidden}
+.hero-loading #art{visibility:hidden}
 
 /* ---------- Accessibility ---------- */
 /* text for screen readers only */
@@ -783,3 +783,27 @@ section[tabindex="-1"]:focus{outline:none}
   .hero.scene .h-cta2{position:static;display:flex;justify-content:center;margin:24px auto 0}
   .hero.scene .h-cards{margin:var(--cardsTop,100svh) auto 0;width:calc(100% - 2 * max(16px,env(safe-area-inset-left,0px)))}
 }
+
+/* ---------- Valuations on phones and portrait tablets (≤999px) ----------
+   The desktop composition collapses to the window alone below 1000px. This smaller version keeps its
+   idea with four large bookmarks over the window's edges (two Views, a Post and the Article) and the
+   cursor dragging the Article into the text, the only thing that moves, as in the original. */
+@keyframes dragM{0%,100%{transform:translate(0,0)}45%,60%{transform:translate(-22px,-16px)}}
+@media (max-width:999px){
+  #mf-val .stage{position:relative;display:block;max-width:600px;margin:0 auto}
+  #mf-val .stage>.mock{display:block;width:100%!important}
+  #mf-val .stage>.mock img{width:100%!important;height:auto}
+  #mf-val .stage>[data-chip]{display:flex!important;position:absolute!important;z-index:3}
+  #mf-val .stage>:is([data-chip=v3],[data-chip=p2],[data-chip=p3]){display:none!important}
+  #mf-val .stage>.bm{height:44px!important;width:auto!important;padding:0 16px 0 8px;gap:10px;font-size:15px;line-height:20px;border-radius:12px;box-shadow:0 10px 28px rgba(16,23,30,.16);white-space:nowrap;animation:none}
+  #mf-val .stage>.bm .bi{width:28px;height:30px;border-radius:6px}
+  #mf-val .stage>.bm .bi svg{width:10px;height:12px}
+  #mf-val [data-chip=v1]{left:-8px!important;top:9%!important}
+  #mf-val [data-chip=p1]{left:auto!important;right:-8px!important;top:27%!important}
+  #mf-val [data-chip=v2]{left:-8px!important;top:58%!important}
+  /* .bm.art also matches the hero's .art rules: undo their column layout and padding here */
+  #mf-val .stage>.bm[data-chip=art]{flex-direction:row;align-items:center;max-width:none;left:auto!important;right:6%!important;top:74%!important;border-color:rgba(134,32,223,.5);box-shadow:0 12px 30px rgba(134,32,223,.24);animation:dragM 4.5s ease-in-out infinite}
+  #mf-val [data-chip=cur]{left:auto!important;right:calc(6% - 16px)!important;top:calc(74% + 28px)!important;width:20px!important;height:22px!important;animation:dragM 4.5s ease-in-out infinite}
+  #mf-val [data-chip=cur] svg{width:18px;height:20px}
+}
+@media (max-width:999px) and (prefers-reduced-motion:reduce){ #mf-val .stage>[data-chip]{animation:none!important} }
