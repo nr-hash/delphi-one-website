@@ -1,0 +1,111 @@
+<!-- ============================================================
+     SECTION 2: HERO — SCROLL PARALLAX
+     Sección de 240vh con stage sticky. El scroll saca el degradado
+     y el copy, y deja pasar la pantalla del producto; el CTA y las
+     tarjetas laterales entran sobre el final del recorrido.
+     ============================================================ -->
+<section id="hero-scroll" data-section="hero-scroll">
+  <!-- El runway es lo que mide el scroll de la escena. Antes esa medida la
+       daba la propia sección, pero ahora la sección puede llevar además la
+       columna de tarjetas debajo del stage. -->
+  <div class="hero2-runway" data-hero2-runway>
+  <div class="hero2-stage" data-hero2-stage>
+
+    <!-- Foto de fondo -->
+    <div class="hero2-photo" style="background-image: url('https://delphi.one/images/hero.avif');"></div>
+
+    <!-- Pantalla del producto: siempre opaca, la oscurece el velo de arriba.
+         El CTA viaja con ella y aparece recién sobre el final del scroll. -->
+    <div class="hero2-device">
+      <!-- Laptop en dos capas:
+             .hero2-laptop-frame  → la foto de la carcasa (no se toca)
+             .hero2-laptop-screen → el hueco de la pantalla, ubicado en %
+                                    sobre la foto. Para cambiar el contenido
+                                    sólo se reemplaza el <img> de adentro por
+                                    el <video>, sin tocar nada más:
+             <video class="hero2-screen-media" autoplay muted loop playsinline
+                    poster="poster.jpg"><source src="delphi-one.mp4" type="video/mp4"></video>
+      -->
+      <div class="hero2-laptop">
+        <img class="hero2-laptop-frame" src="/laptop-frame.avif"
+             alt="Delphi One on Macbook" width="2136" height="1294"
+             fetchpriority="high" decoding="async">
+
+        <div class="hero2-laptop-screen">
+          <img class="hero2-screen-media" src="/screen-app.jpg"
+               alt="Delphi One en pantalla" width="1440" height="1088" decoding="async">
+        </div>
+      </div>
+
+      <a href="https://app.delphi.one/?nav=login&snav=register" target="_blank" class="hero2-cta">
+        Try Alpha now with
+        <svg class="x-icon" fill="none" viewBox="0 0 1200 1227"><path fill="currentColor" d="M714.163 519.284 1160.89 0h-105.86L667.137 450.887 357.328 0H0l468.492 681.821L0 1226.37h105.866l409.625-476.152 327.181 476.152H1200L714.137 519.284h.026ZM569.165 687.828l-47.468-67.894-377.686-540.24h162.604l304.797 435.991 47.468 67.894 396.2 566.721H892.476L569.165 687.854v-.026Z"/></svg>
+      </a>
+    </div>
+
+    <!-- Capa oscura (degradado + estrellas): se va con el texto al scrollear.
+         Las estrellas las genera el script con una semilla fija. -->
+    <div class="hero2-dark">
+      <div class="hero2-veil"></div>
+      <div class="hero2-stars" data-hero2-stars aria-hidden="true"></div>
+    </div>
+
+    <div class="hero2-vignette"></div>
+
+    <!-- Sombra del título: donde se deshace el equipo al sumarse a la fila,
+         y lo que sostiene la lectura del título y la bajada mientras las
+         tarjetas pasan por debajo. -->
+    <div class="hero2-titleshade" aria-hidden="true"></div>
+
+    <!-- Copy inicial -->
+    <div class="hero2-copy">
+      <span class="hero2-badge">Investment Alpha, Distilled</span>
+      <!-- El asset rota cada 3s desde la lista del script de más abajo.
+           Bitcoin queda escrito acá para que el título funcione sin JS. -->
+      <h1>
+        <span>Be the #1 analyst on</span>
+        <span class="hero2-asset" data-hero2-asset>
+          <span class="hero2-asset-name">Bitcoin</span>
+          <span class="hero2-asset-icon" aria-hidden="true"></span>
+        </span>
+      </h1>
+      <p class="hero2-lede">A research community built to stress-test assumptions and expose weak reasoning.</p>
+    </div>
+
+    <!-- Destino de las tarjetas en modo lateral (>=1600px). Va vacío: el
+         script las mueve acá o las deja en la columna según el ancho, así
+         el copy existe una sola vez en el HTML. -->
+    <div class="hero2-messages" data-hero2-side></div>
+
+    <!-- Columna de tarjetas: el modo por defecto (todo por debajo de 1600px,
+         donde no hay lugar real a los costados del equipo). Arranca debajo
+         del viewport y el scroll la sube por detrás de la laptop, que para
+         entonces ya está acoplada arriba. -->
+    <div class="hero2-stack-window" data-hero2-stack-window>
+    <div class="hero2-stack" data-hero2-stack>
+      <article class="hero2-card hero2-card--left" data-slot="0">
+        <h3>Alpha in 80 characters or less</h3>
+        <p>Views are one-sentence theses backed by premises, not price targets.</p>
+      </article>
+      <article class="hero2-card hero2-card--left" data-slot="1">
+        <h3>Kelly Bet-compatible</h3>
+        <p>Conviction levels that tell you how big the position should be.</p>
+      </article>
+      <article class="hero2-card hero2-card--right" data-slot="2">
+        <h3>Pareto-friendly</h3>
+        <p>Bite-sized, opinionated theses you can update as evidence changes.</p>
+      </article>
+      <article class="hero2-card hero2-card--right" data-slot="3">
+        <h3>Human and AI reasoning</h3>
+        <p>Every view gets stress-tested by the community before it ranks.</p>
+      </article>
+    </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<script>
+  import '../scripts/hero-asset-rotator.js';
+  import '../scripts/hero-parallax.js';
+</script>

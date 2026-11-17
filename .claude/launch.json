@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "website",
+      "autoPort": true,
+      "runtimeExecutable": "sh",
+      "runtimeArgs": ["-c", "exec npx astro dev --port \"${PORT:-4321}\""],
+      "port": 4321
+    }
+  ]
+}

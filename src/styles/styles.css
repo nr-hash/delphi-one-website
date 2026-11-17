@@ -1,0 +1,1520 @@
+/* =============================================================
+   DELPHI ONE PROTOTYPE — Design Tokens & Styles
+   Tokens extracted from Figma file 34hscRAX9GXY3ggwc5xy7Y
+   ============================================================= */
+
+/* --- DESIGN TOKENS (Figma variables) --- */
+:root {
+  /* Primary palette */
+  --primary-5: #FAFAFA;
+  --primary-10: #F3F3F3;
+  --primary-25: #E6E8EA;
+  --primary-50: #DADEE1;
+  --primary-100: #B9BFC6;
+  --primary-200: #A2ABB4;
+  --primary-300: #8C96A1;
+  --primary-400: #6B7884;
+  --primary-500: #59636E;
+  --primary-600: #474F57;
+  --primary-700: #343A40;
+  --primary-800: #10171E;
+
+  /* Secondary palette */
+  --secondary-orange-400: #F9AD4E;
+  --secondary-green-500: #00D473;
+  --secondary-green-600: #0EA05D;
+  --secondary-red-500: #F76659;
+  --secondary-red-600: #DF3020;
+
+  /* Text & system */
+  --text-01: #212529;
+  --white: #FFFFFF;
+  --bg-light: #F7F8FA;
+
+  /* Spacing scale */
+  --sp-0: 0px;
+  --sp-4: 4px;
+  --sp-8: 8px;
+  --sp-12: 12px;
+  --sp-14: 14px;
+  --sp-16: 16px;
+  --sp-20: 20px;
+  --sp-24: 24px;
+  --sp-32: 32px;
+  --sp-64: 64px;
+
+  /* Border radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 18px;
+  --radius-2xl: 24px;
+  --radius-full: 9999px;
+
+  /* Shadows (Figma Elevation-2 & Drop web shadow) */
+  --elevation-2: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-web: 2px 2px 32px rgba(0, 0, 0, 0.13);
+
+  /* Stroke */
+  --stroke-width: 2px;
+
+  /* Typography — Montserrat */
+  --font-family: 'Montserrat', sans-serif;
+
+  /* Headings — escala Figma, se deja como referencia del kit */
+  --heading-xl: 700 60px/76px var(--font-family);
+  --heading-l: 700 52px/68px var(--font-family);
+  --heading-m: 700 48px/64px var(--font-family);
+
+  /* Título de sección — UNA sola rampa para todos los H2 de sección.
+     Antes cada sección resolvía su propio tamaño y convivían 48, 52 y 62
+     en el mismo nivel. Ahora todo H2 de sección apunta acá y nadie
+     escribe font-size a mano. Rampa: 32 → 48 (768) → 60 (1024) → 72 (1920). */
+  --heading-section: 700 24px/32px var(--font-family);
+
+  /* Título del hero — siempre un escalón por encima de --heading-section,
+     para que el H1 encabece la jerarquía. Antes quedaba por debajo (56
+     contra los 62 de los títulos de sección). */
+  --heading-hero: 700 31px/38px var(--font-family);
+
+  /* Body */
+  --body-xl: 400 20px/28px var(--font-family);
+  --body-l: 400 14px/20px var(--font-family);
+  --body-m: 400 16px/24px var(--font-family);
+  --body-s: 400 14px/20px var(--font-family);
+
+  /* Buttons */
+  --btn-xl: 600 18px/24px var(--font-family);
+  --btn-l: 600 16px/22px var(--font-family);
+  --btn-m: 600 14px/20px var(--font-family);
+  --btn-s: 600 12px/18px var(--font-family);
+
+  /* Layout — grilla del Figma.
+     Gutter y ancho de contenido medidos sobre los cinco frames:
+       360 -> 24/312 · 744 -> 64/616 · 1368 -> 144/1080
+       1920 -> 144/1632 · 2560 -> 245/2070
+     Un solo par (gutter, tope de contenido) reproduce los cinco: hasta
+     2358px de viewport manda el gutter; de ahí para arriba manda el tope
+     y el gutter crece solo. Antes eran dos columnas fijas (1550/1920) con
+     32px de padding, y a 1368 el contenido salía 224px más ancho que el
+     diseño. */
+  --gutter: 24px;
+  --content-max: 2070px;
+}
+
+/* El escalón de gutter va en 744 y 1024 porque son los anchos de los
+   frames del Figma. Ojo: la escala tipográfica todavía corta en 768, así
+   que entre 744 y 767 conviven gutter de tablet y tipografía de móvil.
+   Se unifica en la pasada de tipografía. */
+@media (min-width: 744px)  { :root { --gutter: 64px; } }
+@media (min-width: 1024px) { :root { --gutter: 144px; } }
+
+
+/* --- ESCALA TIPOGRÁFICA RESPONSIVE ---
+   El H2 de sección sigue la rampa medida sobre los frames del Figma:
+   360 -> 24/32 · 744 -> 40/54 · 1368/1920/2560 -> 48/66. O sea que a
+   partir de 1024 NO vuelve a crecer: el mismo string ocupa 1006px de
+   ancho tanto en 1368 como en 1920, y en 2560 sólo cambia el corte de
+   línea. Antes trepaba a 60 en 1536 y a 72 en 1920.
+   El H2 corta en 744 (el ancho del frame) igual que el gutter; el H1
+   sigue cortando en 768 hasta que se confirmen sus valores exactos. */
+@media (min-width: 744px) {
+  :root {
+    --heading-section: 700 40px/54px var(--font-family);
+    --heading-hero: 700 62px/76px var(--font-family);
+    --body-l: 400 16px/24px var(--font-family);
+  }
+}
+
+/* Banda de laptop (1024–1535): un 13" o 14" reporta 1440–1512px de ancho,
+   pero es una pantalla física chica. Sin este corte recibía la misma
+   escala que un monitor de 27", y el H1 se comía el 16% del alto. */
+@media (min-width: 1024px) {
+  :root {
+    --heading-section: 700 48px/66px var(--font-family);
+    --heading-hero: 700 53px/64px var(--font-family);
+    --body-l: 400 20px/28px var(--font-family);
+  }
+}
+
+/* Monitores: acá sí hay pantalla física para sostener la escala grande. */
+@media (min-width: 1536px) {
+  :root {
+    --heading-hero: 700 68px/80px var(--font-family);
+  }
+}
+
+/* Tier 2K / 4K. Hasta acá el breakpoint más alto era 1280: en 3840 el
+   sitio servía exactamente la misma tipografía que en 1280, con una
+   columna de 1550px en el centro de la pantalla. */
+@media (min-width: 1920px) {
+  :root {
+    --heading-hero: 700 80px/96px var(--font-family);
+    --body-xl: 400 22px/32px var(--font-family);
+    --body-m: 400 18px/28px var(--font-family);
+    --body-s: 400 16px/24px var(--font-family);
+  }
+}
+
+/* Va DESPUÉS del bloque de 1920 a propósito: misma especificidad, así que
+   si se declara antes gana 1920 y el H1 nunca llega a 84 en 2560. */
+@media (min-width: 2560px) {
+  :root {
+    --heading-hero: 700 84px/100px var(--font-family);
+  }
+}
+
+
+/* La escala se decide por ancho, pero la banda del hero la limita el ALTO.
+   Un teléfono horizontal (844x390) reporta 844px de ancho y se llevaba la
+   escala de tablet: el H1 en 52/64 a dos líneas más badge y bajada pedían
+   ~254px dentro de una banda de ~121px, así que el copy se derramaba sobre
+   la laptop y el badge quedaba cortado por el header. Este corte por alto
+   va último a propósito: pisa a los de ancho para cualquier viewport bajo. */
+@media (max-height: 560px) and (min-width: 768px) {
+  :root {
+    --heading-hero: 700 32px/40px var(--font-family);
+    --heading-section: 700 32px/40px var(--font-family);
+  }
+}
+
+
+/* --- RESET & BASE --- */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font: var(--body-m);
+  color: var(--text-01);
+  background: var(--white);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul { list-style: none; }
+
+
+/* --- UTILITIES --- */
+.container {
+  max-width: calc(var(--content-max) + var(--gutter) * 2);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.section-title-center {
+  font: var(--heading-section);
+  text-align: center;
+  max-width: calc(1078px + var(--gutter) * 2);
+  margin: 0 auto var(--sp-64);
+  padding: 0 var(--gutter);
+}
+
+/* La caja del título ensancha recién en 2560. A 1920 el Figma corta
+   "...for your firm, your / clients..." igual que en 1368, lo que exige una
+   caja de ~1078; con 1320 el navegador metía "clients," en la primera línea
+   y el corte no coincidía. */
+@media (min-width: 2560px) {
+  .section-title-center { max-width: calc(1320px + var(--gutter) * 2); }
+}
+
+/* X (Twitter) icon used in CTAs */
+.x-icon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+
+/* =============================================================
+   SECTION 1: HEADER
+   ============================================================= */
+[data-section="header"] {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  background: var(--white);
+  border-bottom: 1px solid rgba(52, 58, 64, 0.1);
+  transition: background 0.3s;
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: calc(var(--content-max) + var(--gutter) * 2);
+  margin: 0 auto;
+  padding: var(--sp-24) var(--gutter);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-8);
+}
+
+.logo-svg {
+  height: 40px;
+  width: auto;
+}
+
+.alpha-badge {
+  padding: 2px 7px;
+  border-radius: var(--radius-sm);
+  background: var(--primary-700);
+  color: var(--white);
+  /* Micro-etiqueta: 8px quedaba por debajo de cualquier mínimo legible. */
+  font: 600 10px/14px var(--font-family);
+  text-transform: uppercase;
+}
+
+.mobile-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.header-nav ul {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-8);
+}
+
+.header-nav a {
+  padding: var(--sp-14) var(--sp-20);
+  /* 400 es la decisión de diseño del menú. Estaba como override en el
+     bloque <style> de index.html; ahora vive en un solo lugar.
+     El line-height es explícito: antes heredaba el 24 del body. */
+  font: 400 14px/20px var(--font-family);
+  text-transform: uppercase;
+  color: var(--text-01);
+  transition: color 0.15s;
+}
+
+.header-nav a:hover {
+  color: var(--primary-500);
+}
+
+.btn-header-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-8);
+  padding: 0 var(--sp-20);
+  height: 40px;
+  border: 1px solid var(--primary-800);
+  border-radius: var(--radius-lg);
+  font: var(--btn-m);
+  color: var(--text-01);
+  transition: all 0.15s;
+}
+
+.btn-header-cta:hover {
+  background: var(--primary-800);
+  color: var(--white);
+}
+
+.btn-header-cta .x-icon {
+  color: var(--text-01);
+  transition: color 0.15s;
+}
+
+.btn-header-cta:hover .x-icon {
+  color: var(--white);
+}
+
+
+/* =============================================================
+   SECTION 2: HERO
+   ============================================================= */
+[data-section="hero"] {
+  position: relative;
+  margin-top: 88px;
+  padding: 64px 24px 88px;
+  text-align: center;
+}
+
+.hero-bg {
+  position: absolute;
+  top: 0;
+  left: 24px;
+  right: 24px;
+  bottom: 40%;
+  border-radius: var(--radius-2xl);
+  overflow: hidden;
+  z-index: 0;
+}
+
+.hero-bg-image {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  /* fallback dark bg in case external image doesn't load */
+  background-color: #1a1f25;
+}
+
+.hero-bg-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.65) 0%,
+    rgba(0, 0, 0, 0.35) 50%,
+    rgba(0, 0, 0, 0.10) 100%
+  );
+  backdrop-filter: blur(1px);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding-top: 48px;
+}
+
+[data-section="hero"] h1 {
+  font: var(--heading-hero);
+  letter-spacing: -0.5px;
+  color: var(--white);
+  text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+}
+
+.hero-sub {
+  font: var(--body-xl);
+  color: var(--white);
+  text-shadow: 0 1px 6px rgba(0,0,0,0.3);
+  max-width: 700px;
+}
+
+.btn-hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-8);
+  padding: 0 var(--sp-32);
+  height: 50px;
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--text-01);
+  transition: background 0.15s;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+}
+
+.btn-hero-cta:hover {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.hero-macbook {
+  display: flex;
+  justify-content: center;
+  margin-top: 32px;
+}
+
+.hero-macbook img {
+  max-width: 915px;
+  width: 100%;
+  filter: drop-shadow(0 8px 32px rgba(0,0,0,0.18));
+}
+
+
+/* =============================================================
+   SECTION 3: WHAT IS DELPHI ONE
+   ============================================================= */
+[data-section="what-is-delphi-one"] {
+  padding: 150px 0;
+}
+
+.advantage-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-32);
+  margin-bottom: var(--sp-64);
+}
+
+.advantage-header h2 {
+  font: var(--heading-section);
+}
+
+.advantage-header p {
+  font: var(--body-l);
+}
+
+.advantage-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--sp-32);
+}
+
+.advantage-card {
+  border: 1px solid var(--primary-25);
+  border-radius: var(--radius-lg);
+  padding: var(--sp-32);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.advantage-icon {
+  width: 42px;
+  height: 42px;
+  padding: var(--sp-8);
+  background: var(--primary-10);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.advantage-card h3 {
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 600;
+  min-height: 56px;
+}
+
+.advantage-card p {
+  font: var(--body-m);
+}
+
+
+/* =============================================================
+   SECTION 4: HOW IT WORKS — Tabbed steps (LinkedIn pattern)
+   ============================================================= */
+[data-section="how-it-works"] {
+  padding: 109px 0;
+}
+
+.hiw-header {
+  text-align: center;
+  margin: 0 auto 64px;
+}
+
+.hiw-header h2 {
+  font: var(--heading-l);
+  margin-bottom: 18px;
+}
+
+.hiw-header p {
+  font: var(--body-l);
+  color: var(--primary-500);
+}
+
+/* --- Tab bar + chevrons --- */
+.step-tabs-wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-16);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.step-chevron {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--primary-100);
+  background: var(--white);
+  color: var(--primary-700);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.15s;
+}
+
+.step-chevron:hover:not(:disabled) {
+  background: var(--primary-10);
+  border-color: var(--primary-300);
+}
+
+.step-chevron:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.step-tabs {
+  display: flex;
+  gap: 0;
+  flex: 1;
+  position: relative;
+}
+
+.step-tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-12);
+  padding: 20px var(--sp-16);
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: var(--font-family);
+}
+
+.step-tab:hover {
+  background: var(--primary-5);
+}
+
+.step-tab__number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--primary-200);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--primary-400);
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+
+.step-tab__label {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--primary-400);
+  transition: color 0.2s;
+}
+
+/* Active tab */
+.step-tab--active {
+  border-bottom-color: transparent;
+}
+
+.step-tab--active .step-tab__number {
+  background: var(--primary-800);
+  border-color: var(--primary-800);
+  color: var(--white);
+}
+
+.step-tab--active .step-tab__label {
+  color: var(--primary-800);
+}
+
+/* --- Tab panels --- */
+.step-panel {
+  display: none;
+  align-items: center;
+  gap: 64px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 64px 0 0;
+}
+
+.step-panel--active {
+  display: flex;
+}
+
+.step-panel__text {
+  flex: 0 0 40%;
+}
+
+.step-panel__text h3 {
+  font-size: 32px;
+  line-height: 40px;
+  font-weight: 700;
+  margin-bottom: var(--sp-16);
+  color: var(--text-01);
+}
+
+.step-panel__text p {
+  font: var(--body-l);
+  color: var(--primary-500);
+}
+
+.step-panel__image {
+  flex: 0 0 56%;
+}
+
+.step-panel__image img {
+  width: 100%;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-web);
+}
+
+
+/* =============================================================
+   SECTIONS 5, 6 y 6B: FEATURE ROWS
+   info-for-investors / info-for-analysts / why-delphi-one.
+   Los tres bloques comparten esqueleto: media columna de texto y
+   media de imagen, con el texto pegado al centro. Mobile-first,
+   con los breakpoints del sitio original (640 / 768 / 1024 / 1280).
+   ============================================================= */
+[data-section="info-for-investors"],
+[data-section="why-delphi-one"] {
+  padding: 45px 0;
+}
+
+/* La fila del medio no lleva padding propio hasta desktop: el aire
+   entre bloques lo ponen las secciones de arriba y abajo. */
+[data-section="info-for-analysts"] {
+  padding: 0;
+}
+
+@media (min-width: 768px) {
+  [data-section="info-for-investors"],
+  [data-section="why-delphi-one"] { padding: 88px 0; }
+}
+
+@media (min-width: 1024px) {
+  [data-section="info-for-investors"],
+  [data-section="info-for-analysts"],
+  [data-section="why-delphi-one"] { padding: 109px 0; }
+}
+
+[data-section="info-for-investors"] .section-title-center {
+  margin-bottom: 82px;
+}
+
+/* --- Fila --- */
+.feature-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-24);
+  color: var(--text-01);
+}
+
+/* Fila con la imagen primero en el DOM: en móvil se invierte para que
+   el texto quede arriba, como en la versión original. */
+.feature-row--image-first {
+  flex-direction: column-reverse;
+}
+
+@media (min-width: 1024px) {
+  .feature-row,
+  .feature-row--image-first { flex-direction: row; }
+}
+
+/* --- Columna de texto --- */
+.feature-text {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  padding-inline: max(var(--gutter), calc((100% - var(--content-max)) / 2));
+}
+
+/* El original abre más el margen derecho del primer bloque en sm. */
+@media (min-width: 768px) {
+  .feature-text--investor { padding-right: 64px; }
+}
+
+
+
+/* El borde izquierdo de la columna visual es el MISMO que el de How it works:
+   gutter + columna de texto + gap, con el mismo reparto (1 : 1.55 y gap 96;
+   1 : 1.764 y gap 173 de 1920 para arriba). Antes acá era un 50% + gap 24, que
+   a 1368 caía 26px a la derecha del video del how it works y a 1728 ya eran 64:
+   las capturas de las feature rows no arrancaban en la misma línea.
+   El % resuelve contra .feature-row, que es full-bleed, así que da el ancho de
+   página sin la barra de scroll. */
+@media (min-width: 1024px) {
+  .feature-row,
+  .feature-row--image-first { gap: 0; }
+
+  .feature-text {
+    --edge: max(var(--gutter), calc((100% - var(--content-max)) / 2));
+    --split: calc(var(--edge) + (100% - var(--edge) - 96px) / 2.55 + 96px);
+    width: var(--split);
+    flex: none;
+    justify-content: flex-end;
+    padding-left: var(--edge);
+    padding-right: 124px;
+  }
+  /* En el primer bloque el original no cierra a 124px hasta xl. */
+  .feature-text--investor { padding-right: 45px; }
+  /* Bloque con imagen a la izquierda: el texto se pega al centro por la izquierda. */
+  .feature-text--analyst {
+    justify-content: flex-start;
+    padding-left: 124px;
+    padding-right: var(--edge);
+  }
+}
+
+/* De 1920 para arriba el reparto cambia, y con él el punto de corte. */
+@media (min-width: 1920px) {
+  .feature-text {
+    --split: calc(var(--edge) + (100% - var(--edge) - 173px) / 2.764 + 173px);
+  }
+}
+
+@media (min-width: 1280px) {
+  .feature-text--investor { padding-right: 124px; }
+}
+
+.feature-text__inner {
+  width: 100%;
+}
+
+.feature-text__inner > * + * {
+  margin-top: var(--sp-32);
+}
+
+@media (min-width: 1024px) {
+  .feature-text__inner { max-width: 605px; }
+  .feature-text--analyst .feature-text__inner { max-width: 637px; }
+}
+
+@media (min-width: 1920px) {
+  .feature-text__inner { max-width: 720px; }
+  .feature-text--analyst .feature-text__inner { max-width: 760px; }
+}
+
+.feature-label {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-12);
+  font: 400 14px/20px var(--font-family);
+}
+
+.feature-text h3 {
+  font: 700 20px/28px var(--font-family);
+}
+
+.feature-text p {
+  font: 400 14px/20px var(--font-family);
+}
+
+@media (min-width: 768px) {
+  .feature-label,
+  .feature-text p { font-size: 16px; line-height: 24px; }
+  .feature-text h3 { font-size: 32px; line-height: 40px; }
+}
+
+@media (min-width: 1024px) {
+  .feature-label,
+  .feature-text p { font-size: 18px; line-height: 26px; }
+  .feature-text h3 { font-size: 40px; line-height: 52px; }
+}
+
+@media (min-width: 1536px) {
+  .feature-text h3 { font-size: 48px; line-height: 64px; }
+}
+
+@media (min-width: 1920px) {
+  .feature-label,
+  .feature-text p { font-size: 20px; line-height: 30px; }
+  .feature-text h3 { font-size: 56px; line-height: 72px; }
+}
+
+/* --- Columna de imagen --- */
+.feature-image {
+  width: 100%;
+  margin: 0;
+}
+
+@media (min-width: 1024px) {
+  .feature-image {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+}
+
+.feature-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Imagen que sangra por la derecha: mantiene el ancho de su columna, la altura
+   la marca la proporción del archivo, y el sobreancho se recorta contra el
+   borde de la pantalla para que parezca que la imagen sigue más allá. */
+.feature-image--bleed-right {
+  --bleed: 1.12;
+}
+
+@media (min-width: 1024px) {
+  .feature-image--bleed-right {
+    overflow: hidden;
+    border-radius: var(--radius-2xl) 0 0 var(--radius-2xl);
+  }
+
+  .feature-image--bleed-right img {
+    display: block;
+    width: calc(100% * var(--bleed));
+    max-width: none;
+    height: auto;
+    object-fit: fill;
+  }
+}
+
+
+/* =============================================================
+   SECTION 7: USE CASES
+   ============================================================= */
+[data-section="use-cases"] {
+  padding: 109px 0;
+}
+
+.personas-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+  gap: var(--sp-32);
+}
+
+.persona-card {
+  background: var(--primary-10);
+  border-radius: var(--radius-2xl);
+  padding: var(--sp-24);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-32);
+}
+
+.persona-header {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-16);
+}
+
+.persona-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+
+/* Título de card: 600. Los 700 quedan reservados a títulos de sección. */
+.persona-header h3 {
+  font: 600 20px/28px var(--font-family);
+}
+
+.persona-card > p {
+  font: var(--body-m);
+}
+
+
+/* =============================================================
+   SECTION 8: PLANS
+   ============================================================= */
+[data-section="plans"] {
+  padding: 109px 0;
+}
+
+.plans-header {
+  text-align: center;
+  max-width: calc(1078px + var(--gutter) * 2);
+  margin: 0 auto var(--sp-64);
+  padding: 0 var(--gutter);
+}
+
+.plans-header h2 {
+  font: var(--heading-section);
+  margin-bottom: var(--sp-16);
+}
+
+.plans-header p {
+  font: var(--body-l);
+  color: var(--primary-600);
+}
+
+.plans-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  /* stretch, no start: las tres tarjetas miden lo mismo aunque los
+     punteos tengan distinto largo, y los botones quedan alineados
+     porque cada uno se empuja al pie con margin-top:auto. */
+  align-items: stretch;
+  gap: var(--sp-32);
+}
+
+.plan-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-32);
+  padding: var(--sp-32);
+  border: 1px solid var(--primary-25);
+  border-radius: var(--radius-2xl);
+  background: var(--white);
+}
+
+.plan-card__head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  /* Piso para que los tres punteos arranquen a la misma altura: la
+     bajada del plan del medio ocupa dos líneas y las otras dos una. */
+  min-height: 164px;
+}
+
+/* Título de card: 600, igual que en las otras grillas de la landing.
+   Los 700 quedan reservados a títulos de sección.
+   El min-height reserva las dos líneas que ocupa "Alexandria
+   membership": sin eso ese plan empujaba su precio y su punteo un
+   renglón más abajo que los otros dos. */
+.plan-card h3 {
+  font: 600 24px/32px var(--font-family);
+  min-height: 64px;
+  /* Aire propio bajo el nombre del plan. Con el gap del bloque a secas,
+     "Alexandria membership" —que llena las dos líneas del min-height—
+     dejaba su precio pegado al título y se leía como un tercer renglón. */
+  margin-bottom: var(--sp-12);
+}
+
+.plan-price {
+  font: 700 32px/40px var(--font-family);
+}
+
+/* La unidad no es el dato: acompaña al número en cuerpo de texto para
+   que "$50" siga leyéndose de un vistazo contra "$0" y "Soon". */
+.plan-price__per {
+  font: var(--body-m);
+  color: var(--primary-400);
+}
+
+.plan-note {
+  font: var(--body-s);
+  color: var(--primary-400);
+}
+
+.plan-features {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-16);
+}
+
+/* Mismo patrón de check que el punteo del CTA final: grid de dos
+   columnas para que la segunda línea no se meta debajo del icono. */
+.plan-features li {
+  display: grid;
+  grid-template-columns: 1.25em auto;
+  gap: var(--sp-12);
+  align-items: start;
+  font: var(--body-m);
+  color: var(--primary-600);
+}
+
+.plan-features .material-symbols-outlined {
+  color: var(--primary-700);
+  font-size: 1.75em;
+  margin: -0.08em 0 0 -0.25em;
+}
+
+.plan-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-8);
+  /* auto arriba: el botón se va al pie de la tarjeta, así los tres
+     quedan sobre la misma línea sin importar el largo del punteo. */
+  margin-top: auto;
+  width: 100%;
+  height: 50px;
+  border-radius: var(--radius-lg);
+  font: var(--btn-l);
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.plan-btn--dark {
+  background: var(--primary-800);
+  color: var(--white);
+}
+
+.plan-btn--dark:hover {
+  background: rgba(16, 23, 30, 0.9);
+}
+
+.plan-btn--soft {
+  background: var(--primary-10);
+  color: var(--primary-800);
+}
+
+.plan-btn--soft:hover {
+  background: var(--primary-25);
+}
+
+.plan-btn--muted {
+  background: var(--primary-10);
+  color: var(--primary-300);
+  cursor: default;
+}
+
+/* Plan destacado. El borde de 2px es el --stroke-width del kit; la
+   sombra es la misma Elevation-2 que usa el menú del header. */
+.plan-card--featured {
+  border: var(--stroke-width) solid var(--primary-800);
+  box-shadow: var(--elevation-2);
+}
+
+/* Plan que todavía no existe: punteado y apagado, para que se lea
+   como un anticipo y no como una opción que se puede contratar. */
+.plan-card--coming {
+  background: var(--primary-5);
+  border: 1px dashed var(--primary-100);
+}
+
+.plan-card--coming .plan-features li,
+.plan-card--coming .plan-price {
+  color: var(--primary-400);
+}
+
+.plan-card--coming .plan-features .material-symbols-outlined {
+  color: var(--primary-300);
+}
+
+.plan-badge {
+  position: absolute;
+  /* Montada sobre el borde punteado, como una etiqueta cosida al
+     canto. El fondo opaco es el que tapa el punteado por detrás. */
+  top: -13px;
+  left: var(--sp-32);
+  padding: var(--sp-4) var(--sp-12);
+  background: var(--primary-25);
+  color: var(--primary-600);
+  border-radius: var(--radius-full);
+  font: var(--btn-s);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.plans-footnote {
+  margin: var(--sp-32) auto 0;
+  text-align: center;
+  font: var(--body-m);
+  color: var(--primary-500);
+}
+
+.plans-footnote strong {
+  font-weight: 600;
+  color: var(--primary-800);
+}
+
+/* Aviso de beta. Estuvo arriba como píldora oscura y ahí era lo primero
+   que se leía de la sección: pesaba más que los planes mismos. Abajo y
+   en gris queda como lo que es, una aclaración de vigencia. */
+.plans-beta {
+  margin: var(--sp-12) auto 0;
+  text-align: center;
+  font: var(--body-s);
+  color: var(--primary-300);
+}
+
+
+/* =============================================================
+   SECTION 9: FOUNDING ANALYST CTA
+   ============================================================= */
+[data-section="founding-analyst-cta"] {
+  padding: 200px 0;
+}
+
+.cta-section {
+  max-width: 1200px;
+  text-align: center;
+}
+
+.cta-section h2 {
+  font: var(--heading-section);
+  margin-bottom: var(--sp-24);
+}
+
+/* --- La Φ de la marca ---
+   Es la "O" real de Montserrat con la barra dibujada encima, no un SVG.
+   Antes era un vector dimensionado a mano: nunca calzaba con la "n" de al
+   lado porque su altura de caja, su peso y su línea de base eran los del
+   dibujo, no los de la fuente. Al usar la letra, todo eso lo define
+   Montserrat y no queda nada que calibrar en cada breakpoint.
+
+   Las proporciones de la barra salen del SVG de marca original:
+     ancho    = 0.1691 x diámetro del aro
+     voladizo = 0.1098 x diámetro, arriba y abajo
+   Con la altura de caja de Montserrat en 0.7118em eso da 0.120em de ancho,
+   0.868em de alto y 0.068em de desplazamiento superior. */
+.d1-phi {
+  position: relative;
+  display: inline-block;
+  line-height: 1;
+  /* Corrección óptica. La O suelta apoya su lateral redondo contra la "n" y
+     el ojo lo tolera; con la barra vertical encima el glifo pasa a leerse
+     como una letra con asta y ese mismo lateral queda abierto.
+     Medido a 48px: Φ→n daba 5.36px contra 4.84px del par n→e. Esto los
+     empareja. La variable queda expuesta por si hay que apretar más. */
+  margin-right: var(--d1-phi-tracking, -0.012em);
+}
+
+.d1-phi::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0.120em;
+  top: 0.068em;
+  height: 0.868em;
+  background: currentColor;
+}
+
+/* La Φ es un inline-block, así que sin esto la línea podría cortarse entre
+   la "O" y el "ne". */
+.d1-word {
+  white-space: nowrap;
+}
+
+.cta-subtitle {
+  /* Estaba en 24/24 (ratio 1.0): el único line-height igual al cuerpo
+     de la letra en toda la página. */
+  font: 400 24px/32px var(--font-family);
+  margin-bottom: var(--sp-64);
+}
+
+.cta-benefits {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-8);
+  /* 64 abajo, igual al margen del subtítulo: los dos respiros de la
+     sección (subtítulo→punteo y punteo→botón) deben medir lo mismo. */
+  margin: 0 auto var(--sp-64);
+  text-align: left;
+}
+
+.cta-benefits li {
+  display: inline-grid;
+  grid-template-columns: 1.25em auto;
+  gap: var(--sp-12);
+  /* start, no center: en los ítems de dos líneas el check quedaba flotando
+     en el medio en vez de junto a la primera línea. */
+  align-items: start;
+  font: var(--body-m);
+  color: var(--primary-600);
+}
+
+/* Utilidad de icono. Sirve para cualquier icono de Material Symbols que se
+   sume después — sólo hay que agregar su nombre al icon_names del <link>. */
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 20px;
+  line-height: 1;
+  display: inline-block;
+  white-space: nowrap;
+  direction: ltr;
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  -webkit-font-smoothing: antialiased;
+}
+
+.cta-benefits .material-symbols-outlined {
+  color: var(--primary-700);
+  /* check_small dibuja el trazo en el centro de su caja de 24 y deja mucho
+     aire alrededor: necesita más cuerpo que un icono normal para pesar lo
+     mismo que el texto. En em, para que acompañe al texto en 2K/4K. */
+  font-size: 1.75em;
+  /* Centra ópticamente el icono contra la primera línea de texto y lo
+     retrae hacia el canal del grid, compensando el aire interno del glifo. */
+  margin: -0.08em 0 0 -0.25em;
+}
+
+.cta-benefits svg {
+  flex-shrink: 0;
+}
+
+.btn-cta-dark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-8);
+  width: 100%;
+  max-width: 450px;
+  height: 50px;
+  background: var(--primary-800);
+  color: var(--white);
+  border-radius: var(--radius-lg);
+  font: var(--btn-xl);
+  transition: background 0.15s;
+}
+
+.btn-cta-dark:hover {
+  background: rgba(16, 23, 30, 0.9);
+}
+
+.x-icon-white {
+  color: var(--white);
+}
+
+
+/* =============================================================
+   SECTION 10: FOOTER
+   ============================================================= */
+[data-section="footer"] {
+  background: var(--bg-light);
+  padding: 40px 0;
+}
+
+.footer-grid {
+  display: flex;
+  gap: var(--sp-24);
+}
+
+.footer-about {
+  max-width: 417px;
+  padding-right: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-24);
+}
+
+.footer-logo {
+  height: 36px;
+  width: auto;
+}
+
+.footer-about p {
+  font: var(--body-s);
+}
+
+.footer-columns {
+  display: flex;
+  gap: var(--sp-20);
+  flex: 1;
+}
+
+.footer-col {
+  min-width: 200px;
+}
+
+.footer-col h4 {
+  font: 700 16px/24px var(--font-family);
+  margin-bottom: var(--sp-12);
+}
+
+.footer-col ul {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-8);
+}
+
+.footer-col a {
+  font: var(--body-s);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-8);
+  transition: color 0.15s;
+}
+
+.footer-col a:hover {
+  color: var(--primary-500);
+}
+
+.footer-col a img {
+  width: 16px;
+  height: 16px;
+}
+
+.footer-legal {
+  margin-top: 40px;
+  opacity: 0.5;
+}
+
+.footer-legal hr {
+  border: none;
+  height: 1px;
+  background: black;
+  opacity: 0.1;
+  margin-bottom: 15px;
+}
+
+.legal-copyright {
+  font: var(--body-s);
+  font-weight: 700;
+  margin-bottom: 9px;
+}
+
+.legal-disclaimer {
+  font: var(--body-s);
+}
+
+
+/* =============================================================
+   RESPONSIVE — 2K / 4K
+   ============================================================= */
+@media (min-width: 1920px) {
+  .header-nav a { font-size: 16px; }
+  .btn-header-cta { font: var(--btn-l); height: 48px; }
+  .logo-svg { height: 48px; }
+  .advantage-card h3 { font-size: 22px; line-height: 30px; }
+  .persona-header h3 { font-size: 22px; line-height: 30px; }
+  .plan-card h3 { font-size: 26px; line-height: 34px; min-height: 68px; }
+  .plan-card__head { min-height: 174px; }
+  .plan-price { font-size: 36px; line-height: 46px; }
+  .plan-btn { font-size: 18px; line-height: 24px; height: 58px; }
+  .cta-subtitle { font-size: 28px; line-height: 38px; }
+  .btn-cta-dark { font-size: 20px; line-height: 28px; height: 58px; max-width: 520px; }
+  .footer-col h4 { font-size: 18px; line-height: 26px; }
+}
+
+
+/* =============================================================
+   RESPONSIVE — Tablet
+   ============================================================= */
+/* El header tiene su propio corte, más alto que el del resto del layout.
+   El nav completo necesita ~1075px (logo 237 + items 590 + CTA 167 + aire):
+   con el corte en 1023 la banda 1024–1074 mostraba el nav de desktop sin
+   espacio, "WHAT IS DELPHI ONE?" y "USE CASES" wrappeaban a dos líneas y
+   el badge ALPHA se montaba sobre el logo. Justo el ancho de un iPad
+   horizontal. Se sube a 1119 para dejar margen real. */
+@media (max-width: 1119px) {
+  .header-nav { display: none; }
+  .header-nav.nav-open {
+    display: block;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--white);
+    padding: var(--sp-24);
+    box-shadow: var(--elevation-2);
+  }
+  .header-nav.nav-open ul {
+    flex-direction: column;
+  }
+  .mobile-menu-btn { display: flex; }
+  .btn-header-cta { display: none; }
+}
+
+/* Banda 1024-1119: el contenedor ya sirve el gutter de 144 (736px de
+   contenido) pero la nav todavía es hamburguesa. Con 4 columnas las
+   tarjetas caían a 166px. Se sostienen 2 columnas hasta que aparece la
+   nav de escritorio. */
+@media (min-width: 1024px) and (max-width: 1119px) {
+  .advantage-grid,
+  .personas-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  /* Los planes se quedan en tres: son un set que se compara de un
+     vistazo y partirlo en 2 + 1 deja al tercero descolgado. Lo que
+     cede es el padding interno. */
+  .plan-card { padding: var(--sp-24); }
+  .plans-grid { gap: var(--sp-24); }
+}
+
+@media (max-width: 1023px) {
+  .advantage-grid { grid-template-columns: repeat(2, 1fr); }
+
+  .step-panel {
+    gap: 40px;
+  }
+  .step-panel__text { flex: 0 0 45%; }
+  .step-panel__image { flex: 0 0 50%; }
+
+  .personas-grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* Por debajo de 1024 las tres columnas dejan las tarjetas en ~200px
+     y el punteo se hace ilegible: pasan a apilarse, la destacada
+     primero para que no quede enterrada en el medio. */
+  .plans-grid { grid-template-columns: 1fr; max-width: 560px; margin: 0 auto; }
+  .plan-card--featured { order: -1; }
+  /* Apiladas ya no hay nada que alinear entre columnas y el min-height
+     sólo dejaría un hueco bajo los títulos de una línea. */
+  .plan-card h3 { font-size: 22px; line-height: 30px; min-height: 0; margin-bottom: var(--sp-8); }
+  .plan-card__head { min-height: 0; }
+
+  .footer-grid { flex-direction: column; }
+  .footer-about { padding-right: 0; max-width: 100%; }
+}
+
+
+/* =============================================================
+   RESPONSIVE — Mobile
+   ============================================================= */
+@media (max-width: 767px) {
+  :root {
+    /* Los ratios: la escala base vive en ~1.45 y el override mobile la
+       rompía (14/16 = 1.14 en texto corrido de párrafo). */
+    --body-xl: 400 16px/24px var(--font-family);
+    --body-l: 400 14px/20px var(--font-family);
+  }
+
+  .logo-svg { height: 30px; }
+
+  [data-section="hero"] {
+    margin-top: 68px;
+    padding: 32px 16px 48px;
+  }
+
+  .hero-bg {
+    left: 16px;
+    right: 16px;
+    border-radius: var(--radius-lg);
+  }
+
+  .hero-content {
+    padding-top: 24px;
+  }
+
+  .hero-sub {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .btn-hero-cta {
+    font-size: 12px;
+    height: 36px;
+    padding: 0 var(--sp-20);
+  }
+
+  [data-section="what-is-delphi-one"] { padding: 45px 0; }
+  .advantage-header { grid-template-columns: 1fr; }
+
+  /* En mobile el texto de card se quedaba en 16 mientras la bajada de la
+     sección bajaba a 14: la card pesaba más que su propia sección. */
+  .advantage-card p,
+  .persona-card > p { font: var(--body-s); }
+
+  [data-section="how-it-works"] { padding: 45px 0; }
+
+  .step-tabs { flex-wrap: wrap; }
+  .step-tab { flex: 1 0 45%; }
+  .step-tab__label { font-size: 14px; }
+
+  .step-panel--active { flex-direction: column; }
+  .step-panel__text { flex: none; width: 100%; }
+  .step-panel__image { flex: none; width: 100%; }
+  .step-panel__text h3 { font-size: 24px; line-height: 32px; }
+
+  [data-section="plans"] { padding: 45px 0; }
+  .plans-header { padding: 0; }
+  .plan-features li { font: var(--body-s); }
+  .plans-footnote { font: var(--body-s); }
+
+  [data-section="founding-analyst-cta"] { padding: 45px 0; }
+
+  .footer-columns { flex-direction: column; }
+}
+
+/* Una sola columna recién por debajo del frame de tablet: el Figma a 744
+   muestra las tres grillas en DOS columnas, y el corte estaba en 767. */
+@media (max-width: 743px) {
+  .advantage-grid,
+  .personas-grid { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,84 @@
+---
+/* Layout base: <head> + <body>. Todo el CSS de la landing entra por un
+   único import para que el orden de cascada quede garantizado
+   (ver src/styles/index.css).
+   El bloque de meta replica el de beta.delphi.one (SEO, OG, Twitter,
+   JSON-LD), así el cambio de versión no mueve nada en buscadores. */
+import '../styles/index.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** Imagen OG absoluta o relativa al sitio (1200x630). */
+  image?: string;
+  /** Agrega `noindex` (páginas de prueba, previews). */
+  noindex?: boolean;
+  bodyClass?: string;
+}
+
+const {
+  title = 'Delphi One — Investment Alpha, Distilled',
+  description = 'Share your investment views on the cryptos and stocks you follow, and get rewarded for sharp reasoning — not lucky price calls.',
+  image = 'https://delphi.one/og_2026_v2.png',
+  noindex = false,
+  bodyClass = 'has-hero-scroll',
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL(image, Astro.site);
+const robots = noindex ? 'noindex, nofollow' : 'index, follow';
+
+const orgJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Delphi One',
+  url: 'https://delphi.one',
+  logo: 'https://delphi.one/delphi-one-logo.svg',
+  description:
+    'Investment Alpha, Distilled — an investment research platform where analysts publish Views, build Valuations and get read first on their asset',
+};
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="generator" content={Astro.generator} />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <meta name="robots" content={robots} />
+  <meta name="googlebot" content={robots} />
+  <meta name="bingbot" content={robots} />
+  <meta name="author" content="Delphi One" />
+  <meta name="keywords" content="investment research, valuations, views, analysts, stocks, crypto" />
+  <link rel="canonical" href={canonical} />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="sitemap" href="/sitemap-index.xml" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:site_name" content="Delphi One" />
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content={canonical} />
+  <meta property="twitter:title" content={title} />
+  <meta property="twitter:description" content={description} />
+  <meta property="twitter:image" content={ogImage} />
+
+  <script type="application/ld+json" set:html={JSON.stringify(orgJsonLd)} />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- Material Symbols. El parámetro icon_names subsetea la fuente a los
+       iconos listados: se descargan ~2 KB en vez de la familia completa.
+       Al agregar un icono nuevo hay que sumarlo a esa lista. -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=check_small&display=swap" rel="stylesheet" />
+</head>
+<body class={bodyClass}>
+  <slot />
+</body>
+</html>

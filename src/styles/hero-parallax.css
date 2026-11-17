@@ -1,0 +1,836 @@
+/* ============================================================
+   HERO — SCROLL-DRIVEN PARALLAX
+   Port a CSS vanilla del hero v2 (antes en Tailwind/Astro).
+   Se carga encima de styles.css (tokens + base).
+   Todo va namespaced con .hero2- para no chocar con el hero clásico.
+
+   La sección mide 240vh y su stage queda sticky en el viewport.
+   El scroll alimenta --p (0 → 1) desde JS y ese progreso mueve:
+     - la foto de fondo (zoom out),
+     - la capa oscura + copy (suben y se desvanecen),
+     - la laptop (sube desde abajo y escala),
+     - el CTA y las tarjetas laterales (entran sobre el final).
+   ============================================================ */
+
+#hero-scroll {
+  position: relative;
+  background: #000;
+}
+
+/* El alto que mide el scroll de la escena. En modo apilado el recorrido se
+   parte en dos: revelar el equipo y hacer subir las tarjetas. En modo
+   lateral las tarjetas entran dentro del propio revelado y no necesitan
+   recorrido propio. */
+.hero2-runway {
+  height: 280vh;
+}
+
+.hero2-stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  width: 100%;
+  overflow: hidden;
+
+  --p: 0;
+
+  /* El recorrido se parte en dos y cada tramo tiene su propio progreso.
+     --hero2-reveal-end dice qué fracción de --p ocupa el revelado; el resto
+     es la subida de la columna. En modo lateral vale 1 y todo lo de abajo
+     se comporta exactamente como antes. */
+  --hero2-reveal-end: 0.45;
+  --r-raw: clamp(0, calc(var(--p) / var(--hero2-reveal-end)), 1);
+
+  /* Rampas lineales crudas, en tiempo de revelado (--r-raw). No se usan
+     directo: cada una pasa por el smoothstep de abajo para que no se note
+     el arranque ni el frenado. */
+  --c-raw: clamp(0, calc((var(--r-raw) - 0.45) * 3), 1);
+  --c2-raw: clamp(0, calc((var(--r-raw) - 0.55) * 3.5), 1);
+
+  /* smoothstep: t²(3 - 2t). Derivada 0 en los dos extremos, así que la
+     entrada y la salida son suaves en vez de cortar en seco. */
+  --c: calc(var(--c-raw) * var(--c-raw) * (3 - 2 * var(--c-raw)));
+  --c2: calc(var(--c2-raw) * var(--c2-raw) * (3 - 2 * var(--c2-raw)));
+
+  /* El progreso maestro también suavizado, para la foto, el copy y la
+     laptop, que son los movimientos largos. */
+  --pe: calc(var(--r-raw) * var(--r-raw) * (3 - 2 * var(--r-raw)));
+
+  /* Segundo tramo: la columna de tarjetas sube. Lineal a propósito —es
+     scroll directo, no una entrada—, así el ritmo de subida es el mismo que
+     el del dedo. Termina en 0.94 y no en 1: sin ese respiro la sección se
+     suelta con la última tarjeta todavía llegando. */
+  --st: clamp(0, calc((var(--p) - 0.45) * 2.04), 1);
+
+  /* En cuanto la primera tarjeta toca el equipo, el equipo se suma a la fila:
+     de ahí en más sube a la misma velocidad que la columna y se desvanece,
+     dejándole el lugar al resto. --hero2-touch-st es el punto de --st en que
+     eso pasa, y sale de geometría (dónde termina el equipo, cuánto recorre la
+     columna), así que lo mide el JS. */
+  --hero2-dev-shift: max(
+    0px,
+    calc((var(--st) - var(--hero2-touch-st, 1)) * var(--hero2-stack-travel))
+  );
+  --dv-raw: clamp(
+    0,
+    calc((var(--st) - var(--hero2-touch-st, 1)) * var(--hero2-dev-fade, 0)),
+    1
+  );
+  --dv: calc(var(--dv-raw) * var(--dv-raw) * (3 - 2 * var(--dv-raw)));
+
+  /* Los publica el JS midiendo el equipo ya montado (offsetHeight, inmune al
+     transform): dónde para el equipo debajo del bloque de texto, dónde
+     arranca la ventana de las tarjetas y cuánto recorre la columna. Sin JS
+     quedan neutros y el hero se comporta como el de siempre, sin columna. */
+  --hero2-dock-rise: 0px;
+  --hero2-stack-travel: 0px;
+  --hero2-touch-st: 1;
+  --hero2-dev-fade: 0;
+
+  /* Reposo de la laptop (p = 0): cuánto cae y a qué escala queda. El JS
+     los lee para saber dónde arranca el borde superior del equipo y poder
+     centrar el copy contra él, así que viven acá y no sueltos en el
+     transform. */
+  --hero2-drop: 47vh;
+  --hero2-rest-scale: 0.9;
+
+  /* Geometría del equipo en un solo lugar: la consumen la laptop y el
+     anclaje de las tarjetas laterales, que antes usaban un 700px mágico
+     sin relación con el ancho real del equipo. */
+  --hero2-frame-ratio: 1.6507;
+
+  /* Techo de alto del equipo. El equipo no se achica en toda la escena, así
+     que el techo tiene que dejar servido todo lo que lo rodea: header más
+     margen y CTA (~200px), el bloque de texto que se queda arriba
+     (--hero2-copy-h, que mide el JS) y el 16svh de la ventana por la que
+     suben las tarjetas. Ese 16svh es el mínimo que deja pasar una tarjeta
+     entera; más que eso se come el equipo.
+     Va en svh porque el stage mide 100svh: con vh, la barra del navegador
+     móvil dejaría el equipo más alto que su propio contenedor. */
+  --hero2-frame-cap: min(
+    64svh,
+    calc(84svh - 200px - var(--hero2-copy-h, 200px))
+  );
+  --hero2-laptop-cap: min(
+    1100px,
+    calc(var(--hero2-frame-cap) * var(--hero2-frame-ratio))
+  );
+  --hero2-card-gap: 16px;
+}
+
+/* Viewports muy bajos (teléfono horizontal): el reservado de 288px para
+   header + CTA se come casi todo el alto y el equipo quedaba en 100px.
+   Se baja el reservado y se sube la porción de viewport que puede ocupar. */
+@media (max-height: 560px) {
+  .hero2-stage { --hero2-frame-cap: min(74vh, calc(100vh - 168px)); }
+}
+
+/* --- Foto de fondo --- */
+.hero2-photo {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-size: cover;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  background-color: #1a1f25; /* fallback si la imagen externa no carga */
+  transform: scale(calc(1.12 - var(--pe) * 0.12));
+  transform-origin: center 40%;
+  will-change: transform;
+}
+
+/* --- Capa oscura (degradado + estrellas): se va con el texto --- */
+.hero2-dark {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -25vh;
+  height: 150vh;
+  /* El orden de pintado ahora es explícito porque .hero2-device subió a
+     z-index 2 para dejar pasar la columna por detrás: sin esto el velo y la
+     viñeta quedarían debajo del equipo y dejarían de oscurecerlo.
+     foto 0 · equipo 1 · tarjetas 2 · velo y viñeta 3 · copy 4 */
+  z-index: 3;
+  pointer-events: none;
+  opacity: clamp(0, calc(1 - var(--r-raw) * 1.7), 1);
+  transform: translate3d(0, calc(var(--pe) * -22vh), 0);
+  will-change: transform, opacity;
+}
+
+.hero2-veil {
+  position: absolute;
+  inset: 0;
+  /* Los stops van en vh porque la capa arranca 25vh por encima del viewport:
+     25vh = borde superior visible, 125vh = borde inferior visible. */
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.96) 25vh,
+    rgba(0, 0, 0, 0.92) 58vh,
+    rgba(0, 0, 0, 0.6) 78vh,
+    rgba(0, 0, 0, 0.34) 98vh,
+    rgba(0, 0, 0, 0.12) 118vh,
+    rgba(0, 0, 0, 0) 140vh
+  );
+}
+
+.hero2-stars {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.hero2-star {
+  position: absolute;
+  border-radius: var(--radius-full);
+  background: #fff;
+  opacity: var(--o);
+  animation-name: hero2-twinkle;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes hero2-twinkle {
+  0%,
+  100% { opacity: calc(var(--o) * 0.35); }
+  50%  { opacity: var(--o); }
+}
+
+/* Viñeta permanente para que el producto siempre recorte bien */
+.hero2-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background: radial-gradient(
+    120% 80% at 50% 45%,
+    rgba(0, 0, 0, 0) 40%,
+    rgba(0, 0, 0, 0.65) 100%
+  );
+}
+
+/* --- Sombra del título ---
+   Es donde se deshace el equipo cuando se suma a la fila, y lo que sostiene
+   la lectura del título y la bajada mientras las tarjetas les pasan por
+   debajo. Aparece con el mismo --dv que apaga el equipo: las dos cosas son el
+   mismo gesto, el equipo disolviéndose en sombra. Va en la capa 3, encima del
+   equipo y de la columna, y debajo del copy, que es lo único que queda legible. */
+.hero2-titleshade {
+  position: absolute;
+  left: 0;
+  right: 0;
+  /* Arranca en el borde de la pantalla, no debajo del header: apoyada en
+     --hero2-copy-top dejaba una línea de corte justo en el canto del header,
+     con la foto clara arriba y la sombra abajo. El header es transparente
+     sobre el hero, así que la sombra tiene que pasarle por detrás. */
+  top: 0;
+  height: calc(var(--hero2-copy-top, 96px) + var(--hero2-copy-h, 200px) + 200px);
+  z-index: 3;
+  pointer-events: none;
+  opacity: var(--dv);
+  /* El tramo opaco llega hasta 24px debajo de la bajada, no hasta un % del
+     bloque: con el CTA sumado a la columna, ésta ya no entra en el hueco y la
+     primera tarjeta termina apoyada sobre el texto. Atando la parada al alto
+     real del copy, lo que queda por encima de la bajada se tapa entero y no
+     se lee un fantasma detrás del título. */
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.92) 0%,
+    rgba(0, 0, 0, 0.9) calc(var(--hero2-copy-top, 96px) + var(--hero2-copy-h, 200px) + 24px),
+    rgba(0, 0, 0, 0) 100%
+  );
+  will-change: opacity;
+}
+
+/* --- Copy inicial --- */
+/* El copy ocupa la banda que va del borde inferior del header al borde
+   superior de la laptop, y se centra ahí adentro. Antes colgaba del techo
+   con un padding fijo de 16vh, que no sabía nada del header (96px, alto
+   fijo) ni de dónde arranca el equipo: el aire de arriba quedaba siempre
+   mucho menor que el de abajo. El JS mide la banda y la publica en estas
+   dos variables; los fallbacks son la geometría del desktop típico. */
+.hero2-copy {
+  position: absolute;
+  z-index: 4;
+  left: 0;
+  right: 0;
+  top: var(--hero2-copy-top, 96px);
+  bottom: var(--hero2-copy-bottom, 36vh);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--sp-24);
+  text-align: center;
+  /* En modo apilado el copy se queda: --hero2-copy-fade vale 0 y la opacidad
+     no baja nunca. En modo lateral vuelve a 2.4 y se va con el velo, como
+     siempre. La subida es la misma variable en los dos casos: acá la mide el
+     JS (del centro de su banda al techo), allá son los 22vh de siempre. */
+  opacity: clamp(0, calc(1 - var(--r-raw) * var(--hero2-copy-fade, 0)), 1);
+  transform: translate3d(0, calc(var(--pe) * -1 * var(--hero2-copy-rise, 0px)), 0);
+  will-change: transform, opacity;
+}
+
+.hero2-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--sp-8) var(--sp-16);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(4px);
+  font: 500 12px/16px var(--font-family);
+  color: rgba(255, 255, 255, 0.9);
+  gap: 6px;
+  white-space: nowrap;
+}
+
+/* Asset rotativo del título: nombre + vector. El swap ocurre con el grupo
+   en opacity 0, así el cambio de ancho de la línea no se nota. */
+.hero2-asset {
+  display: inline-flex;
+  align-items: center;
+  /* Zona de swap: caja de ancho fijo, centrada. El ancho lo mide el script
+     del asset rotativo contra el nombre más largo de la lista y lo deja en
+     --hero2-asset-w (el ancho se aplica más abajo). Sin esto el título se
+     corre de costado en cada rotación, porque "Ethereum" y "Bitcoin" no
+     miden lo mismo: a 744 el salto es de 78px. */
+  justify-content: center;
+  gap: var(--hero2-asset-gap, 6px);
+  transition: opacity 0.3s ease;
+}
+
+/* El nombre del asset lleva el color de marca (lo pinta el JS; Bitcoin
+   queda acá para el render sin JS). El peso lo hereda del h1. */
+.hero2-asset-name {
+  color: #F7931A;
+}
+
+.hero2-asset.is-swapping { opacity: 0; }
+
+/* Máscara circular del vector: recorta lo que sea que se meta adentro
+   (SVG propio, logo oficial cuadrado, PNG), así ningún asset queda con
+   esquinas rectas. */
+.hero2-asset-icon {
+  display: inline-flex;
+  flex: 0 0 auto;
+  width: var(--hero2-asset-icon-size, 24px);
+  height: var(--hero2-asset-icon-size, 24px);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  clip-path: circle(50% at 50% 50%);
+  background: rgba(255, 255, 255, 0.08);
+  /* Alineación óptica: align-items lo centra contra la caja de línea, y el
+     centro del cap-height del nombre cae 0.0085em más abajo (medido con
+     Montserrat: ascent .9623, descent .2453, cap .700 — el line-height se
+     cancela, así que la constante vale en todos los breakpoints). */
+  transform: translateY(var(--hero2-asset-icon-nudge, 0.0085em));
+}
+
+.hero2-asset-icon svg,
+.hero2-asset-icon img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero2-copy h1 {
+  margin-top: var(--sp-24);
+  /* Token compartido: siempre un escalón por encima de --heading-section. */
+  font: var(--heading-hero);
+  letter-spacing: -0.02em;
+  color: var(--white);
+  /* El vector del asset vive dentro del h1: se mide en em para crecer con
+     el título en cada breakpoint, en vez de quedar clavado en 24px. */
+  --hero2-asset-icon-size: 1.06em;
+  --hero2-asset-gap: 0.2em;
+}
+
+/* Sólo las líneas del título cambian de display; el grupo del asset se
+   queda inline-flex siempre (si pasara a block, el vector se despegaría
+   del nombre). */
+.hero2-copy h1 > span { display: inline; }
+.hero2-copy h1 .hero2-asset { display: inline-flex; }
+
+/* El ancho reservado de la zona de swap. Va en todos los formatos: de 768
+   para arriba el renglón uno es `block` y el asset tiene el suyo propio;
+   por debajo el renglón uno es `nowrap` y largo, así que el grupo cae
+   igual al renglón dos y ahí la caja se centra sola. La única excepción es
+   el viewport bajo, donde el h1 vuelve a ser una línea corrida (más
+   abajo). */
+.hero2-copy h1 .hero2-asset { width: var(--hero2-asset-w, auto); }
+
+/* La línea blanca no se parte nunca: en el Figma va en una sola fila en
+   los 5 formatos (a 744 desborda ~3px por lado sobre el gutter, centrada,
+   igual que allá). Si no entra, se ajusta la escala, no el corte. */
+.hero2-copy h1 > span:not(.hero2-asset) { white-space: nowrap; }
+
+.hero2-lede {
+  margin-top: var(--sp-16);
+  max-width: 560px;
+  font: var(--body-s);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* --- Pantalla del producto ---
+   Nunca se transparenta: la oscurece el velo de arriba. Arranca abajo
+   (asomando) y termina centrada. El CTA viaja con ella. */
+.hero2-device {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-24);
+  padding: 0 var(--sp-24);
+  /* Un solo movimiento: el equipo sube desde abajo y termina arriba, ya en
+     su lugar definitivo. No hay un segundo tramo que lo acomode ni una
+     escala de acople —el equipo mide lo mismo toda la escena—, así que el
+     revelado entrega la posición final y de ahí en más no se mueve. */
+  transform: translate3d(
+      0,
+      calc(
+        (1 - var(--pe)) * var(--hero2-drop)
+        - var(--pe) * var(--hero2-dock-rise)
+        - var(--hero2-dev-shift)
+      ),
+      0
+    )
+    scale(
+      calc(var(--hero2-rest-scale) + var(--pe) * (1 - var(--hero2-rest-scale)))
+    );
+  transform-origin: center center;
+  /* Por encima de la columna: mientras el equipo está en su lugar, la primera
+     tarjeta se le mete detrás en vez de taparlo. Después se suma a la fila.
+     foto 0 · columna 1 · equipo 2 · velos, viñeta y sombra 3 · copy 4 */
+  z-index: 2;
+  opacity: calc(1 - var(--dv));
+  will-change: transform, opacity;
+}
+
+/* ------------------------------------------------------------
+   LAPTOP EN DOS CAPAS
+   La foto de la carcasa manda el tamaño; encima va un hueco absoluto
+   que calza con el área de pantalla de la foto. El contenido de ese
+   hueco (imagen hoy, video después) se cambia sin tocar el resto.
+   Los % del hueco salen de medir la foto, no de ojo.
+   ------------------------------------------------------------ */
+.hero2-laptop {
+  position: relative;
+
+  /* El techo de alto NO va como max-height: si el alto recorta una caja de
+     ancho 100%, la foto queda letterboxeada adentro y los % del hueco de
+     pantalla —que son del contenedor, no de la foto dibujada— dejan de
+     calzar con el bisel. Se veía en cualquier viewport de menos de ~814px
+     de alto: en 1024x768 el hueco quedaba 34px corrido y 54px más ancho, y
+     en un teléfono horizontal la captura salía como una banda blanca sin
+     carcasa. Por eso el techo ya viene convertido a ancho (--hero2-laptop-cap)
+     y el ratio lo fija aspect-ratio: la caja del <img> nunca deja de calzar. */
+  width: min(100%, var(--hero2-laptop-cap));
+  aspect-ratio: var(--hero2-frame-ratio);
+
+  /* Medidos sobre laptop-frame.avif (2136x1294): el área de pantalla
+     arranca en x=217 y=37 y mide 1704x1101 px. */
+  --screen-left: 10.16%;
+  --screen-top: 2.86%;
+  --screen-width: 79.78%;
+  --screen-height: 85.09%;
+}
+
+.hero2-laptop-frame {
+  display: block;
+  width: 100%;
+  height: 100%;
+  /* Red de contención: con --hero2-frame-ratio exacto no recorta nada, pero si
+     algún día cambia la foto y el ratio queda desfasado, preferimos ver
+     letterbox que la carcasa deformada. */
+  object-fit: contain;
+}
+
+/* Área de pantalla dentro de la foto — ajustar sólo estos cuatro valores
+   si algún día cambia la imagen de la carcasa. */
+.hero2-laptop-screen {
+  position: absolute;
+  left: var(--screen-left);
+  top: var(--screen-top);
+  width: var(--screen-width);
+  height: var(--screen-height);
+  overflow: hidden;
+  background: #000;
+}
+
+/* La captura entra a lo ancho del hueco: el alto sale del ratio y lo que
+   sobra por abajo lo recorta el overflow del contenedor. */
+.hero2-screen-media {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* El CTA vive debajo de la laptop y aparece cuando el degradado ya se fue.
+   Píldora negra sólida: es el mismo botón primario que usa la app dentro
+   de la laptop (el "New View"), así que el hero no inventa un lenguaje
+   nuevo. Queda en la familia oscura de las tarjetas —no compite con la
+   masa blanca de la pantalla— pero es opaco en vez de vidrio, y eso solo
+   ya lo separa del fondo. El hairline es apenas un filo, no un contorno.
+   La sombra es la que lo levanta de la foto. */
+.hero2-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-8);
+  height: 40px;
+  padding: 0 var(--sp-24);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: var(--radius-full);
+  background: var(--primary-800);
+  font: var(--btn-m);
+  color: var(--white);
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.55);
+  transition: background-color 0.15s, border-color 0.15s;
+  opacity: var(--c2);
+  transform: translate3d(0, calc((1 - var(--c2)) * 16px), 0);
+  pointer-events: none;
+}
+
+/* En hover levanta un punto y el filo termina de encenderse. */
+.hero2-cta:hover {
+  background: #1b232c;
+  border-color: rgba(255, 255, 255, 0.75);
+}
+
+.hero2-stage.is-revealed .hero2-cta { pointer-events: auto; }
+
+/* ------------------------------------------------------------
+   TARJETAS DE MENSAJE — DOS MODOS
+
+   REGLA FIJA DEL PROYECTO: de 1024px para arriba —desktop y tablet
+   horizontal— las tarjetas van SIEMPRE a los costados del equipo. No se
+   bajan, no se apilan, no se mueven al centro. Cualquier cambio de la escena
+   tiene que resolverse sin tocar eso.
+
+   Lateral (>=1024px): las cuatro flotando a los costados. El aire contra el
+     equipo es fijo, y lo que se ajusta para que entren es el ANCHO DEL
+     EQUIPO, nunca la posición de las tarjetas: --hero2-laptop-cap descuenta
+     lo que ocupan los dos costados. Antes las tarjetas se anclaban al centro
+     del viewport (50% - 700px) y su borde interno caía siempre 70px ADENTRO
+     del equipo: tapaban el producto en todos los anchos, y por debajo de
+     ~1300px le tapaban la pantalla. Anclarlas al borde del equipo y
+     despejarles el ancho es lo que arregla eso sin moverlas de lugar.
+   Apilado (sólo por debajo de 1024px): mobile y tablet vertical, donde no
+     hay costados. Ahí la escena hace el relevo y las tarjetas van al centro.
+   ------------------------------------------------------------ */
+
+/* Look común a los dos modos */
+.hero2-card {
+  padding: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-xl);
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(12px);
+  text-align: left;
+}
+
+.hero2-card h3 {
+  font: 600 16px/22px var(--font-family);
+  color: var(--white);
+}
+
+.hero2-card p {
+  margin-top: 6px;
+  font: 400 14px/20px var(--font-family);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* --- Modo apilado ---
+   La columna vive DENTRO del stage y arranca justo debajo del viewport
+   (top: 100%). El scroll no la mueve por flujo: la sube el transform, con
+   el equipo ya acoplado arriba. Así las cuatro pasan de a una por la
+   ventana que queda libre y se meten detrás de la laptop, que no se mueve.
+   Al quedar antes que .hero2-device en z-index, la columna pasa por atrás. */
+/* La ventana es el hueco que deja el equipo: arranca justo debajo del CTA y
+   llega al piso del stage. Recorta la columna ahí en vez de confiar en que la
+   laptop tape las tarjetas —la laptop puede ser más angosta que una tarjeta y
+   les asomaban las puntas por los costados—, y el degradado del mask las
+   apaga al llegar arriba en vez de cortarlas en seco. El top y el degradado
+   los publica el JS junto con la posición del equipo. */
+.hero2-stack-window {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: var(--hero2-stack-top, 100%);
+  bottom: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+  /* El degradado se mide contra la ventana, que va de 130px en un portátil
+     bajo a 300 en un monitor: un valor fijo se comería la ventana chica. */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 var(--hero2-stack-fade, 56px));
+  mask-image: linear-gradient(to bottom, transparent 0, #000 var(--hero2-stack-fade, 56px));
+}
+
+.hero2-stack {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Más ajustado que en modo lateral: con el CTA cerrando la fila, la columna
+     tiene que entrar en el hueco que deja el equipo. Con los 16 de aire y los
+     18 de padding se pasaba 44px en un teléfono de 812 y la primera tarjeta
+     terminaba apoyada sobre la bajada. */
+  gap: var(--sp-12);
+  padding: 0 var(--sp-24);
+
+  transform: translate3d(0, calc(var(--st) * -1 * var(--hero2-stack-travel)), 0);
+  will-change: transform;
+}
+
+/* El CTA cierra la fila. Un respiro extra para que no se lea como una quinta
+   tarjeta, y el alto de tap completo aunque esté dentro de la columna. */
+.hero2-stack .hero2-cta {
+  margin-top: var(--sp-4);
+  flex: 0 0 auto;
+}
+
+.hero2-stack .hero2-card {
+  width: 100%;
+  max-width: 560px;
+  padding: var(--sp-14);
+  pointer-events: auto;
+  /* La foto de fondo sigue detrás: acá el vidrio sí aporta. */
+  background: rgba(0, 0, 0, 0.62);
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+/* --- Modo lateral --- */
+.hero2-messages {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .hero2-messages { display: block; }
+  .hero2-stack-window,
+  .hero2-titleshade { display: none; }
+
+  /* En modo lateral las tarjetas entran dentro del propio revelado: no hay
+     columna ni equipo acoplado arriba, el recorrido entero es el revelado y
+     el runway conserva los 240vh originales. El equipo vuelve al techo de
+     860px porque comparte el ancho con las tarjetas de los costados. */
+  .hero2-stage {
+    --hero2-reveal-end: 1;
+    --st: 0;
+    --hero2-copy-fade: 2.4;
+    --hero2-card-w: 268px;
+    --hero2-frame-cap: min(64vh, calc(100vh - 288px));
+
+    /* En el Figma el estado inicial de ESCRITORIO no muestra el equipo: entra
+       recién con el scroll. Con 47vh asomaba ~213px ya en 1368x768. Sólo mueve
+       el arranque — la posición final la fija --hero2-dock-rise, así que el
+       revelado termina donde terminaba. Va acá adentro y no en la base porque
+       en móvil el Figma sí lo deja asomar por abajo. */
+    --hero2-drop: 76vh;
+
+    /* Tres techos, y el tercero es el que sostiene la regla: el equipo no
+       puede pasar de lo que sobra después de darle a cada costado su
+       tarjeta, su aire contra el equipo y 24px de margen al borde. Así el
+       solape es imposible por construcción a cualquier ancho, sin que las
+       tarjetas se muevan nunca de los costados. */
+    --hero2-laptop-cap: min(
+      860px,
+      calc(var(--hero2-frame-cap) * var(--hero2-frame-ratio)),
+      calc(100vw - 2 * (var(--hero2-card-w) + var(--hero2-card-gap) + 80px))
+    );
+  }
+
+  .hero2-runway { height: 240vh; }
+
+  .hero2-messages .hero2-card {
+    position: absolute;
+    width: var(--hero2-card-w);
+    background: rgba(0, 0, 0, 0.55);
+    border-color: rgba(255, 255, 255, 0.12);
+    opacity: var(--c);
+    transition: none;
+
+    /* Deriva permanente para que la escena no quede congelada durante el
+       hold. Va en `translate`/`rotate`, propiedades independientes que se
+       componen con el `transform` de entrada sin pisarlo. */
+    animation: hero2-drift 9s ease-in-out infinite alternate;
+    will-change: translate;
+  }
+
+  /* El borde interno de la tarjeta se ancla al borde del equipo, no al
+     centro del viewport: el aire contra la laptop es siempre el mismo
+     (--hero2-card-gap) y no depende del ancho de pantalla. */
+  .hero2-messages .hero2-card--left {
+    right: calc(50% + var(--hero2-laptop-cap) / 2 + var(--hero2-card-gap));
+    transform: translate3d(calc((1 - var(--c)) * -32px), 0, 0);
+  }
+
+  .hero2-messages .hero2-card--right {
+    left: calc(50% + var(--hero2-laptop-cap) / 2 + var(--hero2-card-gap));
+    transform: translate3d(calc((1 - var(--c)) * 32px), 0, 0);
+  }
+
+  /* Cada tarjeta con su propio ritmo: si van todas juntas se lee como un
+     bloque que sube y baja, no como cuatro cosas flotando. */
+  .hero2-messages .hero2-card[data-slot="0"] { top: 26vh; animation-duration: 9s;    animation-delay: -0.8s; }
+  .hero2-messages .hero2-card[data-slot="1"] { top: 52vh; animation-duration: 11.5s; animation-delay: -4.2s; }
+  .hero2-messages .hero2-card[data-slot="2"] { top: 32vh; animation-duration: 10.4s; animation-delay: -2.6s; }
+  .hero2-messages .hero2-card[data-slot="3"] { top: 58vh; animation-duration: 12.6s; animation-delay: -6.1s; }
+}
+
+@keyframes hero2-drift {
+  from { translate: 0 -7px; rotate: -0.35deg; }
+  to   { translate: 0 9px;  rotate: 0.35deg; }
+}
+
+/* --- Header transparente mientras está sobre el hero oscuro ---
+   El script le agrega .is-solid al terminar el hero. */
+body.has-hero-scroll [data-section="header"]:not(.is-solid) {
+  background: transparent;
+  border-bottom-color: transparent;
+  backdrop-filter: blur(2px);
+}
+
+body.has-hero-scroll [data-section="header"]:not(.is-solid) .header-nav a,
+body.has-hero-scroll [data-section="header"]:not(.is-solid) .btn-header-cta {
+  color: var(--white);
+}
+
+body.has-hero-scroll [data-section="header"]:not(.is-solid) .logo-svg path,
+body.has-hero-scroll [data-section="header"]:not(.is-solid) .mobile-menu-btn path {
+  fill: var(--white);
+}
+
+body.has-hero-scroll [data-section="header"]:not(.is-solid) .alpha-badge {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+body.has-hero-scroll [data-section="header"]:not(.is-solid) .btn-header-cta {
+  border-color: rgba(255, 255, 255, 0.6);
+  background: transparent;
+}
+
+body.has-hero-scroll [data-section="header"]:not(.is-solid) .btn-header-cta:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+body.has-hero-scroll [data-section="header"]:not(.is-solid) .btn-header-cta .x-icon {
+  color: var(--white);
+}
+
+/* El menú desplegado sí tiene fondo blanco: el texto vuelve a ser oscuro */
+body.has-hero-scroll [data-section="header"]:not(.is-solid) .header-nav.nav-open a {
+  color: var(--text-01);
+}
+
+/* --- Desktop --- */
+@media (min-width: 768px) {
+  .hero2-device { gap: var(--sp-32); }
+
+  .hero2-badge { font-size: 14px; }
+
+  .hero2-copy h1 > span:not(.hero2-asset) { display: block; }
+
+  .hero2-lede {
+    font-size: 18px;
+    line-height: 26px;
+  }
+
+  .hero2-cta {
+    height: 48px;
+    padding: 0 var(--sp-32);
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .hero2-stage { --hero2-card-w: 300px; }
+  .hero2-card { padding: 20px; }
+}
+
+@media (min-width: 1920px) {
+  .hero2-lede { font-size: 20px; line-height: 30px; }
+  .hero2-cta { height: 56px; font-size: 18px; }
+  .hero2-stage { --hero2-card-w: 360px; }  /* medido en el frame de 1920 */
+  .hero2-card { padding: 24px; }
+  .hero2-card h3 { font-size: 18px; line-height: 26px; }
+  .hero2-card p { font-size: 16px; line-height: 24px; }
+}
+
+/* Viewport bajo: además de la escala compacta (styles.css), el H1 vuelve a
+   una sola línea corrida y la bajada al cuerpo chico, para que el bloque
+   entre en la banda que deja el header arriba y la laptop abajo. */
+@media (max-height: 560px) and (min-width: 768px) {
+  .hero2-copy h1 {
+    margin-top: var(--sp-16);
+  }
+  .hero2-copy h1 > span:not(.hero2-asset) { display: inline; }
+  .hero2-copy h1 .hero2-asset { width: auto; }
+  .hero2-lede {
+    margin-top: var(--sp-8);
+    font-size: 14px;
+    line-height: 20px;
+  }
+  .hero2-badge { font-size: 12px; }
+  .hero2-device { gap: var(--sp-16); }
+  .hero2-cta { height: 40px; font-size: 14px; }
+}
+
+/* Columna en flujo normal. La usan dos casos: reduced motion (con --p fijo
+   en 1 el transform la dejaría casi entera fuera de pantalla) y los
+   viewports muy bajos, donde el equipo arriba y una ventana usable abajo no
+   entran juntos —un teléfono horizontal tiene 390px de alto y sólo el
+   header y el CTA ya se llevan 140—. Ahí el hero se revela igual y las
+   tarjetas quedan como columna debajo. */
+#hero-scroll.is-static-stack .hero2-runway { height: 200vh; }
+
+@media (prefers-reduced-motion: reduce) {
+  #hero-scroll.is-static-stack .hero2-runway { height: 100svh; }
+}
+
+#hero-scroll.is-static-stack .hero2-titleshade { display: none; }
+
+#hero-scroll.is-static-stack .hero2-stack-window {
+  position: static;
+  overflow: visible;
+  mask-image: none;
+  -webkit-mask-image: none;
+  padding: var(--sp-64) 0 96px;
+  pointer-events: auto;
+}
+
+#hero-scroll.is-static-stack .hero2-stack {
+  position: static;
+  transform: none;
+}
+
+#hero-scroll.is-static-stack .hero2-stack .hero2-card {
+  /* Fuera del stage no hay foto detrás: el vidrio no aporta y el contraste
+     lo dan el filo y un fondo apenas levantado sobre el negro. */
+  background: rgba(255, 255, 255, 0.045);
+}
+
+/* --- Reduced motion: el hero se muestra ya revelado, sin animaciones --- */
+@media (prefers-reduced-motion: reduce) {
+  .hero2-photo,
+  .hero2-copy,
+  .hero2-dark,
+  .hero2-device,
+  .hero2-card,
+  .hero2-cta {
+    transform: none;
+  }
+  .hero2-star { animation: none; }
+  .hero2-card { animation: none; translate: none; rotate: none; }
+  .hero2-asset { transition: none; }
+}
