@@ -826,3 +826,11 @@ section[tabindex="-1"]:focus{outline:none}
   .pg-site section.sec{padding-top:112px}
   .pg-site .many{padding-top:112px}
 }
+
+/* rail cards (Research, Trade) on phones and portrait tablets: each card is as tall as its own content,
+   so the screenshot sits right under the text instead of being pushed to the bottom of a card stretched
+   to the tallest one (the screenshot still bleeds off the card's bottom edge, as designed) */
+@media (max-width:900px){
+  .fcar-track{align-items:flex-start}
+  .fcard .appwin{margin-top:0}
+}

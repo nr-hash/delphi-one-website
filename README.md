@@ -122,6 +122,7 @@ El artifact es la fuente del diseño y del copy. Cuando cambia:
 - **Mobile** (revisión del 17/11/2026, bloque "Mobile review" en `global.css`):
   - encabezado → contenido: 32 px en todas las secciones (antes 32 a 96);
   - separación entre secciones: 112 px (antes 64), para que se vean menos la anterior y la siguiente;
+  - cards de Research y Trade con su propio alto: la captura va justo debajo del texto (30 px), sin hueco;
   - el header toma un fondo oscuro al hacer scroll sobre el hero (`.hdr.scrolled`), porque
     transparente se montaba sobre el texto;
   - Plans: el plan destacado (Premium) va primero cuando se apilan;
