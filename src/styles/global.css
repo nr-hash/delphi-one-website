@@ -723,4 +723,7 @@ section[tabindex="-1"]:focus{outline:none}
   /* the intro sets in two balanced lines so the head, the link and the composition fit one screen */
   .pg-site #mf-val .mf-head{max-width:1180px}
   .pg-site #mf-val .mf-head .sub{max-width:1160px;text-wrap:balance}
+  /* the head ends on a one-line link and the window opens with a near-white bar, so the usual 64px
+     reads as a gap: the window sits 40px under the link (head margin 30 + the window's 10px offset) */
+  .pg-site #mf-val .mf-head{margin-bottom:30px}
 }

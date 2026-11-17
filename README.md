@@ -113,7 +113,8 @@ El artifact es la fuente del diseño y del copy. Cuando cambia:
   - Valuations: el link "Are you an analyst? Get paid for your Valuations" pasa del pie de
     la composición al encabezado (`.mf-link`, debajo de la bajada); la bajada va en 2
     líneas (≥1280 px) y la composición (`data-fit="screen"`) se achica según el alto,
-    hasta 70 %, para que encabezado y composición entren en una pantalla.
+    hasta 70 %, para que encabezado y composición entren en una pantalla. La ventana queda a 40 px del
+    link (en vez de 64 + 10), porque la barra casi blanca de la ventana hacía que se leyera lejos.
 
 ## Pendientes conocidos
 
