@@ -807,3 +807,15 @@ section[tabindex="-1"]:focus{outline:none}
   #mf-val [data-chip=cur] svg{width:18px;height:20px}
 }
 @media (max-width:999px) and (prefers-reduced-motion:reduce){ #mf-val .stage>[data-chip]{animation:none!important} }
+
+/* ---------- App screenshots sized to the device (phones and portrait tablets, ≤999px) ----------
+   From "We give you the AI" to the end, each app screen is capped by the screen's height so it reads
+   whole next to its title: rail screenshots up to 30% of the height (cropped from the top, as they
+   already are), the Valuations and Portfolio windows up to 45% (they narrow to keep their proportions,
+   so the Valuations bookmarks stay on the window's edges). */
+@media (max-width:999px){
+  .fcard .appwin :is(.shot,.ph){max-height:30vh;max-height:30svh}
+  #mf-val .stage{max-width:min(600px,calc(45vh * 1300 / 1136));max-width:min(600px,calc(45svh * 1300 / 1136))}
+  #mf .stage>.mock{width:100%!important;max-width:calc(45vh * 2020 / 2061);max-width:calc(45svh * 2020 / 2061);margin:0 auto}
+  #mf .stage>.mock img{width:100%!important;height:auto}
+}

@@ -138,6 +138,9 @@ El artifact es la fuente del diseño y del copy. Cuando cambia:
   - Valuations (≤999 px): versión chica de la composición. 4 marcadores grandes sobre los bordes de
     la ventana (View 1, View 2, Post 1, Article) y el cursor arrastrando el Article hacia el texto,
     como en escritorio. Los marcadores llevan `data-chip` en `Valuations.astro`.
+  - capturas de la app con alto máximo según el dispositivo (≤999 px, de Research al final): las
+    de los carruseles hasta 30 % del alto de pantalla y las ventanas de Valuations y Portfolio
+    hasta 45 % (se angostan para mantener la proporción).
 
 ## Pendientes conocidos
 
