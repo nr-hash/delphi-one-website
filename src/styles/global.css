@@ -977,3 +977,6 @@ section[tabindex="-1"]:focus{outline:none}
   .tiers .feats>.label:empty{display:none} /* same: the empty label only aligns the lists across cards */
   .tier .row{flex-wrap:wrap;justify-content:flex-start;gap:6px 10px} /* the badge drops under the label instead of squeezing it */
 }
+
+/* the plan description and the note under the price read at the same size (16/24) in every card */
+.tier .desc,.tier .pnote{font-size:16px;line-height:24px}
