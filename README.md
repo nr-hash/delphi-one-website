@@ -157,6 +157,10 @@ El artifact es la fuente del diseño y del copy. Cuando cambia:
     la clase `html.tp` (script inline del Layout, se actualiza al rotar en `syncTP`). El resto de
     la página mantiene el diseño de escritorio;
   - el botón del menú no tiene borde.
+- **Portfolio por debajo de 1200 px** (bloque al final de `global.css`): ventana grande (72 % del
+  ancho, hasta 70 % del alto de pantalla) con las 5 cards por delante, superpuestas sobre sus
+  bordes (`data-co` en `Portfolio.astro`). En celular (<600 px) la ventana va a ancho completo y
+  las cards la siguen alternando izquierda y derecha, la primera montada sobre su borde.
 
 ## Pendientes conocidos
 

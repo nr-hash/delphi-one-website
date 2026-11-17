@@ -925,3 +925,32 @@ section[tabindex="-1"]:focus{outline:none}
 
 /* the menu button has no outline (it read as a heavy black frame on the white header) */
 .burger{border:0}
+
+/* ---------- Portfolio, stacked layouts (≤1199px): a bigger window with the cards in front of it ----------
+   The window grows to 72% of the composition (and up to 70% of the screen height); the five callouts sit
+   over its edges, two on the left and three on the right, overlapping it. The composition's width is
+   tied to the screen height so the window never outgrows the screen. */
+@media (max-width:1199px){
+  #mf .stagebox{height:auto!important}
+  #mf .stage{position:relative!important;display:block!important;width:auto!important;height:auto!important;max-width:min(1000px,calc(70vh * 2020 / 2061 / .72));max-width:min(1000px,calc(70svh * 2020 / 2061 / .72));margin:0 auto;padding:16px 0;transform:none!important}
+  #mf .stage>.mock{position:relative!important;left:auto!important;top:auto!important;z-index:1;width:72%!important;max-width:none!important;margin:0 auto}
+  #mf .stage>.mock img{width:100%!important;height:auto}
+  #mf .stage>.callout{position:absolute!important;z-index:3;width:min(250px,31%)!important;height:auto!important;padding:14px 16px;gap:4px;box-shadow:0 12px 32px rgba(16,23,30,.14)!important}
+  #mf .stage>.callout .t{font-size:15px;line-height:20px}
+  #mf .stage>.callout .b{font-size:13px;line-height:18px}
+  #mf .stage>[data-co="1"]{left:0!important;top:14%!important}
+  #mf .stage>[data-co="2"]{left:0!important;top:52%!important}
+  #mf .stage>[data-co="3"]{left:auto!important;right:0!important;top:5%!important}
+  #mf .stage>[data-co="4"]{left:auto!important;right:0!important;top:37%!important}
+  #mf .stage>[data-co="5"]{left:auto!important;right:0!important;top:69%!important}
+  #mf .conn{display:none!important}
+}
+/* phones: side cards would be ~105px wide, so the window takes the full width and the cards follow it,
+   the first one riding over its bottom edge and the rest alternating left and right */
+@media (max-width:599px){
+  #mf .stage{max-width:none;padding:0}
+  #mf .stage>.mock{width:100%!important}
+  #mf .stage>.callout{position:relative!important;left:auto!important;right:auto!important;top:auto!important;width:86%!important;margin:10px 0 0}
+  #mf .stage>[data-co="1"]{margin-top:-48px}
+  #mf .stage>:is([data-co="2"],[data-co="4"]){margin-left:auto}
+}
