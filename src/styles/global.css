@@ -963,3 +963,17 @@ section[tabindex="-1"]:focus{outline:none}
 .phead h3{font-size:18px;line-height:24px;font-weight:600}
 /* every section intro uses the same size below 1001px (Valuations and Portfolio used 16, the rest 17–20) */
 @media (max-width:1000px){ .mf-head .sub{font-size:clamp(17px,.3vw + 15px,20px);line-height:1.4} }
+
+/* plan head on phones and portrait tablets, where the plans stack: who it's for, the name and the
+   description on the left; the price and its note on the right. The rest of the card spans both. */
+@media (max-width:900px){
+  .tier{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:16px;row-gap:24px}
+  .tier>*{grid-column:1/-1}
+  .tier>:first-child{grid-column:1;grid-row:1}
+  .tier>.desc{grid-column:1;grid-row:2;margin-top:-12px}
+  .tier>:nth-child(3){grid-column:2;grid-row:1/3;align-self:center;text-align:right;max-width:min(38vw,260px)}
+  .tier>:nth-child(3) .price{justify-content:flex-end}
+  .tier>.grow{display:none} /* the spacer only aligns buttons across side-by-side cards */
+  .tiers .feats>.label:empty{display:none} /* same: the empty label only aligns the lists across cards */
+  .tier .row{flex-wrap:wrap;justify-content:flex-start;gap:6px 10px} /* the badge drops under the label instead of squeezing it */
+}

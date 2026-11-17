@@ -129,6 +129,8 @@ El artifact es la fuente del diseño y del copy. Cuando cambia:
   - el header toma un fondo oscuro al hacer scroll sobre el hero (`.hdr.scrolled`), porque
     transparente se montaba sobre el texto;
   - Plans: siempre en orden Free, Premium, Alexandria (Custom), también cuando se apilan;
+  - Plans apilados (≤900 px): encabezado en 2 columnas, a la izquierda etiqueta, nombre y
+    descripción, a la derecha precio y nota; sin los espaciadores que alinean cards lado a lado;
   - el link de Valuations se acomoda centrado y la flecha no queda sola en una línea;
   - "BETA" y "Coming soon" suben a 12 px (estaban en 10 y 11).
   - hero en 2 etapas en celulares y tablets en vertical (≤900 px, pantallas de ≥560 px de alto):
