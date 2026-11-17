@@ -24,8 +24,9 @@ Pendientes del sitio, al 17/11/2026 (actualizado en la revisión final). Marcar 
 - [ ] **Páginas que faltan.** El menú y los CTAs enlazan a `/creators` e `/investors`, que
       existen en beta pero no en este repo. Beta además tiene `/faq/`, `/privacy/` y
       `/terms/`.
-- [ ] **Capturas de Research.** Las 4 cards de "We give you the AI. You bring the
-      judgment." muestran "Placeholder".
+- [ ] **Capturas de Research.** "Good judgment is small data" ya tiene su captura
+      (`jd1_good_judgment.webp`, 2000×1135). Faltan "Pick your analysts" (Leaderboard),
+      "Chair your investment committee" y "John Maven AI, at your service".
 - [ ] **Redes del footer.** El artifact tenía "Discord" sin URL; se puso YouTube, como en
       beta. Confirmar cuál va.
 
