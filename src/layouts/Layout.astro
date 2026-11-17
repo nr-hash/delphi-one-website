@@ -1,10 +1,11 @@
 ---
-/* Layout base: <head> + <body>. Todo el CSS de la landing entra por un
-   único import para que el orden de cascada quede garantizado
-   (ver src/styles/index.css).
-   El bloque de meta replica el de beta.delphi.one (SEO, OG, Twitter,
-   JSON-LD), así el cambio de versión no mueve nada en buscadores. */
-import '../styles/index.css';
+/* Layout base: <head> + <body>, same structure as beta.delphi.one.
+   - Un solo CSS global (src/styles/global.css), copiado del artifact de diseño sin
+     las herramientas de edición: las clases del markup son las del artifact.
+   - El bloque de meta replica el de beta (SEO, OG, Twitter, JSON-LD).
+   - Analytics (GA4 + Clarity) sólo en el build de producción, cargados después
+     de la primera interacción o del load, como en beta. */
+import '../styles/global.css';
 
 interface Props {
   title?: string;
@@ -27,6 +28,7 @@ const {
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL(image, Astro.site);
 const robots = noindex ? 'noindex, nofollow' : 'index, follow';
+const analytics = import.meta.env.PROD;
 
 const orgJsonLd = {
   '@context': 'https://schema.org',
@@ -73,10 +75,38 @@ const orgJsonLd = {
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <!-- Material Symbols. El parámetro icon_names subsetea la fuente a los
-       iconos listados: se descargan ~2 KB en vez de la familia completa.
-       Al agregar un icono nuevo hay que sumarlo a esa lista. -->
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=check_small&display=swap" rel="stylesheet" />
+
+  {analytics && (
+    <script is:inline>
+      (function () {
+        var started = false;
+        function start() {
+          if (started) return;
+          started = true;
+          window.dataLayer = window.dataLayer || [];
+          window.gtag = function () { window.dataLayer.push(arguments); };
+          window.gtag("js", new Date());
+          window.gtag("config", "G-J386F4YV1J");
+          var ga = document.createElement("script");
+          ga.async = true;
+          ga.src = "https://www.googletagmanager.com/gtag/js?id=G-J386F4YV1J";
+          document.head.appendChild(ga);
+          (function (c, l, a, r, i, t, y) {
+            c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments); };
+            t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
+            y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+          })(window, document, "clarity", "script", "riza6fip09");
+        }
+        if (document.readyState === "complete") start();
+        else window.addEventListener("load", start, { once: true });
+        ["pointerdown", "keydown", "scroll"].forEach(function (ev) {
+          window.addEventListener(ev, start, { once: true, passive: true });
+        });
+      })();
+    </script>
+  )}
+  <!-- the hero artboard stays hidden until the script has scaled it (see .hero-loading in global.css) -->
+  <script is:inline>document.documentElement.classList.add('hero-loading');setTimeout(function(){document.documentElement.classList.remove('hero-loading')},2000);</script>
 </head>
 <body class={bodyClass}>
   <slot />

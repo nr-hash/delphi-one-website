@@ -1,6 +1,0 @@
-/* Orden de cascada del prototipo: tokens y base primero, luego las
-   dos secciones scroll-driven, que pisan reglas de styles.css.
-   Un solo import en el Layout mantiene ese orden garantizado. */
-@import './styles.css';
-@import './hero-parallax.css';
-@import './how-it-works-parallax.css';

@@ -1,0 +1,17 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="assets-ethereum.svg" clip-path="url(#clip0_0_163)">
+<rect width="18" height="18" fill="white"></rect>
+<path id="Vector" d="M17.6351 11.1162C17.1973 12.8189 16.273 14.3757 14.9595 15.5676C13.6459 16.7595 12.0162 17.5378 10.2649 17.8054C8.51351 18.0486 6.71351 17.8054 5.13243 17.0514C3.52703 16.273 2.18919 15.0811 1.26486 13.5486C0.364865 12.0405 -0.0729731 10.2892 -1.49012e-07 8.51351C0.0729728 6.73784 0.681081 5.03514 1.75135 3.62432C2.7973 2.18919 4.25676 1.11892 5.91081 0.510811C7.58919 -0.0486488 9.38919 -0.145946 11.1162 0.243243C12.2595 0.535135 13.3297 1.04595 14.2784 1.75135C15.2027 2.43243 16.0054 3.33243 16.6135 4.32973C17.2216 5.32703 17.6351 6.44595 17.8054 7.61351C17.9757 8.78108 17.9027 9.97297 17.6351 11.1162Z" fill="#627EEA"></path>
+<path id="Vector_2" d="M9.04865 2.16486V7.15135L13.2568 9.02432L9.04865 2.16486Z" fill="white" fill-opacity="0.6"></path>
+<path id="Vector_3" d="M9.04865 2.16486L4.86486 9.02432L9.04865 7.15135V2.16486Z" fill="white"></path>
+<path id="Vector_4" d="M9.04865 12.2351V15.6162L13.2568 9.8027L9.04865 12.2351Z" fill="white" fill-opacity="0.6"></path>
+<path id="Vector_5" d="M9.04865 15.6162V12.2351L4.86486 9.8027L9.04865 15.6162Z" fill="white"></path>
+<path id="Vector_6" d="M9.04865 11.4568L13.2568 9.02432L9.04865 7.15135V11.4568Z" fill="white" fill-opacity="0.2"></path>
+<path id="Vector_7" d="M4.86486 9.02432L9.04865 11.4568V7.15135L4.86486 9.02432Z" fill="white" fill-opacity="0.6"></path>
+</g>
+<defs>
+<clipPath id="clip0_0_163">
+<rect width="18" height="18" fill="white"></rect>
+</clipPath>
+</defs>
+</svg>
