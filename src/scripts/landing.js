@@ -83,6 +83,7 @@ function setupHero(){
     if(raf===null) raf=requestAnimationFrame(tick);
     const solid=hero.getBoundingClientRect().bottom<=hdr.offsetHeight+60;
     hdr.classList.toggle("solid",solid);
+    hdr.classList.toggle("scrolled",scrollY>8); /* mobile: the header gets a dark backdrop over the hero */
   }
   /* each side's two cards stack with a fixed 24px gap, whatever their text length */
   const stack=()=>{ if(mobile()||cards.length<4) return; const s=parseFloat(art.style.getPropertyValue("--s"))||1; [[0,1],[2,3]].forEach(([a,b])=>{cards[b].style.top=(parseFloat(getComputedStyle(cards[a]).top)+cards[a].offsetHeight+24/s)+"px"}) };

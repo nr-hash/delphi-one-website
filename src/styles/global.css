@@ -58,7 +58,7 @@ b,strong{font-weight:600;color:var(--ink)}
 .brand{display:flex;align-items:center;gap:8px;flex:none}
 .brand .logo{height:32px;width:auto;transition:filter .3s}
 .hdr.solid .brand .logo{filter:invert(1)}
-.alpha{font-size:10px;line-height:14px;font-weight:600;padding:2px 7px;border-radius:4px;background:rgba(255,255,255,.1)}
+.alpha{font-size:12px;line-height:16px;font-weight:600;padding:2px 7px;border-radius:4px;background:rgba(255,255,255,.1)}
 .hdr.solid .alpha{background:var(--soft2)}
 .nav{display:flex;align-items:center;gap:clamp(16px,2.2vw,40px)}
 .nav a{font-size:14px;line-height:20px;display:flex;align-items:center;gap:4px;padding:8px 0;position:relative;white-space:nowrap}
@@ -364,7 +364,7 @@ section.sec{padding-block:clamp(64px,7vw,150px) 0}
 .feats>.label:empty{visibility:hidden}
 .tier .row{min-height:24px}
 .tiers .feats>.label{font-size:14px;line-height:20px;font-weight:400;color:var(--muted)}
-.fthead .fsoon{font-size:11px;line-height:16px;padding:2px 8px}
+.fthead .fsoon{font-size:12px;line-height:16px;padding:2px 8px}
 .feat .fb{font-size:14px;line-height:20px;color:var(--text2);margin-top:4px}
 .feat.off .ft,.feat.off .fb{color:var(--faint)}
 .tier:not(.main) .feat.off .ft,.tier:not(.main) .feat.off .fb{color:var(--muted)}
@@ -716,7 +716,7 @@ section[tabindex="-1"]:focus{outline:none}
    instead of floating on its own under the composition */
 .nowrap{white-space:nowrap}
 .mf-link{display:inline-flex;align-items:center;gap:6px;margin-top:16px;font-size:16px;line-height:24px;font-weight:600;color:var(--ink);transition:color .2s}
-.mf-link .arr{transition:transform .2s}
+.mf-link .arr{display:inline-block;transition:transform .2s}
 .mf-link:hover{color:var(--green)}
 .mf-link:hover .arr{transform:translateX(3px)}
 @media (min-width:1001px){
@@ -729,3 +729,19 @@ section[tabindex="-1"]:focus{outline:none}
    room above the cards for focus rings, and the compositions start with empty space above their
    window (data-trim, removed by fitStages) */
 @media (min-width:1001px){ .pg-site .fcar{margin-top:-8px} .pg-site .tiers{margin-top:0} }
+
+/* ---------- Mobile review (17-nov) ---------- */
+@media (max-width:1000px){
+  /* one head → content distance on mobile too: 32px from the last line of the head to what you see */
+  .pg-site :is(.mf-head,.intro,.hiw-head){padding-bottom:0;margin-bottom:32px}
+  .pg-site .fcar{margin-top:-8px}
+  .pg-site .tiers,.pg-site .stagebox{margin-top:0}
+  /* the creator link wraps on narrow screens: the arrow follows the last word instead of floating right */
+  .mf-link{display:block;text-align:center}
+  /* the featured plan leads when the plans stack */
+  .tier.main{order:-1}
+}
+@media (max-width:900px){
+  /* the hero stacks, so the transparent header would sit on top of its text: dark backdrop once you scroll */
+  .hdr.scrolled:not(.solid){background:rgba(5,7,10,.88);backdrop-filter:blur(10px);box-shadow:0 1px 0 rgba(255,255,255,.08)}
+}

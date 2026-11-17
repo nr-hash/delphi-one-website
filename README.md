@@ -119,6 +119,13 @@ El artifact es la fuente del diseño y del copy. Cuando cambia:
     planes pierde su margen propio y las composiciones recortan el vacío de arriba con
     `data-trim` (Portfolio 44, Valuations 10), que aplica `fitStages`. En Personas el
     selector es parte del encabezado (24 px bajo el título) y las cards van a 40 px.
+- **Mobile** (revisión del 17/11/2026, bloque "Mobile review" en `global.css`):
+  - encabezado → contenido: 32 px en todas las secciones (antes 32 a 96);
+  - el header toma un fondo oscuro al hacer scroll sobre el hero (`.hdr.scrolled`), porque
+    transparente se montaba sobre el texto;
+  - Plans: el plan destacado (Premium) va primero cuando se apilan;
+  - el link de Valuations se acomoda centrado y la flecha no queda sola en una línea;
+  - "BETA" y "Coming soon" suben a 12 px (estaban en 10 y 11).
 
 ## Pendientes conocidos
 
