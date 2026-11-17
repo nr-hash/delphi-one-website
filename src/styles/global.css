@@ -486,7 +486,7 @@ main{transition:opacity .25s, transform .25s}
    Every section opens 128px below the previous one, every head is eyebrow 16 · title 20 · subtitle,
    and every head sits 64px above its content. Defined on the Home and applied to For Creators and For Investors so the three read as one site. */
 @media (min-width:1001px){
-  .pg-site{--sy:128px;--head-gap:64px}
+  .pg-site{--sy:128px;--head-gap:40px} /* head → first visible element of its content, every section (was 64) */
   .pg-site section.sec{padding-block:var(--sy) 0}
   .pg-site .many{padding-block:var(--sy)}
   .pg-site :is(.mf-head,.hiw-head,.intro){gap:0;max-width:960px;margin:0 auto var(--head-gap);padding-bottom:0;align-items:center}
@@ -723,7 +723,9 @@ section[tabindex="-1"]:focus{outline:none}
   /* the intro sets in two balanced lines so the head, the link and the composition fit one screen */
   .pg-site #mf-val .mf-head{max-width:1180px}
   .pg-site #mf-val .mf-head .sub{max-width:1160px;text-wrap:balance}
-  /* the head ends on a one-line link and the window opens with a near-white bar, so the usual 64px
-     reads as a gap: the window sits 40px under the link (head margin 30 + the window's 10px offset) */
-  .pg-site #mf-val .mf-head{margin-bottom:30px}
 }
+
+/* one head → content distance (--head-gap) measured to what you see: the rails' track has 8px of
+   room above the cards for focus rings, and the compositions start with empty space above their
+   window (data-trim, removed by fitStages) */
+@media (min-width:1001px){ .pg-site .fcar{margin-top:-8px} .pg-site .tiers{margin-top:0} }

@@ -113,8 +113,12 @@ El artifact es la fuente del diseño y del copy. Cuando cambia:
   - Valuations: el link "Are you an analyst? Get paid for your Valuations" pasa del pie de
     la composición al encabezado (`.mf-link`, debajo de la bajada); la bajada va en 2
     líneas (≥1280 px) y la composición (`data-fit="screen"`) se achica según el alto,
-    hasta 70 %, para que encabezado y composición entren en una pantalla. La ventana queda a 40 px del
-    link (en vez de 64 + 10), porque la barra casi blanca de la ventana hacía que se leyera lejos.
+    hasta 70 %, para que encabezado y composición entren en una pantalla. 
+  - encabezado → contenido: 40 px en todas las secciones (`--head-gap`, antes 64), medido al
+    primer elemento visible. Para eso el carrusel compensa su relleno de 8 px, la grilla de
+    planes pierde su margen propio y las composiciones recortan el vacío de arriba con
+    `data-trim` (Portfolio 44, Valuations 10), que aplica `fitStages`. En Personas el
+    selector es parte del encabezado (24 px bajo el título) y las cards van a 40 px.
 
 ## Pendientes conocidos
 
