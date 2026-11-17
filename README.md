@@ -97,6 +97,14 @@ El artifact es la fuente del diseño y del copy. Cuando cambia:
     `aria-controls`, flechas, Home/End);
   - la decoración de Valuations y los conectores de Portfolio llevan `aria-hidden`;
   - hay un link "Skip to content", y los links internos mueven el foco a su sección.
+- **Jerarquía** (misma revisión; bloque "Hierarchy review" al final de `global.css`):
+  - escala única: título de sección 41 · título de card 24 · título chico 18 ·
+    bajada de sección 18 · cuerpo de card 16 · meta 14;
+  - hero: el botón principal se ve a 18 px (antes 13,5 px, porque escalaba con la
+    mesa de trabajo); el link "Are you a creator?" y el badge bajan a 14 px;
+  - Plans: el plan destacado es Premium (gratis en beta), con el badge "Free in beta".
+    Free pierde el badge "Start here". Los badges de estado ("Coming soon") pasan a
+    gris neutro, para no confundirse con la recomendación.
 
 ## Pendientes conocidos
 

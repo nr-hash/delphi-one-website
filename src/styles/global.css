@@ -673,3 +673,30 @@ main{transition:opacity .25s, transform .25s}
 main:focus{outline:none}
 .cs-pane:focus-visible{outline-offset:8px;border-radius:28px}
 section[tabindex="-1"]:focus{outline:none}
+
+/* ---------- Hierarchy review (17-nov) ----------
+   One step per role, the same everywhere: section title 41 · card title 24 · small title 18 ·
+   section intro 18 · card body 16 · meta 14. The primary action is the loudest thing after the title. */
+/* card titles: rails, plans and personas share one size */
+.fcard .ftext h3,.tier .name,.phead h3{font-size:24px;line-height:30px;font-weight:700}
+/* card body sits one step under the section intro, so the intro leads */
+.fcard .ftext p,.pcard p{font-size:16px;line-height:24px}
+.pdesc{font-size:14px;line-height:20px}
+/* plans: recommendation and status are different things */
+.pbadge{background:var(--soft2);color:var(--text2)}
+.pbadge.rec{background:var(--ink);color:var(--white)}
+@media (min-width:1001px){
+  /* hero: the main button reads at 18px on screen (it sat inside the scaled artboard at 13.5px);
+     the creator link and the badge step back to 14px */
+  .pg-site :is(.h-copy,.h-cta2) .btn-pill{height:calc(56px / var(--s,1));padding:0 calc(32px / var(--s,1));gap:calc(8px / var(--s,1));font-size:calc(18px / var(--s,1));line-height:calc(26px / var(--s,1))}
+  .pg-site :is(.h-copy,.h-cta2) .btn-pill img{width:calc(18px / var(--s,1));height:calc(18px / var(--s,1))}
+  .pg-site .h-alt{font-size:calc(14px / var(--s,1));line-height:calc(20px / var(--s,1))}
+  .pg-site .h-badge{font-size:calc(14px / var(--s,1));line-height:calc(20px / var(--s,1));padding:calc(8px / var(--s,1)) calc(16px / var(--s,1));gap:calc(8px / var(--s,1))}
+  .pg-site .h-badge img{width:calc(18px / var(--s,1));height:calc(20px / var(--s,1))}
+}
+@media (max-width:900px){
+  .h-badge{font-size:14px;line-height:20px;padding:8px 14px}
+  .h-badge img{width:18px;height:20px}
+  .h-alt{font-size:14px;line-height:20px}
+  .fcard .ftext h3,.tier .name,.phead h3{font-size:22px;line-height:28px}
+}
