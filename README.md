@@ -126,6 +126,11 @@ El artifact es la fuente del diseño y del copy. Cuando cambia:
   - Plans: el plan destacado (Premium) va primero cuando se apilan;
   - el link de Valuations se acomoda centrado y la flecha no queda sola en una línea;
   - "BETA" y "Coming soon" suben a 12 px (estaban en 10 y 11).
+  - hero en 2 etapas en celulares y tablets en vertical (≤900 px, pantallas de ≥560 px de alto):
+    la etapa 1 llena la pantalla con el texto centrado y la ventana asomando abajo; al hacer
+    scroll (`.hero-run`) el hero queda fijo, el texto se va, sube la ventana y aparecen el segundo
+    título, el botón y las cards (etapa 2). `setupHero` → `layoutScene`/`paintScene`. En pantallas
+    más bajas (celular acostado) queda apilado;
   - las 4 cards del hero son un carrusel horizontal (antes apiladas): el hero baja de ~3 a ~1,7 pantallas;
   - el menú abierto termina con "Get started with X" (`.nav-cta`) por debajo de 640 px, donde el
     botón del header se oculta;

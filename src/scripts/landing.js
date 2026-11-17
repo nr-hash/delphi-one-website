@@ -64,8 +64,32 @@ function setupHero(){
     scale(); onS(); addEventListener("scroll",onS,{passive:true}); addEventListener("resize",onR);
     return;
   }
+  /* ---- phones and portrait tablets: two-stage scene (see "Mobile hero in two stages" in global.css) ---- */
+  let sc=null; /* scene geometry, null when the stacked layout is used */
+  const rowEl=stageEl.querySelector(".h-cards");
+  function layoutScene(){
+    const on=mobile()&&innerHeight>=560; hero.classList.toggle("scene",on);
+    if(!on){ sc=null; ["--copyTop","--hintTop","--winTop","--ctaTop","--cardsTop"].forEach(v=>art.style.removeProperty(v)); hero.style.removeProperty("--run"); return }
+    const H=innerHeight, top=hdr.offsetHeight, peek=72, gap=24;
+    const copyTop=top+Math.max(16,(H-top-peek-copy.offsetHeight)/2);
+    const block=hint.offsetHeight+gap+winEl.offsetHeight+gap+cta.offsetHeight;
+    const hintTop=top+Math.max(16,(H-top-block)/2), winTop=hintTop+hint.offsetHeight+gap, ctaTop=winTop+winEl.offsetHeight+gap;
+    sc={run:Math.round(H*.8), shift:(H-peek)-winTop};
+    const set=(k,v)=>art.style.setProperty(k,Math.round(v)+"px");
+    set("--copyTop",copyTop); set("--hintTop",hintTop); set("--winTop",winTop); set("--ctaTop",ctaTop); set("--cardsTop",ctaTop+cta.offsetHeight+32);
+    hero.style.setProperty("--run",sc.run+"px");
+  }
+  function sceneProgress(){ return sc?cl(-hero.getBoundingClientRect().top/sc.run):0 }
+  function paintScene(p){
+    const out=ease(cl(p/.45)); copy.style.opacity=1-out; copy.style.transform=`translateY(${-48*out}px)`; copy.style.pointerEvents=out>.6?"none":""; focusable(copy,out<=.6);
+    const hk=ease(cl((p-.3)/.4)); hint.style.opacity=hk; hint.style.transform=`translateY(${(1-hk)*24}px)`;
+    const w=ease(cl(p/.85)); winEl.style.transform=`translateY(${(1-w)*sc.shift}px)`;
+    const k=ease(cl((p-.7)/.3)); cta.style.opacity=k; cta.style.transform=`translateY(${(1-k)*16}px)`; cta.style.pointerEvents=k>.5?"":"none"; focusable(cta,k>.5);
+    /* the card row starts right under the button, so it comes in with it */
+    if(rowEl){ rowEl.style.opacity=k; rowEl.style.transform=`translateY(${(1-k)*24}px)`; focusable(rowEl,k>.5) }
+  }
   function paint(p){
-    if(mobile()){[copy,winEl,cta,hint,bgA,bgB,stars,...cards].forEach(e=>{e.style.opacity="";e.style.transform="";focusable(e,true)});return}
+    if(mobile()){[copy,winEl,cta,hint,bgA,bgB,stars,rowEl,...cards].filter(Boolean).forEach(e=>{e.style.opacity="";e.style.transform="";e.style.pointerEvents="";focusable(e,true)}); if(sc) paintScene(sceneProgress()); return}
     const out=ease(cl((p-.04)/.3));
     copy.style.opacity=1-out; copy.style.transform=`translateY(${-140*out}px)`; copy.style.pointerEvents=out>.6?"none":"";
     focusable(copy,out<=.6);
@@ -78,9 +102,10 @@ function setupHero(){
     const k=ease(cl((p-.74)/.16)); cta.style.opacity=k; cta.style.transform=`translate(-50%,${(1-k)*30}px)`; cta.style.pointerEvents=k>.5?"":"none"; focusable(cta,k>.5);
   }
   function tick(){const d=target-cur; if(Math.abs(d)<4e-4){cur=target;paint(cur);raf=null;return} cur+=d*.11; paint(cur); raf=requestAnimationFrame(tick)}
+  let sraf=0;
   function onScroll(){
-    target=reduce?1:progress();
-    if(raf===null) raf=requestAnimationFrame(tick);
+    if(sc){ if(!sraf) sraf=requestAnimationFrame(()=>{sraf=0;paintScene(sceneProgress())}) } /* follows the finger: no easing lag */
+    else { target=reduce?1:progress(); if(raf===null) raf=requestAnimationFrame(tick) }
     const solid=hero.getBoundingClientRect().bottom<=hdr.offsetHeight+60;
     hdr.classList.toggle("solid",solid);
     hdr.classList.toggle("scrolled",scrollY>8); /* mobile: the header gets a dark backdrop over the hero */
@@ -88,7 +113,10 @@ function setupHero(){
   /* each side's two cards stack with a fixed 24px gap, whatever their text length */
   const stack=()=>{ if(mobile()||cards.length<4) return; const s=parseFloat(art.style.getPropertyValue("--s"))||1; [[0,1],[2,3]].forEach(([a,b])=>{cards[b].style.top=(parseFloat(getComputedStyle(cards[a]).top)+cards[a].offsetHeight+24/s)+"px"}) };
   const cro=new ResizeObserver(stack); cards.forEach(c=>cro.observe(c));
-  function onResize(){scale(); stack(); onScroll()}
+  /* phones resize the viewport while the URL bar slides: only re-measure the scene when the width changes or the height changes a lot */
+  let lastW=innerWidth, lastH=innerHeight;
+  function onResize(){ const big=innerWidth!==lastW||Math.abs(innerHeight-lastH)>120; if(big||!mobile()){lastW=innerWidth;lastH=innerHeight;layoutScene()} scale(); stack(); paint(cur); onScroll()}
+  layoutScene(); if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{layoutScene(); paint(cur)});
   scale(); stack(); cur=target=reduce?1:progress(); paint(cur); onScroll();
   addEventListener("scroll",onScroll,{passive:true}); addEventListener("resize",onResize);
 }
