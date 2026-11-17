@@ -160,7 +160,7 @@ b,strong{font-weight:600;color:var(--ink)}
   .asset-rot .ic{width:.8em;height:.8em}
   .h-sub{width:auto;font-size:16px;line-height:24px}
   .h-win{position:static;width:100%;max-width:640px;height:auto;margin-top:16px}
-  .h-win img{width:100%;height:auto;aspect-ratio:808/516}
+  .h-win img{width:100%;height:auto;aspect-ratio:3024/1722} /* the screenshot's own proportions (scr_home2.webp is 3024×1722): nothing is cropped */
   .h-url{left:30%;width:40%}
   .h-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;width:100%;max-width:640px}
   .h-card{position:static;width:auto;opacity:1!important;transform:none!important;padding:18px}
@@ -593,7 +593,7 @@ main{transition:opacity .25s, transform .25s}
 
 @media (min-width:901px){
   html:not(.tp) .pg-home2.pg-site .h-win{height:448px}
-  html:not(.tp) .pg-home2.pg-site .h-win img{height:401px;object-position:top left}
+  html:not(.tp) .pg-home2.pg-site .h-win img{height:auto;aspect-ratio:3024/1722;object-position:top left} /* = 704×401, the screenshot's proportions */
   html:not(.tp) .pg-home2.pg-site .h-cta2{top:calc(808px + var(--hy,0px))}
   html:not(.tp) .pg-home2.pg-site .h-card{margin-top:-17px}
 }
@@ -890,7 +890,7 @@ section[tabindex="-1"]:focus{outline:none}
   html.tp .asset-rot .ic{width:.8em;height:.8em}
   html.tp .h-sub{width:auto;font-size:16px;line-height:24px}
   html.tp .h-win{position:static;width:100%;max-width:640px;height:auto;margin-top:16px}
-  html.tp .h-win img{width:100%;height:auto;aspect-ratio:808/516}
+  html.tp .h-win img{width:100%;height:auto;aspect-ratio:3024/1722}
   html.tp .h-url{left:30%;width:40%}
   html.tp .h-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;width:100%;max-width:640px}
   html.tp .h-card{position:static;width:auto;opacity:1!important;transform:none!important;padding:18px}
