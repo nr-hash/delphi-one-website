@@ -377,7 +377,7 @@ section.sec{padding-block:clamp(64px,7vw,150px) 0}
 .tbtn.solid{background:var(--black);color:var(--white);border-color:var(--black);height:48px}
 .tbtn.solid:hover{background:var(--ink)}
 .tier .grow{flex:1}
-@media (max-width:1100px){.tiers.n3,.tiers.n2{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:900px){.tiers.n3,.tiers.n2{grid-template-columns:minmax(0,1fr)}}
 /* Earn */
 .earn .icon52{width:52px;height:52px;border-radius:12px;background:var(--soft2);display:grid;place-items:center}
 .earn .icon52 svg{width:28px;height:28px}
@@ -439,7 +439,7 @@ section.sec{padding-block:clamp(64px,7vw,150px) 0}
 .cs-grid .pcard{animation:paneIn .5s both}
 .cs-grid .pcard:nth-child(2){animation-delay:.07s}.cs-grid .pcard:nth-child(3){animation-delay:.14s}
 @keyframes paneIn{from{opacity:0;transform:translateY(14px)}}
-@media (max-width:1100px){.cs-grid{grid-template-columns:minmax(0,1fr);gap:16px}}
+@media (max-width:900px){.cs-grid{grid-template-columns:minmax(0,1fr);gap:16px}}
 
 .ph{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;width:100%;height:100%;min-height:200px;background:repeating-linear-gradient(135deg,var(--soft2) 0 12px,var(--soft) 12px 24px);color:var(--muted);text-align:center;padding:24px}
 .ph span{font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
@@ -694,6 +694,8 @@ section[tabindex="-1"]:focus{outline:none}
   /* hero, last frame: the title block, the app window and the button sit the same --hg apart (56px on screen),
      and the cards keep --cg off the window (40px on screen, less on narrow windows so they stay inside) */
   .pg-site .art{--hg:56px;--cg:min(calc(40px / var(--s,1)),64px)}
+  /* narrow landscape screens (1024px): the hero cards narrow so they stay ≥32px off the screen edge */
+  .pg-site .h-card{width:min(calc(280px / var(--s,1)),calc(608px - var(--cg) - 32px / var(--s,1)))}
   @media (max-height:760px){.pg-site .art{--hg:40px}}
   .pg-site .h-hint{bottom:calc(752px + var(--hg) / var(--s,1) - var(--hy,0px))}
   .pg-home2.pg-site .h-cta2{top:calc(776px + var(--hg) / var(--s,1) + var(--hy,0px))}
@@ -740,7 +742,6 @@ section[tabindex="-1"]:focus{outline:none}
   /* the creator link wraps on narrow screens: the arrow follows the last word instead of floating right */
   .mf-link{display:block;text-align:center}
   /* the featured plan leads when the plans stack */
-  .tier.main{order:-1}
 }
 @media (max-width:900px){
   /* the hero stacks, so the transparent header would sit on top of its text: dark backdrop once you scroll */
@@ -833,4 +834,43 @@ section[tabindex="-1"]:focus{outline:none}
 @media (max-width:900px){
   .fcar-track{align-items:flex-start}
   .fcard .appwin{margin-top:0}
+}
+
+/* ---------- Tablet header (portrait and landscape) ----------
+   Logo on the left; "Get started with X" and the menu button together on the right; nothing in the
+   centre. Portrait tablets already use the menu (≤1100px); landscape tablets (touch, no mouse, up to
+   1366px) get the same header instead of the desktop menu. html.touch is set by an inline script in the
+   Layout, so there is no flash of the desktop menu. Laptops of the same width keep the desktop header. */
+@media (max-width:1100px){
+  .hdr-row{gap:12px}
+  .hdr-cta{margin-left:auto}
+}
+@media (max-width:1366px){
+  html.touch .hdr-row{gap:12px}
+  html.touch .hdr-cta{margin-left:auto}
+  html.touch .nav{display:none}
+  html.touch .burger{display:grid;place-items:center}
+  html.touch .nav.open{display:flex;position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:flex-start;gap:4px;background:var(--white);color:var(--ink);padding:12px max(16px,env(safe-area-inset-left,0px));box-shadow:0 12px 24px rgba(0,0,0,.08)}
+}
+
+/* ---------- Tablet review (17-nov) ---------- */
+/* plan badges never wrap ("Free in beta" broke in two at 1024px) */
+.pbadge{white-space:nowrap;flex:none}
+/* the featured plan leads only when the plans stack in one column */
+@media (max-width:900px){ .tier.main{order:-1} }
+/* short screens up to 1366px wide (landscape tablets, small laptops): rail screenshots are capped so a
+   whole card fits the screen */
+@media (max-width:1366px) and (max-height:900px){
+  .fcard .appwin :is(.shot,.ph){max-height:42vh;max-height:42svh}
+}
+/* Portfolio: below 1200px its 1800px-wide composition shrinks the callouts into narrow columns of small
+   text, so it uses the stacked layout (window on top, callouts in a grid) up to 1199px instead of 999px */
+@media (min-width:1000px) and (max-width:1199px){
+  #mf .stagebox{height:auto!important;margin-top:0!important}
+  #mf .stage{position:static;transform:none!important;width:auto!important;height:auto!important;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+  #mf .stage>*{position:static!important;width:auto!important;height:auto!important}
+  #mf .stage>.mock{grid-column:1/-1;justify-self:center;width:100%!important;max-width:min(640px,calc(50vh * 2020 / 2061))}
+  #mf .stage>.mock img{width:100%!important;height:auto}
+  #mf .conn{display:none!important}
+  #mf .callout{box-shadow:none}
 }

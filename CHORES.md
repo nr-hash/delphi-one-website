@@ -52,14 +52,19 @@ Pendientes del sitio, al 17/11/2026 (actualizado al cerrar la revisión mobile).
       desde el artifact los pisa. La revisión mobile incluye cambios de markup, no sólo CSS:
       `.hero-run` en el hero, `data-chip` en Valuations y `.nav-cta` en el menú.
 
-## Mobile y tablet vertical
+## Mobile y tablet
 
-Revisión cerrada el 17/11/2026 (hero en 2 etapas, cards del hero en columna, Valuations
+Revisión mobile cerrada el 17/11/2026; revisión de tablet (vertical y horizontal) el mismo día (hero en 2 etapas, cards del hero en columna, Valuations
 con marcadores, capturas con alto máximo, separación entre secciones, menú con CTA).
 Quedó abierto:
 
-- [ ] **iPad Pro 12,9" en vertical (1024 px).** Usa el hero de escritorio, que ahí queda
-      chico en una pantalla muy alta. El hero en 2 etapas aplica hasta 900 px.
+- [ ] **iPad Pro 12,9" en vertical (1024×1366).** Usa el hero de escritorio: en el estado
+      final el bloque ocupa ~560 px de 1366 y queda mucho vacío arriba y abajo (las cards ya no
+      tocan los bordes). Llevarle el hero en 2 etapas implica que los estilos de escritorio
+      (≥1001 px) no apliquen en vertical; hoy el hero en 2 etapas llega hasta 900 px.
+- [ ] **Probar el header de tablet en un iPad real.** El modo táctil se detecta con
+      `(hover:none) and (pointer:coarse)`; un iPad con mouse o trackpad conectado muestra el
+      menú de escritorio en horizontal.
 - [ ] **Secciones más altas que la pantalla.** Portfolio (~1350 px), Personas (~1550) y
       Plans (~3100) en un teléfono. Se decidió no cambiar su estructura; si molesta, la
       opción es pasar callouts, personas y planes a carrusel.

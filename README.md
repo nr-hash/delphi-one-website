@@ -143,6 +143,16 @@ El artifact es la fuente del diseño y del copy. Cuando cambia:
   - capturas de la app con alto máximo según el dispositivo (≤999 px, de Research al final): las
     de los carruseles hasta 30 % del alto de pantalla y las ventanas de Valuations y Portfolio
     hasta 45 % (se angostan para mantener la proporción).
+- **Tablet** (revisión del 17/11/2026, bloques "Tablet header" y "Tablet review" en `global.css`):
+  - header: logo a la izquierda; "Get started with X" y el menú juntos a la derecha; nada al
+    centro. En vertical (≤1100 px) y en horizontal con pantalla táctil (hasta 1366 px, clase
+    `html.touch` que pone un script inline del Layout). Las laptops del mismo ancho, con mouse,
+    conservan el menú de escritorio;
+  - hero a 1024 px: las cards se angostan para quedar a ≥32 px del borde;
+  - capturas de los carruseles con tope de 42 % del alto en pantallas bajas (≤1366×900);
+  - Portfolio usa el armado apilado hasta 1199 px (`data-stack="1200"`);
+  - Personas y Plans en 3 columnas desde 901 px (antes 1101); Premium primero sólo al apilarse;
+  - los badges de los planes no se parten.
 
 ## Pendientes conocidos
 

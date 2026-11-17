@@ -105,6 +105,8 @@ const orgJsonLd = {
       })();
     </script>
   )}
+  <!-- touch screens without a mouse (tablets) get the compact header up to 1366px: logo left, button and menu right -->
+  <script is:inline>if(matchMedia('(hover:none) and (pointer:coarse)').matches)document.documentElement.classList.add('touch');</script>
   <!-- the hero artboard stays hidden until the script has scaled it (see .hero-loading in global.css) -->
   <script is:inline>document.documentElement.classList.add('hero-loading');setTimeout(function(){document.documentElement.classList.remove('hero-loading')},2000);</script>
 </head>

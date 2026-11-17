@@ -14,7 +14,7 @@ const W = { i_btc: "/images/v2/i_btc.svg", i_eth: "/images/v2/i_eth.svg", i_tsla
 function fitStages(){
   document.querySelectorAll(".stagebox").forEach(b=>{
     const w=+b.dataset.w,h=+b.dataset.h,st=b.firstElementChild;
-    if(innerWidth<1000){st.style.transform="";b.style.marginTop="";st.style.removeProperty("--k");st.querySelectorAll(".callout").forEach(c=>{if(c.dataset.l) c.style.left=c.dataset.l+"px"});b.style.height="";return}
+    if(innerWidth<(+b.dataset.stack||1000)){st.style.transform="";b.style.marginTop="";st.style.removeProperty("--k");st.querySelectorAll(".callout").forEach(c=>{if(c.dataset.l) c.style.left=c.dataset.l+"px"});b.style.height="";return}
     let s=Math.min(1,b.clientWidth/w);
     /* data-fit="screen": the head and the composition fit one screen under the header (down to 70%) */
     if(b.dataset.fit==="screen"){ const head=b.previousElementSibling, hh=head?head.offsetHeight+parseFloat(getComputedStyle(head).marginBottom):0; s=Math.max(.7,Math.min(s,(innerHeight-64-48-hh)/h)) }
