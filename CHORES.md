@@ -26,8 +26,8 @@ Pendientes del sitio, al 17/11/2026 (actualizado en la revisión final). Marcar 
       `/terms/`.
 - [ ] **Capturas de Research.** "Good judgment is small data" ya tiene su captura
       (`jd1_good_judgment.webp`, 2000×1135) y "Pick your analysts" también
-      (`jd2_leaderboard.webp`, 2000×1138). Faltan "Chair your investment committee" y
-      "John Maven AI, at your service".
+      (`jd2_leaderboard.webp`, 2000×1138) y "Chair your investment committee"
+      (`jd3_views.webp`, 2000×1144). Falta "John Maven AI, at your service".
 - [ ] **Redes del footer.** El artifact tenía "Discord" sin URL; se puso YouTube, como en
       beta. Confirmar cuál va.
 
