@@ -69,14 +69,14 @@ function setupHero(){
   const rowEl=stageEl.querySelector(".h-cards");
   function layoutScene(){
     const on=mobile()&&innerHeight>=560; hero.classList.toggle("scene",on);
-    if(!on){ sc=null; ["--copyTop","--hintTop","--winTop","--ctaTop","--cardsTop"].forEach(v=>art.style.removeProperty(v)); hero.style.removeProperty("--run"); return }
+    if(!on){ sc=null; ["--copyTop","--hintTop","--winTop","--cardsTop"].forEach(v=>art.style.removeProperty(v)); hero.style.removeProperty("--run"); return }
     const H=innerHeight, top=hdr.offsetHeight, peek=72, gap=24;
     const copyTop=top+Math.max(16,(H-top-peek-copy.offsetHeight)/2);
-    const block=hint.offsetHeight+gap+winEl.offsetHeight+gap+cta.offsetHeight;
-    const hintTop=top+Math.max(16,(H-top-block)/2), winTop=hintTop+hint.offsetHeight+gap, ctaTop=winTop+winEl.offsetHeight+gap;
+    const block=hint.offsetHeight+gap+winEl.offsetHeight;
+    const hintTop=top+Math.max(16,(H-top-block)/2), winTop=hintTop+hint.offsetHeight+gap;
     sc={run:Math.round(H*.8), shift:(H-peek)-winTop};
     const set=(k,v)=>art.style.setProperty(k,Math.round(v)+"px");
-    set("--copyTop",copyTop); set("--hintTop",hintTop); set("--winTop",winTop); set("--ctaTop",ctaTop); set("--cardsTop",ctaTop+cta.offsetHeight+32);
+    set("--copyTop",copyTop); set("--hintTop",hintTop); set("--winTop",winTop); set("--cardsTop",winTop+winEl.offsetHeight+32);
     hero.style.setProperty("--run",sc.run+"px");
   }
   function sceneProgress(){ return sc?cl(-hero.getBoundingClientRect().top/sc.run):0 }
@@ -84,8 +84,8 @@ function setupHero(){
     const out=ease(cl(p/.45)); copy.style.opacity=1-out; copy.style.transform=`translateY(${-48*out}px)`; copy.style.pointerEvents=out>.6?"none":""; focusable(copy,out<=.6);
     const hk=ease(cl((p-.3)/.4)); hint.style.opacity=hk; hint.style.transform=`translateY(${(1-hk)*24}px)`;
     const w=ease(cl(p/.85)); winEl.style.transform=`translateY(${(1-w)*sc.shift}px)`;
-    const k=ease(cl((p-.7)/.3)); cta.style.opacity=k; cta.style.transform=`translateY(${(1-k)*16}px)`; cta.style.pointerEvents=k>.5?"":"none"; focusable(cta,k>.5);
-    /* the card row starts right under the button, so it comes in with it */
+    /* the cards start right under the window, so they come in as it settles; the button follows them in the flow */
+    const k=ease(cl((p-.7)/.3));
     if(rowEl){ rowEl.style.opacity=k; rowEl.style.transform=`translateY(${(1-k)*24}px)`; focusable(rowEl,k>.5) }
   }
   function paint(p){

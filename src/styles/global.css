@@ -757,26 +757,29 @@ section[tabindex="-1"]:focus{outline:none}
   .nav-cta img{width:16px;height:16px}
 }
 @media (max-width:900px){
-  /* hero cards: a swipeable row (like the Research and Trade rails) instead of four stacked cards;
-     the next card peeks in so it reads as scrollable */
-  .h-cards{display:flex;gap:12px;max-width:none;width:auto;align-self:stretch;margin:0 calc(-1 * max(16px, env(safe-area-inset-left,0px)));padding:0 max(16px, env(safe-area-inset-left,0px)) 4px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-left:max(16px, env(safe-area-inset-left,0px));scrollbar-width:none;overscroll-behavior-x:contain}
-  .h-cards::-webkit-scrollbar{display:none}
-  .h-card{flex:0 0 min(78%,300px);scroll-snap-align:start}
+  /* hero cards: a compact column under the app window, without their "Learn more" links (they only
+     repeat the menu); the section's button closes the list */
+  .h-cards{display:flex;flex-direction:column;gap:10px;width:100%;max-width:640px}
+  .h-card{padding:14px 16px;gap:2px;border-radius:12px}
+  .h-card .t{font-size:16px;line-height:22px}
+  .h-card .b{font-size:14px;line-height:20px}
+  .h-card .h-more{display:none}
+  .h-cta2{margin-top:8px}
 }
 
 /* ---------- Mobile hero in two stages (phones and portrait tablets, ≤900px) ----------
    setupHero adds .scene when the screen is tall enough (≥560px). Stage 1 fills the screen: the copy
    centred, the app window peeking at the bottom. Scrolling through .hero-run keeps the stage pinned
-   while the copy leaves, the window rises and the second title and button come in (stage 2).
-   Then the stage scrolls away and the card row follows. Positions come from the script as vars. */
+   while the copy leaves, the window rises under the second title (stage 2) and the cards come in
+   below it. Then the stage scrolls away: the cards and the button follow in the page flow. Positions come from the script as vars. */
 @media (max-width:900px){
   .hero.scene .hero-stage{position:sticky;top:0;padding:0}
   .hero.scene .hero-run{display:block;height:var(--run,80svh)}
   .hero.scene .art{display:flow-root;padding:0 0 48px} /* flow-root: the cards' top margin must not collapse through the artboard */
-  .hero.scene :is(.h-copy,.h-hint,.h-win,.h-cta2){position:absolute;left:max(16px,env(safe-area-inset-left,0px));right:max(16px,env(safe-area-inset-right,0px));margin:0 auto;width:auto}
+  .hero.scene :is(.h-copy,.h-hint,.h-win){position:absolute;left:max(16px,env(safe-area-inset-left,0px));right:max(16px,env(safe-area-inset-right,0px));margin:0 auto;width:auto}
   .hero.scene .h-copy{top:var(--copyTop,120px);max-width:560px}
   .hero.scene .h-hint{top:var(--hintTop,120px);bottom:auto;max-width:560px}
   .hero.scene .h-win{top:var(--winTop,400px);max-width:640px}
-  .hero.scene .h-cta2{top:var(--ctaTop,700px);display:flex;justify-content:center}
-  .hero.scene .h-cards{margin-top:var(--cardsTop,100svh);padding-left:max(16px,env(safe-area-inset-left,0px))}
+  .hero.scene .h-cta2{position:static;display:flex;justify-content:center;margin:24px auto 0}
+  .hero.scene .h-cards{margin:var(--cardsTop,100svh) auto 0;width:calc(100% - 2 * max(16px,env(safe-area-inset-left,0px)))}
 }
