@@ -128,7 +128,7 @@ El artifact es la fuente del diseño y del copy. Cuando cambia:
   - cards de Research y Trade con su propio alto: la captura va justo debajo del texto (30 px), sin hueco;
   - el header toma un fondo oscuro al hacer scroll sobre el hero (`.hdr.scrolled`), porque
     transparente se montaba sobre el texto;
-  - Plans: el plan destacado (Premium) va primero cuando se apilan;
+  - Plans: siempre en orden Free, Premium, Alexandria (Custom), también cuando se apilan;
   - el link de Valuations se acomoda centrado y la flecha no queda sola en una línea;
   - "BETA" y "Coming soon" suben a 12 px (estaban en 10 y 11).
   - hero en 2 etapas en celulares y tablets en vertical (≤900 px, pantallas de ≥560 px de alto):
@@ -154,7 +154,7 @@ El artifact es la fuente del diseño y del copy. Cuando cambia:
   - hero a 1024 px: las cards se angostan para quedar a ≥32 px del borde;
   - capturas de los carruseles con tope de 42 % del alto en pantallas bajas (≤1366×900);
   - Portfolio usa el armado apilado hasta 1199 px (`data-stack="1200"`);
-  - Personas y Plans en 3 columnas desde 901 px (antes 1101); Premium primero sólo al apilarse;
+  - Personas y Plans en 3 columnas desde 901 px (antes 1101);
   - los badges de los planes no se parten.
   - tablets en vertical de 901–1100 px (iPad Pro 12,9"): hero en 2 etapas como en celular, con
     la clase `html.tp` (script inline del Layout, se actualiza al rotar en `syncTP`). El resto de

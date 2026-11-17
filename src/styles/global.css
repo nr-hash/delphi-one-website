@@ -856,8 +856,7 @@ section[tabindex="-1"]:focus{outline:none}
 /* ---------- Tablet review (17-nov) ---------- */
 /* plan badges never wrap ("Free in beta" broke in two at 1024px) */
 .pbadge{white-space:nowrap;flex:none}
-/* the featured plan leads only when the plans stack in one column */
-@media (max-width:900px){ .tier.main{order:-1} }
+/* plans always read Free, Premium, Custom, also when they stack (no reordering of the featured one) */
 /* short screens up to 1366px wide (landscape tablets, small laptops): rail screenshots are capped so a
    whole card fits the screen */
 @media (max-width:1366px) and (max-height:900px){
