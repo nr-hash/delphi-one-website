@@ -927,8 +927,8 @@ section[tabindex="-1"]:focus{outline:none}
 .burger{border:0}
 
 /* ---------- Portfolio, stacked layouts (≤1199px): a bigger window with the cards in front of it ----------
-   The window grows to 72% of the composition (and up to 70% of the screen height); the five callouts sit
-   over its edges, two on the left and three on the right, overlapping it. The composition's width is
+   The window grows to 72% of the composition (and up to 70% of the screen height); three callouts sit
+   in front of its edges, zigzagging left and right, and the other two follow under it side by side. The composition's width is
    tied to the screen height so the window never outgrows the screen. */
 @media (max-width:1199px){
   #mf .stagebox{height:auto!important}
@@ -938,17 +938,21 @@ section[tabindex="-1"]:focus{outline:none}
   #mf .stage>.callout{position:absolute!important;z-index:3;width:min(250px,31%)!important;height:auto!important;padding:14px 16px;gap:4px;box-shadow:0 12px 32px rgba(16,23,30,.14)!important}
   #mf .stage>.callout .t{font-size:15px;line-height:20px}
   #mf .stage>.callout .b{font-size:13px;line-height:18px}
-  #mf .stage>[data-co="1"]{left:0!important;top:14%!important}
-  #mf .stage>[data-co="2"]{left:0!important;top:52%!important}
-  #mf .stage>[data-co="3"]{left:auto!important;right:0!important;top:5%!important}
-  #mf .stage>[data-co="4"]{left:auto!important;right:0!important;top:37%!important}
-  #mf .stage>[data-co="5"]{left:auto!important;right:0!important;top:69%!important}
+  /* three cards in front of the window, zigzagging down its sides; positions are measured against the
+     window's height (72% of the composition's width × its 2061/2020 aspect = 73.46cqw) */
+  #mf .stage{container-type:inline-size;display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 16px}
+  #mf .stage>.mock{grid-column:1/-1}
+  #mf .stage>[data-co="1"]{left:0!important;top:calc(16px + 73.46cqw * .08)!important}
+  #mf .stage>[data-co="2"]{left:auto!important;right:0!important;top:calc(16px + 73.46cqw * .38)!important}
+  #mf .stage>[data-co="3"]{left:0!important;top:calc(16px + 73.46cqw * .68)!important}
+  /* the other two follow under the window, side by side */
+  #mf .stage>:is([data-co="4"],[data-co="5"]){position:static!important;width:auto!important;box-shadow:0 6px 20px rgba(16,23,30,.08)!important}
   #mf .conn{display:none!important}
 }
 /* phones: side cards would be ~105px wide, so the window takes the full width and the cards follow it,
    the first one riding over its bottom edge and the rest alternating left and right */
 @media (max-width:599px){
-  #mf .stage{max-width:none;padding:0}
+  #mf .stage{max-width:none;padding:0;display:block!important}
   #mf .stage>.mock{width:100%!important}
   #mf .stage>.callout{position:relative!important;left:auto!important;right:auto!important;top:auto!important;width:86%!important;margin:10px 0 0}
   #mf .stage>[data-co="1"]{margin-top:-48px}

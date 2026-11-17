@@ -158,8 +158,8 @@ El artifact es la fuente del diseño y del copy. Cuando cambia:
     la página mantiene el diseño de escritorio;
   - el botón del menú no tiene borde.
 - **Portfolio por debajo de 1200 px** (bloque al final de `global.css`): ventana grande (72 % del
-  ancho, hasta 70 % del alto de pantalla) con las 5 cards por delante, superpuestas sobre sus
-  bordes (`data-co` en `Portfolio.astro`). En celular (<600 px) la ventana va a ancho completo y
+  ancho, hasta 70 % del alto de pantalla) con 3 cards por delante, en zigzag sobre sus bordes, y
+  las otras 2 debajo, lado a lado (`data-co` en `Portfolio.astro`; posiciones en `cqw`). En celular (<600 px) la ventana va a ancho completo y
   las cards la siguen alternando izquierda y derecha, la primera montada sobre su borde.
 
 ## Pendientes conocidos
