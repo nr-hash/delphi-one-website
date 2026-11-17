@@ -58,10 +58,11 @@ Revisión mobile cerrada el 17/11/2026; revisión de tablet (vertical y horizont
 con marcadores, capturas con alto máximo, separación entre secciones, menú con CTA).
 Quedó abierto:
 
-- [ ] **iPad Pro 12,9" en vertical (1024×1366).** Usa el hero de escritorio: en el estado
-      final el bloque ocupa ~560 px de 1366 y queda mucho vacío arriba y abajo (las cards ya no
-      tocan los bordes). Llevarle el hero en 2 etapas implica que los estilos de escritorio
-      (≥1001 px) no apliquen en vertical; hoy el hero en 2 etapas llega hasta 900 px.
+- [x] **iPad Pro 12,9" en vertical (1024×1366).** Resuelto: las tablets en vertical de
+      901–1100 px usan el hero en 2 etapas (clase `html.tp`).
+- [ ] **Reglas del hero duplicadas para `html.tp`.** El bloque "Portrait tablets 901–1100px" de
+      `global.css` es una copia generada de las reglas del hero de celular. Si se cambia el hero
+      mobile, hay que regenerarlo (o pasarlo a una media query cuando se limpie el CSS).
 - [ ] **Probar el header de tablet en un iPad real.** El modo táctil se detecta con
       `(hover:none) and (pointer:coarse)`; un iPad con mouse o trackpad conectado muestra el
       menú de escritorio en horizontal.

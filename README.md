@@ -153,6 +153,10 @@ El artifact es la fuente del diseño y del copy. Cuando cambia:
   - Portfolio usa el armado apilado hasta 1199 px (`data-stack="1200"`);
   - Personas y Plans en 3 columnas desde 901 px (antes 1101); Premium primero sólo al apilarse;
   - los badges de los planes no se parten.
+  - tablets en vertical de 901–1100 px (iPad Pro 12,9"): hero en 2 etapas como en celular, con
+    la clase `html.tp` (script inline del Layout, se actualiza al rotar en `syncTP`). El resto de
+    la página mantiene el diseño de escritorio;
+  - el botón del menú no tiene borde.
 
 ## Pendientes conocidos
 

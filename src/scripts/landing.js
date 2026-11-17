@@ -38,6 +38,9 @@ function setupStages(){
 /* a faded-out layer keeps its links out of the tab order, so keyboard focus never lands on something invisible (a11y) */
 function focusable(layer,on){ layer.querySelectorAll("a,button").forEach(a=>{ if(on) a.removeAttribute("tabindex"); else a.setAttribute("tabindex","-1") }) }
 
+/* portrait tablets 901–1100px take the phone hero (html.tp, first set by an inline script in the Layout) */
+function syncTP(){ document.documentElement.classList.toggle("tp",innerWidth>900&&innerWidth<=1100&&innerHeight>innerWidth) }
+
 /* ---------- hero: scroll-driven like beta.delphi.one (eased progress, lerp .11) ---------- */
 function setupHero(){
   const hero=document.getElementById("hero"), stageEl=document.getElementById("heroStage"), art=document.getElementById("art");
@@ -50,7 +53,7 @@ function setupHero(){
   const cards=[...stageEl.querySelectorAll(".h-card")];
   const hdr=document.getElementById("hdr");
   const reduce=REDUCE;
-  const mobile=()=>innerWidth<=900;
+  const mobile=()=>innerWidth<=900||document.documentElement.classList.contains("tp"); /* phones, and portrait tablets up to 1100px */
   const cl=v=>Math.max(0,Math.min(1,v)), ease=t=>1-Math.pow(1-t,3);
   let target=0,cur=0,raf=null;
   function scale(){ if(mobile()){art.style.removeProperty("--s");art.style.removeProperty("--hy");return}
@@ -115,7 +118,7 @@ function setupHero(){
   const cro=new ResizeObserver(stack); cards.forEach(c=>cro.observe(c));
   /* phones resize the viewport while the URL bar slides: only re-measure the scene when the width changes or the height changes a lot */
   let lastW=innerWidth, lastH=innerHeight;
-  function onResize(){ const big=innerWidth!==lastW||Math.abs(innerHeight-lastH)>120; if(big||!mobile()){lastW=innerWidth;lastH=innerHeight;layoutScene()} scale(); stack(); paint(cur); onScroll()}
+  function onResize(){ syncTP(); const big=innerWidth!==lastW||Math.abs(innerHeight-lastH)>120; if(big||!mobile()){lastW=innerWidth;lastH=innerHeight;layoutScene()} scale(); stack(); paint(cur); onScroll()}
   layoutScene(); if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{layoutScene(); paint(cur)});
   scale(); stack(); cur=target=reduce?1:progress(); paint(cur); onScroll();
   addEventListener("scroll",onScroll,{passive:true}); addEventListener("resize",onResize);

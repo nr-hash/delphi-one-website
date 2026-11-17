@@ -107,6 +107,8 @@ const orgJsonLd = {
   )}
   <!-- touch screens without a mouse (tablets) get the compact header up to 1366px: logo left, button and menu right -->
   <script is:inline>if(matchMedia('(hover:none) and (pointer:coarse)').matches)document.documentElement.classList.add('touch');</script>
+  <!-- portrait tablets 901–1100px (12.9" iPad Pro) use the two-stage hero of phones; landing.js keeps it in sync on rotation -->
+  <script is:inline>if(innerWidth>900&&innerWidth<=1100&&innerHeight>innerWidth)document.documentElement.classList.add('tp');</script>
   <!-- the hero artboard stays hidden until the script has scaled it (see .hero-loading in global.css) -->
   <script is:inline>document.documentElement.classList.add('hero-loading');setTimeout(function(){document.documentElement.classList.remove('hero-loading')},2000);</script>
 </head>
