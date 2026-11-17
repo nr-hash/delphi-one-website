@@ -499,7 +499,6 @@ main{transition:opacity .25s, transform .25s}
   /* What is → Research opens the four chapters, so it gets a wider break than the 128px between chapters */
   .pg-site #what{padding-bottom:64px}
   .pg-site .stagebox{margin-top:0}
-  .pg-site #mf-val .center-btn{margin-top:var(--head-gap)}
   .pg-site :is(.ftabs,.fcar){margin-top:0}
   /* Use cases: the switch belongs to the head (24px under the title, like a subtitle) and sits the usual 64px above the cards it filters */
   .pg-site #personas .intro{margin-bottom:24px}
@@ -556,8 +555,6 @@ main{transition:opacity .25s, transform .25s}
 .plans.even .tier:hover .tbtn{background:var(--black);color:var(--white);border-color:var(--black)}
 /* which one are you: one CTA under the switch, its label follows the selected side */
 .case-go{margin-top:56px}
-.pg-home2 #mf-val .center-btn .btn-dark{background:none;color:var(--ink);height:auto;padding:4px 0;font-size:16px;line-height:24px;font-weight:600;box-shadow:none;transform:none}
-.pg-home2 #mf-val .center-btn .btn-dark:hover{color:var(--green)}
 .case-go .btn-dark{height:48px;padding:0 32px;font-size:16px}
 /* Max Distills: files dragged into the upload box */
 .bm.file{animation:fileDrop 6s cubic-bezier(.5,0,.2,1) infinite;opacity:0}
@@ -713,4 +710,17 @@ section[tabindex="-1"]:focus{outline:none}
   .h-badge img{width:18px;height:20px}
   .h-alt{font-size:14px;line-height:20px}
   .fcard .ftext h3,.tier .name,.phead h3{font-size:22px;line-height:28px}
+}
+
+/* Valuations: the creator link sits in the head, right under the text about analysts it continues,
+   instead of floating on its own under the composition */
+.nowrap{white-space:nowrap}
+.mf-link{display:inline-flex;align-items:center;gap:6px;margin-top:16px;font-size:16px;line-height:24px;font-weight:600;color:var(--ink);transition:color .2s}
+.mf-link .arr{transition:transform .2s}
+.mf-link:hover{color:var(--green)}
+.mf-link:hover .arr{transform:translateX(3px)}
+@media (min-width:1001px){
+  /* the intro sets in two balanced lines so the head, the link and the composition fit one screen */
+  .pg-site #mf-val .mf-head{max-width:1180px}
+  .pg-site #mf-val .mf-head .sub{max-width:1160px;text-wrap:balance}
 }

@@ -110,6 +110,10 @@ El artifact es la fuente del diseño y del copy. Cuando cambia:
   - final del hero: título, pantalla y botón separados por `--hg` (56 px en pantalla;
     40 px en ventanas de hasta 760 px de alto), y las cards a `--cg` de la pantalla
     (40 px, menos en ventanas angostas). El script usa `--hg` para centrar el conjunto.
+  - Valuations: el link "Are you an analyst? Get paid for your Valuations" pasa del pie de
+    la composición al encabezado (`.mf-link`, debajo de la bajada); la bajada va en 2
+    líneas (≥1280 px) y la composición (`data-fit="screen"`) se achica según el alto,
+    hasta 70 %, para que encabezado y composición entren en una pantalla.
 
 ## Pendientes conocidos
 

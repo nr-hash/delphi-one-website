@@ -15,7 +15,9 @@ function fitStages(){
   document.querySelectorAll(".stagebox").forEach(b=>{
     const w=+b.dataset.w,h=+b.dataset.h,st=b.firstElementChild;
     if(innerWidth<1000){st.style.transform="";st.style.removeProperty("--k");st.querySelectorAll(".callout").forEach(c=>{if(c.dataset.l) c.style.left=c.dataset.l+"px"});b.style.height="";return}
-    const s=Math.min(1,b.clientWidth/w);
+    let s=Math.min(1,b.clientWidth/w);
+    /* data-fit="screen": the head and the composition fit one screen under the header (down to 70%) */
+    if(b.dataset.fit==="screen"){ const head=b.previousElementSibling, hh=head?head.offsetHeight+parseFloat(getComputedStyle(head).marginBottom):0; s=Math.max(.7,Math.min(s,(innerHeight-64-48-hh)/h)) }
     st.style.transform=`translateX(${Math.max(0,(b.clientWidth-w*s)/2)}px) scale(${s})`;
     st.style.setProperty("--k",(1/s).toFixed(4));
     st.querySelectorAll(".callout").forEach(c=>{ if(!c.dataset.l) c.dataset.l=parseFloat(c.style.left)||0; const l=+c.dataset.l, nw=Math.round(280*Math.min(1/s,1.15));
@@ -27,6 +29,7 @@ function setupStages(){
   if(!document.querySelector(".stagebox")) return;
   const ro=new ResizeObserver(()=>fitStages());
   document.querySelectorAll(".stagebox").forEach(b=>ro.observe(b));
+  addEventListener("resize",fitStages); /* height-only changes too (data-fit="screen") */
   fitStages();
 }
 
