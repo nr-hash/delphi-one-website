@@ -1,6 +1,6 @@
 # Chores
 
-Pendientes del sitio, al 17/11/2026. Marcar con `[x]` al cerrar y sumar lo nuevo abajo de su grupo.
+Pendientes del sitio, al 17/11/2026 (actualizado al cerrar la revisión mobile). Marcar con `[x]` al cerrar y sumar lo nuevo abajo de su grupo.
 
 ## Infraestructura
 
@@ -47,9 +47,26 @@ Pendientes del sitio, al 17/11/2026. Marcar con `[x]` al cerrar y sumar lo nuevo
 ## Sincronización con el diseño
 
 - [ ] **Pasar los cambios al artifact "Delphi One Home Design".** Accesibilidad,
-      jerarquía, espaciado y mobile están sólo en este repo (lista en el README,
-      "Diferencias a propósito con el artifact"). Si no se pasan, la próxima copia desde
-      el artifact los pisa.
+      jerarquía, espaciado y toda la revisión mobile están sólo en este repo (lista en el
+      README, "Diferencias a propósito con el artifact"). Si no se pasan, la próxima copia
+      desde el artifact los pisa. La revisión mobile incluye cambios de markup, no sólo CSS:
+      `.hero-run` en el hero, `data-chip` en Valuations y `.nav-cta` en el menú.
+
+## Mobile y tablet vertical
+
+Revisión cerrada el 17/11/2026 (hero en 2 etapas, cards del hero en columna, Valuations
+con marcadores, capturas con alto máximo, separación entre secciones, menú con CTA).
+Quedó abierto:
+
+- [ ] **iPad Pro 12,9" en vertical (1024 px).** Usa el hero de escritorio, que ahí queda
+      chico en una pantalla muy alta. El hero en 2 etapas aplica hasta 900 px.
+- [ ] **Secciones más altas que la pantalla.** Portfolio (~1350 px), Personas (~1550) y
+      Plans (~3100) en un teléfono. Se decidió no cambiar su estructura; si molesta, la
+      opción es pasar callouts, personas y planes a carrusel.
+- [ ] **Probar en dispositivos reales.** Todo se verificó en Chrome con marcos de 375×667,
+      393×852, 768×1024 y 844×390. Falta Safari de iOS: la barra de direcciones cambia el
+      alto de la pantalla y el hero en 2 etapas depende de ese alto (sólo se re-mide si
+      cambia más de 120 px).
 
 ## Limpieza de código
 
@@ -57,3 +74,6 @@ Pendientes del sitio, al 17/11/2026. Marcar con `[x]` al cerrar y sumar lo nuevo
       landings (`.ftabs`, `.hiw-*`, `.earn`, `.pgrid`, `.mx*`, `.an-*`…) y `.h-alt`, que ya
       no está en el markup. Conservarlas mientras falten `/creators` e `/investors`;
       podarlas cuando esas páginas existan.
+- [ ] **Clase `.art` duplicada.** El chip "Article" de Valuations (`.bm.art`) comparte nombre
+      con la mesa de trabajo del hero (`.art`) y hereda sus reglas; hoy se compensa en el CSS
+      de mobile. Renombrar una de las dos al limpiar.
