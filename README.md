@@ -121,6 +121,7 @@ El artifact es la fuente del diseño y del copy. Cuando cambia:
     selector es parte del encabezado (24 px bajo el título) y las cards van a 40 px.
 - **Mobile** (revisión del 17/11/2026, bloque "Mobile review" en `global.css`):
   - encabezado → contenido: 32 px en todas las secciones (antes 32 a 96);
+  - separación entre secciones: 112 px (antes 64), para que se vean menos la anterior y la siguiente;
   - el header toma un fondo oscuro al hacer scroll sobre el hero (`.hdr.scrolled`), porque
     transparente se montaba sobre el texto;
   - Plans: el plan destacado (Premium) va primero cuando se apilan;

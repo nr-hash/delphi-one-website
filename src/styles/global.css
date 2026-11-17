@@ -819,3 +819,10 @@ section[tabindex="-1"]:focus{outline:none}
   #mf .stage>.mock{width:100%!important;max-width:calc(45vh * 2020 / 2061);max-width:calc(45svh * 2020 / 2061);margin:0 auto}
   #mf .stage>.mock img{width:100%!important;height:auto}
 }
+
+/* sections breathe more on phones and portrait tablets: 112px between one section's content and the
+   next one's title (was 64), so the previous and next sections show less around the one being read */
+@media (max-width:900px){
+  .pg-site section.sec{padding-top:112px}
+  .pg-site .many{padding-top:112px}
+}
