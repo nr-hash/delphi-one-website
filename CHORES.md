@@ -27,6 +27,9 @@ Pendientes del sitio, al 17/11/2026 (actualizado en la revisión final). Marcar 
 - [x] **Capturas de Research.** Las 4 cards tienen su captura (`jd1_good_judgment`,
       `jd2_leaderboard`, `jd3_views`, `jd4_john_maven`, todas webp de ~2000×1140) y cada
       ventana toma la proporción de su imagen. No queda ningún placeholder en la página.
+- [ ] **Captura de "We never hold your funds" (Trade).** Ahora es la pantalla de Wallet
+      (`tx3_wallet.webp`, 2000×1139) en lugar de `tx_olives.webp` del artifact. Subirla
+      también al artifact; `tx_olives.webp` quedó en `public/` sin usar.
 - [ ] **Redes del footer.** El artifact tenía "Discord" sin URL; se puso YouTube, como en
       beta. Confirmar cuál va.
 
