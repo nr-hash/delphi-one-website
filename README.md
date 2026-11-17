@@ -133,6 +133,8 @@ El artifact es la fuente del diseño y del copy. Cuando cambia:
 
 ## Pendientes conocidos
 
+La lista completa y al día está en [`CHORES.md`](CHORES.md). Resumen:
+
 1. **`/api/ticker`:** el ticker del header pide precios a `/api/ticker`, que en
    beta es un backend aparte. Acá no existe: el pedido da 404 y quedan los
    precios fijos del markup. Al deployar junto a beta, funciona solo.
