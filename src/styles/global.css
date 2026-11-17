@@ -811,11 +811,10 @@ section[tabindex="-1"]:focus{outline:none}
 
 /* ---------- App screenshots sized to the device (phones and portrait tablets, ≤999px) ----------
    From "We give you the AI" to the end, each app screen is capped by the screen's height so it reads
-   whole next to its title: rail screenshots up to 30% of the height (cropped from the top, as they
-   already are), the Valuations and Portfolio windows up to 45% (they narrow to keep their proportions,
+   whole next to its title: rail screenshots up to 30% of the height (the window narrows, nothing is cropped), the Valuations and Portfolio windows up to 45% (they narrow to keep their proportions,
    so the Valuations bookmarks stay on the window's edges). */
 @media (max-width:999px){
-  .fcard .appwin :is(.shot,.ph){max-height:30vh;max-height:30svh}
+  .fcard .appwin{width:min(100%,calc(30vh * 966 / 560));width:min(100%,calc(30svh * 966 / 560));align-self:center} /* capped by width, so the screenshot keeps its proportions instead of being cropped */
   #mf-val .stage{max-width:min(600px,calc(45vh * 1300 / 1136));max-width:min(600px,calc(45svh * 1300 / 1136))}
   #mf .stage>.mock{width:100%!important;max-width:calc(45vh * 2020 / 2061);max-width:calc(45svh * 2020 / 2061);margin:0 auto}
   #mf .stage>.mock img{width:100%!important;height:auto}
@@ -860,7 +859,7 @@ section[tabindex="-1"]:focus{outline:none}
 /* short screens up to 1366px wide (landscape tablets, small laptops): rail screenshots are capped so a
    whole card fits the screen */
 @media (max-width:1366px) and (max-height:900px){
-  .fcard .appwin :is(.shot,.ph){max-height:42vh;max-height:42svh}
+  .fcard .appwin{width:min(100%,calc(42vh * 966 / 560));width:min(100%,calc(42svh * 966 / 560));align-self:center}
 }
 /* Portfolio: below 1200px its 1800px-wide composition shrinks the callouts into narrow columns of small
    text, so it uses the stacked layout (window on top, callouts in a grid) up to 1199px instead of 999px */

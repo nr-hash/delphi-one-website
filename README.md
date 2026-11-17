@@ -146,8 +146,10 @@ El artifact es la fuente del diseño y del copy. Cuando cambia:
     la ventana (View 1, View 2, Post 1, Article) y el cursor arrastrando el Article hacia el texto,
     como en escritorio. Los marcadores llevan `data-chip` en `Valuations.astro`.
   - capturas de la app con alto máximo según el dispositivo (≤999 px, de Research al final): las
-    de los carruseles hasta 30 % del alto de pantalla y las ventanas de Valuations y Portfolio
-    hasta 45 % (se angostan para mantener la proporción).
+    de los carruseles hasta 30 % del alto de pantalla (42 % en pantallas bajas hasta 1366×900) y
+    las ventanas de Valuations y Portfolio hasta 45 %. En todos los casos la ventana se angosta
+    para mantener la proporción de su imagen: ninguna captura se recorta. La del hero usa la
+    proporción de `scr_home2.webp` (3024:1722).
 - **Tablet** (revisión del 17/11/2026, bloques "Tablet header" y "Tablet review" en `global.css`):
   - header: logo a la izquierda; "Get started with X" y el menú juntos a la derecha; nada al
     centro. En vertical (≤1100 px) y en horizontal con pantalla táctil (hasta 1366 px, clase
