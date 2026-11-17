@@ -126,6 +126,10 @@ El artifact es la fuente del diseño y del copy. Cuando cambia:
   - Plans: el plan destacado (Premium) va primero cuando se apilan;
   - el link de Valuations se acomoda centrado y la flecha no queda sola en una línea;
   - "BETA" y "Coming soon" suben a 12 px (estaban en 10 y 11).
+  - las 4 cards del hero son un carrusel horizontal (antes apiladas): el hero baja de ~3 a ~1,7 pantallas;
+  - el menú abierto termina con "Get started with X" (`.nav-cta`) por debajo de 640 px, donde el
+    botón del header se oculta;
+  - el logo es una zona táctil de 44 px.
 
 ## Pendientes conocidos
 

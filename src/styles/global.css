@@ -745,3 +745,20 @@ section[tabindex="-1"]:focus{outline:none}
   /* the hero stacks, so the transparent header would sit on top of its text: dark backdrop once you scroll */
   .hdr.scrolled:not(.solid){background:rgba(5,7,10,.88);backdrop-filter:blur(10px);box-shadow:0 1px 0 rgba(255,255,255,.08)}
 }
+
+/* the logo is a 44px tap target, like every other control (it was 32) */
+.brand{min-height:44px}
+/* "Get started" lives in the header CTA; on phones that button is hidden, so it closes the open menu instead */
+.nav a.nav-cta{display:none}
+@media (max-width:640px){
+  .nav.open a.nav-cta{display:inline-flex;align-items:center;gap:8px;align-self:stretch;justify-content:center;margin-top:8px;height:48px;padding:0 20px;border-radius:999px;background:var(--ink);color:var(--white);font-weight:600}
+  .nav.open a.nav-cta::after{display:none}
+  .nav-cta img{width:16px;height:16px}
+}
+@media (max-width:900px){
+  /* hero cards: a swipeable row (like the Research and Trade rails) instead of four stacked cards;
+     the next card peeks in so it reads as scrollable */
+  .h-cards{display:flex;gap:12px;max-width:none;width:auto;align-self:stretch;margin:0 calc(-1 * max(16px, env(safe-area-inset-left,0px)));padding:0 max(16px, env(safe-area-inset-left,0px)) 4px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-left:max(16px, env(safe-area-inset-left,0px));scrollbar-width:none;overscroll-behavior-x:contain}
+  .h-cards::-webkit-scrollbar{display:none}
+  .h-card{flex:0 0 min(78%,300px);scroll-snap-align:start}
+}
