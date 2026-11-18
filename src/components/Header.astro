@@ -6,7 +6,7 @@ interface Props { page?: 'home' | 'creators' }
 const { page = 'home' } = Astro.props;
 const REG = 'https://app.delphi.one/?nav=login&snav=register';
 const home = (h: string) => (page === 'home' ? h : `/${h}`);
-const NAV: [string, string, string?][] = [[home('#how'), 'WHY DELPHI ONE?'], [home('#mf-val'), 'VALUATIONS'], [home('#trade'), 'TRADE'], [home('#mf'), 'PORTFOLIO'], [home('#plans'), 'PLANS'], ['/creators', 'FOR CREATORS', 'nav-switch']];
+const NAV: [string, string, string?][] = [[home('#hero'), 'HOME'], [home('#mf-val'), 'VALUATIONS'], [home('#trade'), 'TRADE'], [home('#mf'), 'PORTFOLIO'], [home('#plans'), 'PLANS'], ['/creators', 'FOR CREATORS', 'nav-switch']];
 const CTA = 'Get started with';
 ---
 <header class="hdr" id="hdr">

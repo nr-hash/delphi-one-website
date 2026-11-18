@@ -26,6 +26,8 @@ function fitStages(){
       c.style.left=(l+140<w/2 ? l+280-nw : l)+"px" });
     b.style.height=(h*s)+"px";
   });
+  /* the Max Distills banner (#import .mxb) takes the on-screen width of the Valuations composition */
+  const vs=document.querySelector("#mf-val .stage"); if(vs) document.documentElement.style.setProperty("--val-sw",Math.round(vs.getBoundingClientRect().width)+"px");
 }
 function setupStages(){
   if(!document.querySelector(".stagebox")) return;
@@ -85,6 +87,7 @@ function setupHero(){
   function sceneProgress(){ return sc?cl(-hero.getBoundingClientRect().top/sc.run):0 }
   function paintScene(p){
     const out=ease(cl(p/.45)); copy.style.opacity=1-out; copy.style.transform=`translateY(${-48*out}px)`; copy.style.pointerEvents=out>.6?"none":""; focusable(copy,out<=.6);
+    hdr.classList.toggle("tk-off",out>.5); /* the ticker leaves with the first scene (comment 18-nov) */
     const hk=ease(cl((p-.3)/.4)); hint.style.opacity=hk; hint.style.transform=`translateY(${(1-hk)*24}px)`;
     const w=ease(cl(p/.85)); winEl.style.transform=`translateY(${(1-w)*sc.shift}px)`;
     /* the cards start right under the window, so they come in as it settles; the button follows them in the flow */
@@ -95,6 +98,7 @@ function setupHero(){
     if(mobile()){[copy,winEl,cta,hint,bgA,bgB,stars,rowEl,...cards].filter(Boolean).forEach(e=>{e.style.opacity="";e.style.transform="";e.style.pointerEvents="";focusable(e,true)}); if(sc) paintScene(sceneProgress()); return}
     const out=ease(cl((p-.04)/.3));
     copy.style.opacity=1-out; copy.style.transform=`translateY(${-140*out}px)`; copy.style.pointerEvents=out>.6?"none":"";
+    hdr.classList.toggle("tk-off",out>.5); /* the ticker leaves with the first scene: gone from the second scroll on */
     focusable(copy,out<=.6);
     const hk=ease(cl((p-.42)/.22)); hint.style.opacity=hk; hint.style.transform=`translateY(${(1-hk)*30}px)`;
     const w=ease(cl((p-.08)/.55));

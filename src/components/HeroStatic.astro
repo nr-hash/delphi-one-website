@@ -1,11 +1,11 @@
 ---
-// #hero estático (For Creators): la última escena del hero de la Home (fondo nocturno con estrellas) con
-// el copy fijo. Mismas clases, CSS y script que Hero.astro: setupHero lo trata como `.hero.static`
+// #hero estático (For Creators): el fondo de la primera escena del hero de la Home (bg_home, sin estrellas)
+// con el copy fijo. Mismas clases, CSS y script que Hero.astro: setupHero lo trata como `.hero.static`
 // (estrellas + header sólido al salir) y setupRotation hace rotar el asset del título.
 ---
 <section class="hero static" id="hero">
    <div class="hero-stage" id="heroStage">
-    <img src="/images/v2/bg_cr.webp" alt="" class="hbg hbg-a" loading="eager" fetchpriority="high" decoding="async"><img src="/images/v2/bg_final.webp" alt="" class="hbg hbg-b" loading="eager" decoding="async">
+    <img src="/images/v2/bg_home.webp" alt="" class="hbg hbg-a" loading="eager" fetchpriority="high" decoding="async">
     <div class="stars" id="stars"></div><div class="hshade"></div>
     <div class="art" id="art">
       <div class="h-copy" id="hCopy">

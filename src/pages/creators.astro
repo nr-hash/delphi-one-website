@@ -5,8 +5,9 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import HeroStatic from '../components/HeroStatic.astro';
+import What from '../components/What.astro';
 import Valuations from '../components/Valuations.astro';
-import Import from '../components/Import.astro';
+import ImportCard from '../components/ImportCard.astro'; // la versión con la pantalla: Import.astro
 import Views from '../components/Views.astro';
 import Newsletter from '../components/Newsletter.astro';
 import Rail from '../components/Rail.astro';
@@ -25,12 +26,13 @@ import Footer from '../components/Footer.astro';
   <Header page="creators" />
   <main id="main" class="pg-creators pg-site" tabindex="-1">
     <HeroStatic />
+    <What />
     <Valuations
       title="Your stock and crypto deep dives, as living Valuations"
       sub="On Substack, a deep dive is frozen the day you publish it. Here you curate the best Views, Articles and Posts, yours or other analysts’, into your Valuation, and keep it current as your thinking changes."
       link={false}
     />
-    <Import />
+    <ImportCard />
     <Views />
     <Newsletter />
     <Rail
