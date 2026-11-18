@@ -34,21 +34,30 @@ Requiere Node 22 (`.nvmrc`; con nvm: `nvm use`).
 ```
 src/
   pages/index.astro          Home: Layout + Header + 8 secciones + Footer + landing.js
+  pages/creators.astro       For Creators: Layout + Header page="creators" + 11 secciones + Footer
   layouts/Layout.astro       <head> (meta de beta, fuentes, analytics en prod) + <body>
   components/
-    Header.astro             ticker, logo, menú de anclas, CTA, burger
+    Header.astro             ticker, logo, menú de anclas, CTA, burger (page: home | creators)
     Hero.astro               #hero      hero scroll-driven (setupHero)
+    HeroStatic.astro         #hero      hero estático de /creators (.hero.static + setupRotation)
     Research.astro           #how       "We give you the AI…" — carrusel (setupRails)
-    Valuations.astro         #mf-val    composición escalada (setupStages)
+    Valuations.astro         #mf-val    composición escalada (setupStages); title/sub/link por props
+    Import.astro             #import    Max Distills: composición con callouts (/creators)
+    Views.astro              #views     3 ShotCard (/creators)
+    ShotCard.astro                      caja celeste con un recorte de captura por delante
+    Newsletter.astro         #newsletter                                (/creators)
     Trade.astro              #trade     carrusel
     Portfolio.astro          #mf        composición con callouts
-    Personas.astro           #personas  "Which one are you?" (setupCaseSwitch)
+    Rail.astro               carrusel genérico por props (pair: 2 cards lado a lado) — #mf y #olives de /creators
+    Win.astro                #win       D1 seat: composición con cards numeradas (/creators)
+    Earn.astro               #earn      3 cards de ganancias (/creators)
+    Personas.astro           #personas  "Which one are you?" (setupCaseSwitch); elenco por página
     Plans.astro              #plans
-    ManyApps.astro           #many      cierre
+    ManyApps.astro           #many      cierre; contenido por página
     Footer.astro
   styles/global.css
   scripts/landing.js
-public/images/v2/            60 assets (webp/svg)
+public/images/v2/            62 assets (webp/svg/png)
 .claude/launch.json          config para levantar el dev server desde Claude Code
 ```
 
@@ -83,8 +92,43 @@ El artifact es la fuente del diseño y del copy. Cuando cambia:
 
 - **Footer:** el artifact tiene "Discord" sin URL; va YouTube, como en beta. El
   mail es un link `mailto:`.
-- **Links a otras landings** (`/creators`, `/investors`): existen en beta y no
-  en este repo todavía (el artifact hoy sólo publica la Home).
+- **Links a otras landings:** `/creators` existe desde el 18/11/2026; `/investors` no.
+- **/creators es una sección del sitio, no una landing aparte:** usa el mismo menú y el mismo
+  footer que la Home (el artifact le daba un menú propio con anclas internas). Desde /creators,
+  cada opción vuelve a su sección de la Home (`/#how`, `/#trade`…, `Header`/`Footer` con
+  `page="creators"`).
+- **Menú activo:** el semibold significa "estás acá" y nada más. Lo lleva sólo la opción de la
+  página actual ("FOR CREATORS" en /creators) o, en la Home, la de la sección que se está leyendo
+  (`setupNavSpy` en `landing.js` pone `aria-current`). El artifact dejaba "FOR CREATORS" siempre en
+  semibold (`.nav-switch`) y parecía seleccionado. Cada etiqueta reserva su ancho en semibold, así
+  el menú no se corre al cambiar la opción activa.
+- **For Creators** (18/11/2026, bloque "For Creators" al final de `global.css`): el copy, los
+  gráficos y los componentes son los de la página For Creators del artifact, montados sobre los
+  componentes de la Home y con sus lineamientos (ritmo 128/40, escala tipográfica, mobile 112/32,
+  pills). Cambios a propósito:
+  - todos los CTAs "Join as a creator with X" van al registro, como en beta (en el artifact
+    apuntaban a la misma página);
+  - "Big ideas, built from small ones" usa `ShotCard`, un componente propio: caja celeste
+    (`--blue25`) con un recorte de una captura en alta por delante. Reemplaza los PNG de 314 px
+    del artifact, que traían el fondo y la UI en una sola imagen;
+  - Newsletter: el artifact tiene un placeholder; va la captura del editor de Articles
+    (`hiw3_article`) hasta tener la del mail (ver CHORES);
+  - Personas: el copy de la página del artifact, pero la cara de cada nombre es la de la Home
+    (en el artifact Marcus y Miles tenían las caras cruzadas entre páginas);
+  - Max Distills (`#import`) usa el armado apilado debajo de 1200 px, como Portfolio; Win recorta
+    8 px vacíos arriba (`data-trim`) para el mismo encabezado → contenido de 40 px;
+  - el hero estático muestra la foto nocturna también en celular y tablet vertical (el artifact la
+    ocultaba y el copy quedaba sobre negro), con el copy centrado en la pantalla;
+  - el título que rota se lee completo con lectores de pantalla (`.sr-only`) y la parte animada
+    lleva `aria-hidden`;
+  - el ícono de Max Distills (`max_distills.png`, 36×38) venía embebido en base64; queda en PNG.
+  - revisión de jerarquía (18/11/2026): el badge del hero mide 14 px como en la Home (el artifact lo
+    agrandaba a 19 sólo en /creators); "Already wrote it? Then the hard part is done." es un título
+    chico (24) sobre la bajada, en lugar de una frase en negrita dentro de ella; los títulos de las
+    cards del D1 seat van en semibold como todos los títulos de card; los dos pares de capturas
+    (Portfolio, Olives) van sin el marco blanco que tenía sólo la primera; y debajo de 1200 px la
+    ventana de Max Distills se achica (`zoom: .72`) para que su título interno no supere al de la
+    sección.
 - **Accesibilidad** (revisión del 17/11/2026; conviene llevarlo también al artifact):
   - los botones "Get started with X" tienen el logo con `alt="X"`;
   - el "Φne" del cierre se lee "One for values." (texto `.sr-only`);

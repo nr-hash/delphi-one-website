@@ -217,6 +217,19 @@ function setupHeaderMenu(){
   });
 }
 
+/* ---------- menu: the link of the section in view is the active one (semibold, aria-current) ----------
+   Only for in-page anchors; the section that crosses a line a third down the screen wins. Sections with
+   no menu item (hero, Personas, the closing) leave nothing active. */
+function setupNavSpy(){
+  const links=[...document.querySelectorAll('#nav a[href^="#"]')].map(a=>[a,document.getElementById(a.hash.slice(1))]).filter(([,s])=>s);
+  if(!links.length) return;
+  let cur=null, raf=0;
+  const pick=()=>{ raf=0; const y=innerHeight/3; let on=null;
+    for(const [a,s] of links){ const r=s.getBoundingClientRect(); if(r.top<=y&&r.bottom>y){on=a;break} }
+    if(on===cur) return; if(cur) cur.removeAttribute("aria-current"); if(on) on.setAttribute("aria-current","true"); cur=on };
+  addEventListener("scroll",()=>{ if(!raf) raf=requestAnimationFrame(pick) },{passive:true}); addEventListener("resize",pick); pick();
+}
+
 /* ---------- live ticker prices (served by the site's /api/ticker; the markup keeps static fallbacks) ---------- */
 function setupTicker(){
   if(!document.querySelector(".tk-item[data-sym]")) return;
@@ -227,6 +240,6 @@ function setupTicker(){
 }
 
 /* ---------- boot ---------- */
-setupStages(); setupHero(); setupHiw(); setupRotation(); setupRails(); setupCaseSwitch(); setupReveal(); setupHeaderMenu(); setupTicker();
+setupStages(); setupHero(); setupHiw(); setupRotation(); setupRails(); setupCaseSwitch(); setupReveal(); setupHeaderMenu(); setupNavSpy(); setupTicker();
 document.documentElement.classList.remove("hero-loading");
 if(location.hash) document.getElementById(decodeURIComponent(location.hash.slice(1)))?.scrollIntoView();

@@ -513,8 +513,6 @@ main{transition:opacity .25s, transform .25s}
   html:not(.tp) .pg-site .h-copy{left:calc(960px - 480px / var(--s,1));width:calc(960px / var(--s,1))}
   html:not(.tp) .pg-site .h-badge{font-size:calc(26px / var(--s,1));line-height:calc(34px / var(--s,1));padding:calc(12px / var(--s,1)) calc(24px / var(--s,1));gap:calc(10px / var(--s,1))}
   html:not(.tp) .pg-site .h-badge img{width:calc(30px / var(--s,1));height:calc(32px / var(--s,1))}
-  html:not(.tp) .pg-site.pg-creators .h-badge{font-size:calc(19px / var(--s,1));line-height:calc(26px / var(--s,1));padding:calc(9px / var(--s,1)) calc(18px / var(--s,1));gap:calc(8px / var(--s,1))}
-  html:not(.tp) .pg-site.pg-creators .h-badge img{width:calc(22px / var(--s,1));height:calc(24px / var(--s,1))}
   html:not(.tp) .pg-site .h-alt{font-size:calc(16px / var(--s,1));line-height:calc(24px / var(--s,1))}
   html:not(.tp) .pg-site .h-ctas{gap:calc(18px / var(--s,1))}
   html:not(.tp) .pg-site .h-sub{font-size:calc(18px / var(--s,1));line-height:calc(26px / var(--s,1));font-weight:400;width:calc(780px / var(--s,1));max-width:none;text-wrap:balance}
@@ -985,4 +983,112 @@ section[tabindex="-1"]:focus{outline:none}
 @media (max-width:599px){
   .tier{padding:32px 24px}
   .tier>:nth-child(3){max-width:min(44vw,260px)}
+}
+
+/* ---------- For Creators (18-nov) ----------
+   /creators reuses the Home's components; these rules bring the For Creators sections of the design
+   artifact onto the same system: one rhythm (128px between sections, --head-gap from head to content),
+   one type scale (title 41 · card title 24 · small title 18 · intro 18 · body 16 · meta 14) and the
+   mobile spacing (112px between sections, 32px head → content). */
+
+/* static hero (For Creators) on phones and portrait tablets: the night photo stays (the stacked hero
+   hides it, which left the copy on flat black) and the copy sits in the middle of the screen */
+@media (max-width:900px){
+  .hero.static .hbg-b{display:block}
+  .hero.static .hero-stage{display:flex;flex-direction:column;justify-content:center;min-height:100svh;padding:96px 0 56px}
+}
+@media (min-width:901px){
+  html.tp .hero.static .hbg-b{display:block}
+  html.tp .hero.static .hero-stage{display:flex;flex-direction:column;justify-content:center;min-height:100svh;padding:96px 0 56px}
+}
+
+/* the photo has bright vertical lights behind the subtitle: the same soft shadow as the Home's hero hint */
+.hero.static .h-sub{text-shadow:0 1px 12px rgba(5,7,10,.6)}
+
+/* menu: the semibold weight means "you are here" and nothing else. Only the current page's link
+   (FOR CREATORS on /creators) or the Home section in view (aria-current, set by setupNavSpy) gets it;
+   FOR CREATORS is no longer bold everywhere. Each label reserves its bold width, so the menu doesn't
+   shift when the active item changes. */
+.nav a.nav-switch{font-weight:inherit}
+.nav a[aria-current]{font-weight:600}
+.nav a>span[data-t]{display:inline-flex;flex-direction:column}
+.nav a>span[data-t]::after{content:attr(data-t);font-weight:600;height:0;overflow:hidden;visibility:hidden;pointer-events:none}
+
+/* Max Distills continues Valuations: its section title is for screen readers only, and its opening
+   sentence is a small title (card-title step, 24) over the intro, so the block reads as a sub-section */
+.pg-creators #import.sec{padding-top:80px}
+.mf-kicker{margin:0;font-size:24px;line-height:30px;font-weight:600;color:var(--ink);text-wrap:balance}
+.pg-site #import .mf-head .sub{margin-top:12px}
+@media (max-width:900px){.pg-creators #import.sec{padding-top:64px}.mf-kicker{font-size:22px;line-height:28px}}
+
+/* For Creators hierarchy review: every card title is semibold (the D1 seat cards were bold), and the two
+   screens of each paired rail sit the same way, full bleed in their window (one had a 12px white frame) */
+.fpd .tt{font-weight:600}
+.pg-creators .fcar.pair .appwin{padding:0}
+
+/* ShotCard: a light-blue box with a crop of an app screen in front of it. The window comes in from the
+   top-left and bleeds off the right and bottom edges; the crop is set on the original image (--x, --y as
+   fractions of its width and height, --z as zoom: image width / window width), so it stays sharp. */
+.shotgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px;align-items:start;max-width:1180px;margin:0 auto} /* the artifact's measure for these cards */
+.shotcard{display:flex;flex-direction:column;min-width:0}
+.shotbox{position:relative;aspect-ratio:1/1;border-radius:16px;background:var(--blue25);overflow:hidden;isolation:isolate}
+.shotwin{position:absolute;left:9%;top:0;margin-top:9%;width:100%;height:100%;background:var(--white);border:1px solid var(--line);border-radius:12px 0 0 0;box-shadow:var(--shadow);overflow:hidden;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.shotwin img{position:absolute;left:0;top:0;max-width:none;height:auto;width:calc(var(--z) * 100%);margin-left:calc(var(--x) * var(--z) * -100%);margin-top:calc(var(--y) * var(--z) * var(--r) * -100%)}
+.shotcard:hover .shotwin{transform:translate(-4px,-6px)}
+.shotcard h3{margin:28px 0 8px;font-size:24px;line-height:30px;font-weight:600;text-wrap:balance}
+.shotcard p{margin:0;font-size:16px;line-height:24px;color:var(--body)}
+@media (prefers-reduced-motion:reduce){.shotwin{transition:none}.shotcard:hover .shotwin{transform:none}}
+
+/* newsletter: the migration button sits under the intro like the Personas CTA (48px pill), and the
+   screenshot is a window of the same family as the rails */
+#newsletter .center-btn{margin-top:32px}
+#newsletter .btn-dark{height:48px;padding:0 32px;font-size:16px}
+.nl-shot{max-width:1000px;margin:0 auto;border-radius:16px}
+.nl-shot .shot{aspect-ratio:1501/965;object-fit:cover;object-position:top}
+
+/* earnings: card titles on the card-title step (24), meta and rows as in the plans */
+.ecard h3{font-size:24px;line-height:30px}
+.ecard .erow .t{font-size:16px;line-height:22px}
+.pg-site .cards3{margin-top:0}
+
+/* the D1 seat cards (.fpd) grow back on scaled-down compositions, like the callouts (≥1000px) */
+@media (min-width:1000px){
+  .stage .fpd{width:calc(280px * min(var(--k,1),1.12));padding:calc(25px * min(var(--k,1),1.12))}
+  .stage .fpd .tt{font-size:calc(18px * var(--k,1));line-height:calc(24px * var(--k,1))}
+  .stage .fpd .bb{font-size:calc(14px * var(--k,1));line-height:calc(21px * var(--k,1))}
+}
+
+/* Max Distills between 1000 and 1199px: its 1660px-wide composition would shrink the callouts into
+   narrow columns, so it stacks like Portfolio (data-stack="1200"): window on top, callouts in a grid */
+@media (max-width:1199px){
+  #import .stagebox{height:auto!important;margin-top:0!important}
+  #import .stage{position:static;transform:none!important;width:auto!important;height:auto!important;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+  #import .stage>*{position:static!important;width:auto!important;height:auto!important}
+  #import .stage>.mock{grid-column:1/-1;justify-self:center;width:100%!important;max-width:560px;margin-bottom:8px}
+  /* the window is a picture of the app: scaled down so its own 26px heading stays under the section's title, like the screenshots elsewhere */
+  #import .stage>.mock .mxw{zoom:.72}
+  #import .stage>.mock{max-width:calc(560px * .72)}
+  #import .conn,#import .bm{display:none!important}
+  #import .callout{box-shadow:0 6px 20px rgba(16,23,30,.08)}
+  #import .callout .t{font-size:16px;line-height:22px}
+  #import .callout .b{font-size:14px;line-height:20px}
+}
+
+/* phones and portrait tablets */
+@media (max-width:999px){
+  /* the D1 seat: the window capped by the screen height like the other compositions, the cards under it */
+  #win .stage>.mock{width:100%!important;max-width:min(770px,calc(45vh * 1440 / 1090));max-width:min(770px,calc(45svh * 1440 / 1090))}
+  #win .stage>.mock img{width:100%!important;height:auto}
+}
+@media (max-width:900px){
+  .shotgrid{grid-template-columns:minmax(0,1fr);gap:48px;max-width:560px;margin:0 auto}
+  .shotbox{aspect-ratio:4/3}
+  .shotcard h3{margin-top:24px;font-size:22px;line-height:28px}
+  .cards3{grid-template-columns:minmax(0,1fr)}
+  .ecard{padding:32px 24px}
+  .ecard h3{font-size:22px;line-height:28px}
+}
+@media (max-width:599px){
+  #import .stage{grid-template-columns:minmax(0,1fr)}
+  .shotbox{aspect-ratio:1/1}
 }

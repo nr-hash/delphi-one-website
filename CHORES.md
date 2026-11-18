@@ -21,9 +21,22 @@ Pendientes del sitio, al 17/11/2026 (actualizado en la revisión final). Marcar 
 
 ## Contenido y páginas
 
-- [ ] **Páginas que faltan.** El menú y los CTAs enlazan a `/creators` e `/investors`, que
-      existen en beta pero no en este repo. Beta además tiene `/faq/`, `/privacy/` y
-      `/terms/`.
+- [ ] **Páginas que faltan.** `/creators` ya existe (18/11/2026). Faltan las que tiene beta:
+      `/faq/`, `/privacy/` y `/terms/`. `/investors` no hace falta mientras la Home sea la
+      página de inversores.
+- [ ] **For Creators: captura del newsletter en el mail.** El artifact pide "un Article en Delphi
+      One y el mismo Article en el inbox de un miembro"; hoy va sólo el editor de Articles
+      (`hiw3_article`). Falta la captura del mail.
+- [ ] **For Creators: personas con otro papel que en la Home.** El artifact cuenta otra historia
+      por página: en la Home, Miles es inversor ("The Committee of One") y Ana es analista ("The
+      Rising Analyst"); en For Creators, Miles es creador de portfolios y Ana es trader. Decidir un
+      solo elenco para las dos páginas. Las caras ya son las mismas por nombre.
+- [ ] **For Creators: Curations aparece dos veces.** "Curation is the work" (cuadro celeste) y
+      "Work others build on" (Olives) muestran la pantalla de Curations, con distinto recorte.
+      No hay otra captura de la curación; si se hace una (por ejemplo, un Argument con sus
+      respuestas, como el PNG del artifact), reemplazar la del cuadro.
+- [ ] **Pasar ShotCard al artifact.** Los cuadros celestes de "Big ideas" son un componente nuevo
+      de la web; en el artifact siguen los PNG de 314 px.
 - [x] **Capturas de Research.** Las 4 cards tienen su captura (`jd1_good_judgment`,
       `jd2_leaderboard`, `jd3_views`, `jd4_john_maven`, todas webp de ~2000×1140) y cada
       ventana toma la proporción de su imagen. No queda ningún placeholder en la página.

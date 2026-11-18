@@ -1,0 +1,20 @@
+---
+// #hero estático (For Creators): la última escena del hero de la Home (fondo nocturno con estrellas) con
+// el copy fijo. Mismas clases, CSS y script que Hero.astro: setupHero lo trata como `.hero.static`
+// (estrellas + header sólido al salir) y setupRotation hace rotar el asset del título.
+---
+<section class="hero static" id="hero">
+   <div class="hero-stage" id="heroStage">
+    <img src="/images/v2/bg_cr.webp" alt="" class="hbg hbg-a" loading="eager" fetchpriority="high" decoding="async"><img src="/images/v2/bg_final.webp" alt="" class="hbg hbg-b" loading="eager" decoding="async">
+    <div class="stars" id="stars"></div><div class="hshade"></div>
+    <div class="art" id="art">
+      <div class="h-copy" id="hCopy">
+        <div class="h-copy-in">
+          <div class="h-badge"><img src="/images/v2/glyph.svg" alt="" loading="lazy" decoding="async"><span>Writing on Substack or X?</span></div>
+          <h1 class="h-title"><span>Be the #1 analyst on</span><span class="sr-only"> your asset: Bitcoin, Ethereum, Tesla, Nvidia, Solana or XRP</span><span class="l2" aria-hidden="true"><span class="asset-rot" id="assetRot" style="--ac:#F7931A"><span class="nm">Bitcoin</span><img src="/images/v2/i_btc.svg" alt="" class="ic" loading="eager" decoding="async"></span></span></h1>
+          <p class="h-sub">Delphi One is the home for your investment business. Bring your newsletter, your deep dives and your model portfolio, get found by investors looking for ideas, and earn when they trade on yours.</p>
+        </div>
+        <div class="h-ctas"><a class="btn-pill light" href="https://app.delphi.one/?nav=login&amp;snav=register" target="_blank" rel="noopener"><span>Join as a creator with</span> <img src="/images/v2/x_dark.svg" alt="X" loading="lazy" decoding="async"></a></div>
+      </div>
+    </div>
+   </div></section>
