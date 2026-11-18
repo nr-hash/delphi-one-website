@@ -1,0 +1,17 @@
+---
+// Card con una caja celeste y, por delante, un recorte de una captura de la app (la ventana entra desde
+// arriba a la izquierda y sangra por la derecha y por abajo). Componente propio de la web, en el mismo
+// lenguaje que .appwin: borde --line, radio 12, sombra de las ventanas.
+// El recorte se define sobre la imagen original, así sale nítido a cualquier tamaño:
+//   x, y  → esquina superior izquierda del recorte, en fracciones del ancho y el alto de la imagen
+//   z     → cuántas veces el ancho visible de la ventana entra en el ancho de la imagen (zoom)
+interface Props { img: string; w: number; h: number; x?: number; y?: number; z?: number; alt?: string; title: string; body: string }
+const { img, w, h, x = 0, y = 0, z = 1, alt = '', title, body } = Astro.props;
+---
+<article class="shotcard">
+  <div class="shotbox" style={`--x:${x};--y:${y};--z:${z};--r:${(h / w).toFixed(4)}`}>
+    <div class="shotwin"><img src={`/images/v2/${img}.webp`} alt={alt} width={w} height={h} loading="lazy" decoding="async" /></div>
+  </div>
+  <h3>{title}</h3>
+  <p>{body}</p>
+</article>

@@ -26,6 +26,8 @@ function fitStages(){
       c.style.left=(l+140<w/2 ? l+280-nw : l)+"px" });
     b.style.height=(h*s)+"px";
   });
+  /* the Max Distills banner (#import .mxb) takes the on-screen width of the Valuations composition */
+  const vs=document.querySelector("#mf-val .stage"); if(vs) document.documentElement.style.setProperty("--val-sw",Math.round(vs.getBoundingClientRect().width)+"px");
 }
 function setupStages(){
   if(!document.querySelector(".stagebox")) return;
@@ -85,6 +87,7 @@ function setupHero(){
   function sceneProgress(){ return sc?cl(-hero.getBoundingClientRect().top/sc.run):0 }
   function paintScene(p){
     const out=ease(cl(p/.45)); copy.style.opacity=1-out; copy.style.transform=`translateY(${-48*out}px)`; copy.style.pointerEvents=out>.6?"none":""; focusable(copy,out<=.6);
+    hdr.classList.toggle("tk-off",out>.5); /* the ticker leaves with the first scene (comment 18-nov) */
     const hk=ease(cl((p-.3)/.4)); hint.style.opacity=hk; hint.style.transform=`translateY(${(1-hk)*24}px)`;
     const w=ease(cl(p/.85)); winEl.style.transform=`translateY(${(1-w)*sc.shift}px)`;
     /* the cards start right under the window, so they come in as it settles; the button follows them in the flow */
@@ -95,6 +98,7 @@ function setupHero(){
     if(mobile()){[copy,winEl,cta,hint,bgA,bgB,stars,rowEl,...cards].filter(Boolean).forEach(e=>{e.style.opacity="";e.style.transform="";e.style.pointerEvents="";focusable(e,true)}); if(sc) paintScene(sceneProgress()); return}
     const out=ease(cl((p-.04)/.3));
     copy.style.opacity=1-out; copy.style.transform=`translateY(${-140*out}px)`; copy.style.pointerEvents=out>.6?"none":"";
+    hdr.classList.toggle("tk-off",out>.5); /* the ticker leaves with the first scene: gone from the second scroll on */
     focusable(copy,out<=.6);
     const hk=ease(cl((p-.42)/.22)); hint.style.opacity=hk; hint.style.transform=`translateY(${(1-hk)*30}px)`;
     const w=ease(cl((p-.08)/.55));
@@ -217,6 +221,19 @@ function setupHeaderMenu(){
   });
 }
 
+/* ---------- menu: the link of the section in view is the active one (semibold, aria-current) ----------
+   Only for in-page anchors; the section that crosses a line a third down the screen wins. Sections with
+   no menu item (hero, Personas, the closing) leave nothing active. */
+function setupNavSpy(){
+  const links=[...document.querySelectorAll('#nav a[href^="#"]')].map(a=>[a,document.getElementById(a.hash.slice(1))]).filter(([,s])=>s);
+  if(!links.length) return;
+  let cur=null, raf=0;
+  const pick=()=>{ raf=0; const y=innerHeight/3; let on=null;
+    for(const [a,s] of links){ const r=s.getBoundingClientRect(); if(r.top<=y&&r.bottom>y){on=a;break} }
+    if(on===cur) return; if(cur) cur.removeAttribute("aria-current"); if(on) on.setAttribute("aria-current","true"); cur=on };
+  addEventListener("scroll",()=>{ if(!raf) raf=requestAnimationFrame(pick) },{passive:true}); addEventListener("resize",pick); pick();
+}
+
 /* ---------- live ticker prices (served by the site's /api/ticker; the markup keeps static fallbacks) ---------- */
 function setupTicker(){
   if(!document.querySelector(".tk-item[data-sym]")) return;
@@ -227,6 +244,6 @@ function setupTicker(){
 }
 
 /* ---------- boot ---------- */
-setupStages(); setupHero(); setupHiw(); setupRotation(); setupRails(); setupCaseSwitch(); setupReveal(); setupHeaderMenu(); setupTicker();
+setupStages(); setupHero(); setupHiw(); setupRotation(); setupRails(); setupCaseSwitch(); setupReveal(); setupHeaderMenu(); setupNavSpy(); setupTicker();
 document.documentElement.classList.remove("hero-loading");
 if(location.hash) document.getElementById(decodeURIComponent(location.hash.slice(1)))?.scrollIntoView();

@@ -1,0 +1,68 @@
+---
+// For Creators: la página "For Creators" del artifact de diseño, armada con los componentes de la Home.
+// Mismo orden de secciones que el artifact: hero, Valuations, Max Distills, Views, newsletter,
+// model portfolio, Olives, D1 seat, ganancias, personas y cierre.
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import HeroStatic from '../components/HeroStatic.astro';
+import What from '../components/What.astro';
+import Valuations from '../components/Valuations.astro';
+import ImportCard from '../components/ImportCard.astro'; // la versión con la pantalla: Import.astro
+import Views from '../components/Views.astro';
+import Newsletter from '../components/Newsletter.astro';
+import Rail from '../components/Rail.astro';
+import Win from '../components/Win.astro';
+import Earn from '../components/Earn.astro';
+import Personas from '../components/Personas.astro';
+import ManyApps from '../components/ManyApps.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout
+  title="Delphi One for Creators — Be the #1 analyst on your asset"
+  description="Delphi One is the home for your investment business. Bring your newsletter, your deep dives and your model portfolio, get found by investors looking for ideas, and earn when they trade on yours."
+>
+  <a class="skip" href="#main">Skip to content</a>
+  <Header page="creators" />
+  <main id="main" class="pg-creators pg-site" tabindex="-1">
+    <HeroStatic />
+    <What />
+    <Valuations
+      title="Your stock and crypto deep dives, as living Valuations"
+      sub="On Substack, a deep dive is frozen the day you publish it. Here you curate the best Views, Articles and Posts, yours or other analysts’, into your Valuation, and keep it current as your thinking changes."
+      link={false}
+    />
+    <ImportCard />
+    <Views />
+    <Newsletter />
+    <Rail
+      id="mf"
+      pair
+      title="Your model portfolio, live for your members to Replicate"
+      lede="Run it from your own wallet, created when you sign up, with real money in any amount: members Replicate your allocations, not your position sizes."
+      cards={[
+        { title: 'Followers get an alert on every move', body: 'Following is free. Members also Replicate it in one click, and they confirm every order themselves.', img: 'pf_readers2', pos: '50% 0' },
+        { title: 'A membership worth paying for', body: 'On Substack, members read about your portfolio. Here they hold it, in one click, with no trading fee on Replicated trades. That makes your membership far easier to sell, at the price you set.', img: 'pf_wallet2', pos: '0 0' },
+      ]}
+    />
+    <Rail
+      id="olives"
+      pair
+      title="Judged on how you think"
+      lede="We never judge your portfolio against a benchmark, because that breeds closet indexing, hype and performance chasing. Olives mostly reward how you reason, how you engage with others and how often other analysts build on your work."
+      cards={[
+        { title: 'Work others build on', body: 'When other analysts vote on your Views, curate your Arguments or build your work into their Valuations, you earn Olives.', img: 'hiw3_curations', pos: '0 0' },
+        { title: 'Earned asset by asset', body: 'Olives are earned and shown per asset, so investors can see exactly where your expertise lies.', img: 'tx_olives', pos: '0 100%' },
+      ]}
+    />
+    <Win />
+    <Earn />
+    <Personas page="creators" />
+    <ManyApps page="creators" />
+  </main>
+  <Footer page="creators" />
+</Layout>
+
+<script>
+  import '../scripts/landing.js';
+</script>
