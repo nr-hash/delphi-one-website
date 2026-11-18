@@ -1092,3 +1092,32 @@ section[tabindex="-1"]:focus{outline:none}
   #import .stage{grid-template-columns:minmax(0,1fr)}
   .shotbox{aspect-ratio:1/1}
 }
+
+/* ---------- Responsive review of /creators (18-nov): phones, portrait and landscape tablets ---------- */
+/* no word left alone on the last line: the hero title broke as "Be the #1 analyst / on" on phones and
+   portrait tablets, card titles as "…on every / move", intros and the closing line as "…exclusivity." */
+.hero.static .h-title>span:first-child{display:block;text-wrap:balance}
+.pg-creators :is(.fcard h3,.ecard h3,.ecard .lab){text-wrap:balance}
+.pg-creators .many .s{text-wrap:balance}
+.pg-creators :is(.intro p,.mf-head .sub,.lede,.fcard p,.ecard p,.shotcard p){text-wrap:pretty}
+/* the D1 seat cards on portrait tablets (and phones held sideways): two per row left the third (dark, "10%") alone at the left;
+   it takes the whole row instead, closing the composition */
+@media (min-width:560px) and (max-width:999px){
+  #win .stage{grid-template-columns:repeat(2,minmax(0,1fr))}
+  #win .stage>.fpd.dark{grid-column:1/-1}
+}
+/* Max Distills stacked (≤1199px): the files kept dropping only on desktop (they were hidden here, so the
+   window looked static). Here they come back over the window itself: each one starts on its lower part,
+   in front of the screen, and drops a short way (~90–120px) into the dashed area. The window is always
+   centred and its drop area sits 244–372px from its top at every width (measured), so the files are placed
+   from the centre. */
+@media (max-width:1199px){
+  #import .stage{position:relative}
+  #import .stage>.bm.file{display:flex!important;position:absolute!important;z-index:4;width:150px!important;height:48px!important;gap:8px;font-size:14px;border-radius:10px;box-shadow:0 10px 28px rgba(16,23,30,.16)}
+  #import .stage>.bm.file .bi{width:24px;height:26px}
+  #import .stage>.bm.file .bi svg{width:13px;height:13px}
+  #import .stage>.bm.file:nth-child(2){left:calc(50% - 140px)!important;top:372px!important;--dx:65px!important;--dy:-88px!important}
+  #import .stage>.bm.file:nth-child(3){left:calc(50% - 10px)!important;top:372px!important;--dx:-65px!important;--dy:-88px!important}
+  #import .stage>.bm.file:nth-child(4){left:calc(50% - 75px)!important;top:404px!important;--dx:0px!important;--dy:-120px!important}
+}
+@media (max-width:1199px) and (prefers-reduced-motion:reduce){ #import .stage>.bm.file{display:none!important} }
