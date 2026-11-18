@@ -1107,17 +1107,53 @@ section[tabindex="-1"]:focus{outline:none}
   #win .stage>.fpd.dark{grid-column:1/-1}
 }
 /* Max Distills stacked (≤1199px): the files kept dropping only on desktop (they were hidden here, so the
-   window looked static). Here they come back over the window itself: each one starts on its lower part,
-   in front of the screen, and drops a short way (~90–120px) into the dashed area. The window is always
-   centred and its drop area sits 244–372px from its top at every width (measured), so the files are placed
-   from the centre. */
+   window looked static). Here they come in from the side, as on desktop: each one appears just left of
+   the window, crossing its edge, and slides in over the screen into the dashed area. The window is always
+   centred (403px wide, or the full width on phones) and its drop area sits 244–372px from its top at every
+   width (measured), so the path is set from the centre with left/top, which resolve against the stage. */
+@keyframes fileSide{
+  0%{left:var(--x0);top:var(--y0);transform:scale(1);opacity:0}
+  8%,18%{left:var(--x0);top:var(--y0);transform:scale(1);opacity:1}
+  60%{left:var(--x1);top:var(--y1);transform:scale(.92);opacity:1}
+  72%,100%{left:var(--x1);top:var(--y1);transform:scale(.6);opacity:0}
+}
 @media (max-width:1199px){
   #import .stage{position:relative}
-  #import .stage>.bm.file{display:flex!important;position:absolute!important;z-index:4;width:150px!important;height:48px!important;gap:8px;font-size:14px;border-radius:10px;box-shadow:0 10px 28px rgba(16,23,30,.16)}
+  #import .stage>.bm.file{display:flex!important;position:absolute!important;z-index:4;width:150px!important;height:48px!important;gap:8px;font-size:14px;border-radius:10px;box-shadow:0 10px 28px rgba(16,23,30,.16);
+    --x0:max(-12px,calc(50% - 201px - 96px));animation-name:fileSide}
   #import .stage>.bm.file .bi{width:24px;height:26px}
   #import .stage>.bm.file .bi svg{width:13px;height:13px}
-  #import .stage>.bm.file:nth-child(2){left:calc(50% - 140px)!important;top:372px!important;--dx:65px!important;--dy:-88px!important}
-  #import .stage>.bm.file:nth-child(3){left:calc(50% - 10px)!important;top:372px!important;--dx:-65px!important;--dy:-88px!important}
-  #import .stage>.bm.file:nth-child(4){left:calc(50% - 75px)!important;top:404px!important;--dx:0px!important;--dy:-120px!important}
+  #import .stage>.bm.file:nth-child(2){--y0:300px;--x1:calc(50% - 95px);--y1:282px}
+  #import .stage>.bm.file:nth-child(3){--y0:336px;--x1:calc(50% - 60px);--y1:300px}
+  #import .stage>.bm.file:nth-child(4){--y0:268px;--x1:calc(50% - 80px);--y1:268px}
 }
 @media (max-width:1199px) and (prefers-reduced-motion:reduce){ #import .stage>.bm.file{display:none!important} }
+/* Valuations on phones and portrait tablets (≤999px), Home and /creators: the bookmarks sat still on the
+   window's edges and read as stuck on top of it. Now they come in from the side, like the files of Max
+   Distills: the Views from the left, the Post and the Article from the right, one after the other, each
+   sliding over the window's edge into its place. The Article then drags into the text with the cursor,
+   as before; everything fades out and the loop starts again. */
+@keyframes chipL{0%{transform:translateX(-36px);opacity:0}10%,82%{transform:none;opacity:1}92%,100%{transform:none;opacity:0}}
+@keyframes chipR{0%{transform:translateX(36px);opacity:0}10%,82%{transform:none;opacity:1}92%,100%{transform:none;opacity:0}}
+@keyframes chipArt{0%{transform:translateX(36px);opacity:0}10%,22%{transform:none;opacity:1}38%,58%{transform:translate(-22px,-16px);opacity:1}64%,82%{transform:none;opacity:1}92%,100%{transform:none;opacity:0}}
+@media (max-width:999px){
+  #mf-val{overflow-x:clip} /* the bookmarks start just outside the window; nothing scrolls sideways */
+  #mf-val .stage>[data-chip]{animation-duration:9s!important;animation-timing-function:cubic-bezier(.2,.7,.2,1)!important;animation-iteration-count:infinite!important;animation-fill-mode:both!important}
+  #mf-val .stage>[data-chip=v1]{animation-name:chipL!important;animation-delay:0s!important}
+  #mf-val .stage>[data-chip=p1]{animation-name:chipR!important;animation-delay:.5s!important}
+  #mf-val .stage>[data-chip=v2]{animation-name:chipL!important;animation-delay:1s!important}
+  #mf-val .stage>:is([data-chip=art],[data-chip=cur]){animation-name:chipArt!important;animation-delay:1.5s!important}
+}
+@media (max-width:999px) and (prefers-reduced-motion:reduce){ #mf-val .stage>[data-chip]{animation:none!important;opacity:1} }
+/* the bookmarks hang further out (comment 18-nov: in front of the window they looked odd): the window is
+   inset 32px on each side of the stage and the bookmarks overhang the stage into the page margin
+   (12px on phones, so they keep a little air from the screen edge; 40px from 700px up), so most of each bookmark sits outside the window */
+@media (max-width:999px){
+  #mf-val .stage{--out:-12px}
+  #mf-val .stage>.mock{width:calc(100% - 64px)!important;margin:0 auto}
+  #mf-val [data-chip=v1],#mf-val [data-chip=v2]{left:var(--out)!important}
+  #mf-val [data-chip=p1]{right:var(--out)!important}
+  #mf-val .stage>.bm[data-chip=art]{right:var(--out)!important}
+  #mf-val [data-chip=cur]{right:calc(var(--out) + 6px)!important} /* on the Article's corner, inside the page */
+}
+@media (min-width:700px) and (max-width:999px){ #mf-val .stage{--out:-40px} }
