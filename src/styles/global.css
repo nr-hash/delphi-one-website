@@ -1157,3 +1157,17 @@ section[tabindex="-1"]:focus{outline:none}
   #mf-val [data-chip=cur]{right:calc(var(--out) + 6px)!important} /* on the Article's corner, inside the page */
 }
 @media (min-width:700px) and (max-width:999px){ #mf-val .stage{--out:-40px} }
+/* ShotCards (Views section, comment 18-nov): the cards sat too close and their titles read too big next
+   to the screenshots and the body copy. More air between them (40px → 72px, growing with the screen),
+   a wider measure on wide desktops, and the card titles one step down the scale (20/28, the small
+   card-title step the Home's persona cards use), on every width. */
+.shotgrid{gap:clamp(40px,3.6vw,72px);max-width:1440px}
+.shotcard h3{margin:24px 0 8px;font-size:20px;line-height:28px}
+@media (max-width:900px){ .shotgrid{gap:48px;max-width:560px} .shotcard h3{font-size:20px;line-height:28px} }
+/* intros under section titles on desktop: two lines at most (comment 18-nov). The /creators copy is longer
+   than the Home's (up to 230 characters), so at the Home's 760px measure five of them ran to three lines;
+   they take the 1160px measure the Valuations intro already uses, with balanced lines. */
+@media (min-width:1100px){
+  .pg-creators :is(.intro,.mf-head){max-width:1180px}
+  .pg-creators :is(.intro .lede,.mf-head .sub){max-width:1160px;margin-left:auto;margin-right:auto;text-wrap:balance}
+}
