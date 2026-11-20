@@ -24,7 +24,7 @@ Pendientes del sitio, al 17/11/2026 (actualizado en la revisión final). Marcar 
 - [ ] **Páginas que faltan.** `/creators` ya existe (18/11/2026). Faltan las que tiene beta:
       `/faq/`, `/privacy/` y `/terms/`. `/investors` no hace falta mientras la Home sea la
       página de inversores.
-- [ ] **For Creators: captura del newsletter en el mail.** El artifact pide "un Article en Delphi
+- [x] **For Creators: captura del newsletter en el mail.** (hecho 20/11: mail HTML estilo webmail) El artifact pide "un Article en Delphi
       One y el mismo Article en el inbox de un miembro"; hoy va sólo el editor de Articles
       (`hiw3_article`). Falta la captura del mail.
 - [ ] **For Creators: personas con otro papel que en la Home.** El artifact cuenta otra historia
@@ -40,7 +40,7 @@ Pendientes del sitio, al 17/11/2026 (actualizado en la revisión final). Marcar 
 - [x] **Capturas de Research.** Las 4 cards tienen su captura (`jd1_good_judgment`,
       `jd2_leaderboard`, `jd3_views`, `jd4_john_maven`, todas webp de ~2000×1140) y cada
       ventana toma la proporción de su imagen. No queda ningún placeholder en la página.
-- [ ] **Captura de "We never hold your funds" (Trade).** Ahora es la pantalla de Wallet
+- [x] **Captura de "We never hold your funds" (Trade).** (hecho 20/11: cifras en positivo) Ahora es la pantalla de Wallet
       (`tx3_wallet.webp`, 2000×1139) en lugar de `tx_olives.webp` del artifact. Subirla
       también al artifact; `tx_olives.webp` quedó en `public/` sin usar.
 - [ ] **Redes del footer.** El artifact tenía "Discord" sin URL; se puso YouTube, como en
@@ -51,20 +51,28 @@ Pendientes del sitio, al 17/11/2026 (actualizado en la revisión final). Marcar 
 Los textos y el diseño del handoff ya están en la rama `fixes`. Faltan las imágenes, que hay que volver a
 capturar en la app:
 
-- [ ] **"ALPHA" junto al logo** en 9 capturas: `scr_home2`, `jd2_leaderboard`, `jd3_views`, `jd4_john_maven`,
+- [ ] **"ALPHA" junto al logo** (en pausa 20/11: la app está en alpha, no en beta; no tocar por ahora) en 9 capturas: `scr_home2`, `jd2_leaderboard`, `jd3_views`, `jd4_john_maven`,
       `tx3_wallet`, `pf_window`, `hiw3_article`, `pf_wallet2` y `d1`.
-- [ ] **Pérdidas en primer plano** (−23.1%, −87.2%, −96.3%): `scr_home2`, `tx3_wallet`, `pf_wallet2`.
-- [ ] **Placeholders** ("Lorem ipsum dolor", "example", "No description found"): `hiw3_article`, `tx_track_record`.
-- [ ] **Home:** `jd1_good_judgment` (consenso de John Maven AI junto a una View contraria), `jd2_leaderboard`
-      (sacar "a 0–100 score"), `jd3_views` (feed de pitches o alerta de cambio de Value), `jd4_john_maven`
-      (prompts nuevos, sin "oracles"), `tx_price_value` (ticket + Valuation con Views y Arguments; "Price vs. Value"),
-      `tx_track_record` (trades de un analista humano).
-- [ ] **For Creators:** `views_pair` (View de Nvidia y su counter-View), `hiw3_curations` (renombrar "Price targets"),
-      `hiw3_article` (Article en el inbox de un miembro), `pf_readers2` (Replicate con membresía, números sanos),
-      `pf_wallet2` (oferta de membresía), segunda `hiw3_curations` en Olives (notificación de Curations), `d1`
-      (D1 Analyst con bio neutra, sin "Oracle", sin el banner).
-- [ ] **Fotos de personas:** reemplazar `av2` (Marcus: inversor famoso real) y `av4` (Lucía: persona real, con
-      certificado CFA). Revisar `av1` (Harry: apretón de manos; mejor un escritor solo).
+- [x] ~~**Pérdidas en primer plano**~~: `scr_home2` reemplazada por la captura de Bitcoin; `tx3_wallet` y `pf_wallet2` en positivo (20/11).
+- [x] ~~**Placeholders**~~: `hiw3_article` y `tx_track_record` resueltos (20/11).
+- [x] ~~`jd1_good_judgment`~~: reemplazada por `jd1_views.jpg` (View de Bitcoin y su counter-View), 20/11.
+- [x] ~~`jd2_leaderboard`~~: reemplazada por `jd2_directory.jpg` (Directory, sin la escala 0–100), 20/11.
+- [x] ~~`jd3_views`~~: panel de notificaciones en HTML sobre la captura (pitches y cambios de Value), 20/11.
+- [x] ~~`jd4_john_maven`~~: prompts editados en la imagen, sin "oracles" ni "chatter on X" (`jd4_john_maven.jpg`), 20/11.
+- [x] ~~`tx_price_value`~~: "Price vs. Value" corregido y panel HTML con Views, counter-View y Arguments sobre el gráfico, 20/11.
+- [x] ~~**Home:**~~
+      ~~`tx_track_record`~~ (hecho 20/11: Lena Ortiz, analista inventada, en lugar de John Maven; descripción de RENDER).
+- [x] ~~`tx3_wallet`~~: cifras inventadas en positivo (wallet $12.4K, BTC primero), 20/11.
+- [x] ~~`hiw3_curations`~~: carpeta "Price targets" renombrada a "Where I see Value" (`hiw3_curations.jpg`), 20/11.
+- [x] ~~`hiw3_article`~~ (placeholders): borradores "example" y "Lorem ipsum dolor" con títulos reales, 20/11.
+- [x] ~~`pf_wallet2`~~: reemplazada por la oferta de membresía de Elena Varga (`pf_membership.jpg`), 20/11.
+- [x] ~~`pf_readers2`~~: 128 subscribers, $46.3K subscribed y "Growth of $10,000" subiendo a $12.2K (coincide con +21.9%), 20/11.
+- [x] ~~segunda `hiw3_curations` en Olives~~: notificación "Joe Delphi added your debate to Curations" en HTML sobre la captura, 20/11.
+- [x] ~~`d1`~~: bio neutra, sin "Oracle", banner neutro y badge "D1 Analyst · Bitcoin" (`d1.jpg`), 20/11.
+- [x] ~~`tx_olives`~~: sin "a 0–100 score" en la descripción del Leaderboard (`tx_olives.jpg`), 20/11.
+- [x] ~~`views_pair`~~: captura de Nvidia con la View retitulada "Nvidia’s moat is CUDA, not silicon" (`views_pair.jpg`), 20/11.
+- [x] ~~`hiw3_article` (inbox)~~: el mismo Article como mail en la bandeja de un miembro, en HTML estilo webmail, 20/11.
+- [x] ~~**Fotos de personas**~~: Marcus, Lucía y Harry con fotos de Pexels (licencia libre): 6333968, 6889999 y 5710615, 20/11.
 
 ## Decisiones de copy (revisión de jerarquía y lógica)
 

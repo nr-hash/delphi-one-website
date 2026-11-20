@@ -133,7 +133,7 @@ b,strong{font-weight:600;color:var(--ink)}
 .h-bar i{width:11px;height:11px;border-radius:50%;display:block}
 .h-bar i:nth-child(1){background:#ff5f57}.h-bar i:nth-child(2){background:#febc2e}.h-bar i:nth-child(3){background:#28c840}
 .h-url{position:absolute;left:270px;top:12px;width:510px;height:25px;border-radius:6px;background:#f3f3f4;color:var(--muted);font-size:12px;display:grid;place-items:center}
-.h-win img{width:1050px;height:685px;object-fit:cover;object-position:top}
+.h-win img{width:1050px;height:685px;object-fit:cover;object-position:top left} /* scr_home2 is wider than the window (1655×808): keep the sidebar and the feed, crop the right rail */
 .h-card{position:absolute;width:340px;padding:24px;border-radius:18px;background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(10px);display:flex;flex-direction:column;gap:5px;will-change:transform,opacity}
 .h-card .t{font-size:20px;line-height:28px;font-weight:600}
 .h-card .b{font-size:18px;line-height:26px}
@@ -162,7 +162,7 @@ b,strong{font-weight:600;color:var(--ink)}
   .asset-rot .ic{width:.8em;height:.8em}
   .h-sub{width:auto;font-size:16px;line-height:24px}
   .h-win{position:static;width:100%;max-width:640px;height:auto;margin-top:16px}
-  .h-win img{width:100%;height:auto;aspect-ratio:3024/1722} /* the screenshot's own proportions (scr_home2.webp is 3024×1722): nothing is cropped */
+  .h-win img{width:100%;height:auto;aspect-ratio:1655/808} /* the screenshot's own proportions (scr_home2.jpg is 1655×808): nothing is cropped */
   .h-url{left:30%;width:40%}
   .h-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;width:100%;max-width:640px}
   .h-card{position:static;width:auto;opacity:1!important;transform:none!important;padding:18px}
@@ -596,8 +596,8 @@ main{transition:opacity .25s, transform .25s}
 }
 
 @media (min-width:901px){
-  html:not(.tp) .pg-home2.pg-site .h-win{height:448px}
-  html:not(.tp) .pg-home2.pg-site .h-win img{height:auto;aspect-ratio:3024/1722;object-position:top left} /* = 704×401, the screenshot's proportions */
+  html:not(.tp) .pg-home2.pg-site .h-win{height:391px}
+  html:not(.tp) .pg-home2.pg-site .h-win img{height:auto;aspect-ratio:1655/808;object-position:top left} /* = 704×344, the screenshot's proportions */
   html:not(.tp) .pg-home2.pg-site .h-cta2{top:calc(808px + var(--hy,0px))}
   html:not(.tp) .pg-home2.pg-site .h-card{margin-top:-17px}
 }
@@ -893,7 +893,7 @@ section[tabindex="-1"]:focus{outline:none}
   html.tp .asset-rot .ic{width:.8em;height:.8em}
   html.tp .h-sub{width:auto;font-size:16px;line-height:24px}
   html.tp .h-win{position:static;width:100%;max-width:640px;height:auto;margin-top:16px}
-  html.tp .h-win img{width:100%;height:auto;aspect-ratio:3024/1722}
+  html.tp .h-win img{width:100%;height:auto;aspect-ratio:1655/808}
   html.tp .h-url{left:30%;width:40%}
   html.tp .h-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;width:100%;max-width:640px}
   html.tp .h-card{position:static;width:auto;opacity:1!important;transform:none!important;padding:18px}
@@ -1302,3 +1302,78 @@ html.tp .pg-creators .h-badge{font-size:16px;line-height:22px}
 }
 /* títulos y bajadas de sección: balanceados, sin una palabra sola en la última línea */
 .pg-site :is(.h2,.intro .lede,.mf-head .sub,.hiw-head .lede,.mf-kicker,.mxb-s,.cs-sub){text-wrap:balance}
+
+/* ticker: each price sits in a chip with a 10% fill of the text colour (pedido 20-nov) */
+.ticker{height:52px}
+.tk-track{gap:10px;padding:10px 10px 10px 0}
+.tk-item{gap:8px;padding:5px 9px 5px 6px;font-size:14px;line-height:20px;border-radius:999px;border:1px solid color-mix(in srgb,currentColor 14%,transparent);background:color-mix(in srgb,currentColor 10%,transparent)}
+.tk-item img{width:20px;height:20px}
+
+/* card 3 (Chair your investment committee): the app's notifications dropdown over the Views screenshot, showing
+   pitches and Value changes (Álvaro, 20-nov). Sized in units of the app’s own 1630px width (×1.3 so it reads at card size) so it scales with the shot. */
+.appwin.ntf-host{position:relative;container-type:inline-size}
+.ntf{--u:calc(100cqw / 1630 * 1.3);position:absolute;top:calc(100cqw * 69 / 1630);right:calc(100cqw * 300 / 1630);width:calc(594 * var(--u));background:var(--white);border-radius:calc(12 * var(--u));box-shadow:0 calc(10 * var(--u)) calc(44 * var(--u)) rgba(20,24,30,.16),0 0 0 1px rgba(20,24,30,.05);font-size:calc(15 * var(--u));line-height:1.3;color:#3a3e44;text-align:left;overflow:hidden}
+.ntf-hd{display:flex;align-items:center;justify-content:space-between;padding:calc(18 * var(--u)) calc(20 * var(--u)) 0}
+.ntf-hd b{font-size:calc(17 * var(--u));font-weight:600;color:#14181e}
+.ntf-hd span{font-size:calc(13 * var(--u));color:#8b9096}
+.ntf-fl{display:flex;align-items:center;gap:calc(8 * var(--u));padding:calc(20 * var(--u)) calc(12 * var(--u)) calc(12 * var(--u))}
+.ntf-pill{display:inline-flex;align-items:center;height:calc(28 * var(--u));padding:0 calc(18 * var(--u));border:1px solid #b9bdc2;border-radius:999px;font-size:calc(13 * var(--u));color:#14181e}
+.ntf-pill.dark{background:#14181e;border-color:#14181e;color:var(--white);font-weight:500}
+.ntf-sp{margin-left:auto;margin-right:calc(8 * var(--u));font-size:calc(13 * var(--u));color:#6b7076}
+.ntf-it{position:relative;display:grid;grid-template-columns:calc(40 * var(--u)) 1fr auto;gap:0 calc(12 * var(--u));padding:calc(15 * var(--u)) calc(18 * var(--u)) calc(15 * var(--u)) calc(14 * var(--u));border-top:1px solid #eceef0}
+.ntf-fl + .ntf-it{border-top:0}
+.ntf-it > img{width:calc(40 * var(--u));height:calc(40 * var(--u));border-radius:50%;object-fit:cover}
+.ntf-it.new::before{content:"";position:absolute;left:calc(14 * var(--u));top:calc(13 * var(--u));width:calc(8 * var(--u));height:calc(8 * var(--u));border-radius:50%;background:var(--violet)}
+.ntf-it p{margin:calc(2 * var(--u)) 0 0;font-weight:500;color:#3a3e44}
+.ntf-it small{display:block;margin-top:calc(4 * var(--u));font-size:calc(13 * var(--u));color:#7a7f85}
+.ntf-it small b{font-weight:600}.ntf-it small .up{color:#1f9d55}.ntf-it small .down{color:#d64545}
+.ntf-r{display:flex;align-items:center;gap:calc(8 * var(--u));align-self:start}
+.ntf-r time{font-size:calc(13 * var(--u));color:#9a9fa5}
+.ntf-chip{display:inline-flex;align-items:center;gap:calc(5 * var(--u));height:calc(26 * var(--u));padding:0 calc(6 * var(--u)) 0 calc(10 * var(--u));border:1px solid #dfe1e4;border-radius:999px;font-size:calc(11 * var(--u));font-weight:600;color:#555a60}
+.ntf-chip img{width:calc(16 * var(--u));height:calc(16 * var(--u));border-radius:50%;object-fit:cover}
+/* Olives card on /creators ("Work others build on"): Álvaro's notification "Joe Delphi added your debate to
+   Curations" over the Curations screenshot. Pair cards are narrower, so it's sized to the card. */
+.ntf.ntf-olives{--u:calc(100cqw / 900);top:calc(100cqw * .2);right:calc(100cqw * .035);width:calc(620 * var(--u))}
+
+/* #newsletter: the editor screenshot plus the same Article as an email in a member's inbox (Álvaro, 20-nov).
+   A generic webmail look, no mail-provider branding. Sized in units of the stage (1000px wide at most). */
+.nl-stage{position:relative;max-width:1000px;margin:0 auto 4%;container-type:inline-size}
+.nl-stage .nl-shot{max-width:none}
+.mail{--m:calc(100cqw / 1000);position:absolute;right:calc(28 * var(--m));top:calc(56 * var(--m));width:calc(430 * var(--m));background:var(--white);border:1px solid var(--line);border-radius:calc(14 * var(--m));box-shadow:0 calc(18 * var(--m)) calc(60 * var(--m)) rgba(20,24,30,.22);font-size:calc(12 * var(--m));line-height:1.45;color:#202124;text-align:left;overflow:hidden}
+.mail .mi{display:inline-grid;place-items:center;width:calc(26 * var(--m));height:calc(26 * var(--m));color:#5f6368}
+.mail .mi svg{width:calc(15 * var(--m));height:calc(15 * var(--m))}
+.mail-bar{display:flex;align-items:center;gap:calc(4 * var(--m));padding:calc(8 * var(--m)) calc(12 * var(--m));border-bottom:1px solid #eceef0}
+.mail-count{margin-left:auto;font-size:calc(11 * var(--m));color:#5f6368}
+.mail-subj{display:flex;align-items:flex-start;gap:calc(8 * var(--m));padding:calc(14 * var(--m)) calc(18 * var(--m)) calc(6 * var(--m))}
+.mail-subj h4{margin:0;font-size:calc(16 * var(--m));line-height:1.3;font-weight:500;color:#1f1f1f}
+.mail-tag{flex:none;margin-top:calc(2 * var(--m));padding:calc(1 * var(--m)) calc(6 * var(--m));border-radius:calc(4 * var(--m));background:#e8eaed;font-size:calc(10 * var(--m));color:#444746}
+.mail-from{display:grid;grid-template-columns:calc(34 * var(--m)) 1fr auto;gap:calc(10 * var(--m));align-items:center;padding:calc(8 * var(--m)) calc(18 * var(--m)) calc(10 * var(--m))}
+.mail-from > img{width:calc(34 * var(--m));height:calc(34 * var(--m));border-radius:50%;object-fit:cover}
+.mail-who p{margin:0;font-size:calc(12 * var(--m))}
+.mail-who b{font-weight:600}.mail-who span{color:#5f6368}
+.mail-who small{display:block;font-size:calc(11 * var(--m));color:#5f6368}
+.mail-meta{display:flex;align-items:center;gap:calc(2 * var(--m));align-self:start}
+.mail-meta time{margin-right:calc(4 * var(--m));font-size:calc(11 * var(--m));color:#5f6368}
+.mail-body{margin:0 calc(18 * var(--m)) calc(18 * var(--m)) calc(62 * var(--m));padding:calc(16 * var(--m));border:1px solid #eceef0;border-radius:calc(10 * var(--m))}
+.mail-logo{display:block;height:calc(16 * var(--m));width:auto;margin-bottom:calc(12 * var(--m))}
+.mail-hero{display:block;width:100%;aspect-ratio:729/292;object-fit:cover;border-radius:calc(8 * var(--m))}
+.mail-body h5{margin:calc(12 * var(--m)) 0 calc(4 * var(--m));font-size:calc(15 * var(--m));line-height:1.3;font-weight:700;color:#14181e}
+.mail-by{margin:0 0 calc(8 * var(--m));font-size:calc(10.5 * var(--m));color:#6b7076}
+.mail-body p:not(.mail-by){margin:0;color:#3a3e44}
+.mail-btn{display:inline-block;margin-top:calc(12 * var(--m));padding:calc(7 * var(--m)) calc(14 * var(--m));border-radius:999px;background:#14181e;color:var(--white);font-size:calc(11 * var(--m));font-weight:600}
+
+/* Trade card 1: the Valuation's debate (Views, counter-Views, Arguments) over the chart, next to the ticket
+   (Álvaro, 20-nov). Units of the screenshot's own 1300px-wide frame so it scales with the shot. */
+.appwin.dbt-host{position:relative;container-type:inline-size}
+.dbt{--t:calc(100cqw / 1300);position:absolute;left:calc(44 * var(--t));top:calc(353 * var(--t));width:calc(736 * var(--t));min-height:calc(358 * var(--t));box-sizing:border-box;background:var(--white);border:1px solid #e3e5e8;border-radius:calc(14 * var(--t));box-shadow:0 calc(6 * var(--t)) calc(24 * var(--t)) rgba(20,24,30,.08);padding:calc(18 * var(--t)) calc(22 * var(--t)) calc(14 * var(--t));font-size:calc(15 * var(--t));line-height:1.35;color:#2f3338;text-align:left}
+.dbt-hd{display:flex;align-items:center;gap:calc(12 * var(--t));padding-bottom:calc(12 * var(--t));border-bottom:1px solid #eceef0}
+.dbt-hd img{width:calc(40 * var(--t));height:calc(40 * var(--t));border-radius:50%;object-fit:cover}
+.dbt-hd b{display:block;font-size:calc(17 * var(--t));font-weight:600;color:#14181e}
+.dbt-hd small{display:block;margin-top:calc(2 * var(--t));font-size:calc(13 * var(--t));color:#7a7f85}
+.dbt-sec{margin:calc(12 * var(--t)) 0 calc(6 * var(--t));font-size:calc(12 * var(--t));font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#8b9096}
+.dbt-row{display:grid;grid-template-columns:calc(108 * var(--t)) 1fr auto;align-items:center;gap:calc(10 * var(--t));padding:calc(8 * var(--t)) calc(12 * var(--t));margin-top:calc(6 * var(--t));border:1px solid #eceef0;border-left:calc(3 * var(--t)) solid;border-radius:calc(8 * var(--t))}
+.dbt-row.pro{border-left-color:#16a34a}.dbt-row.con{border-left-color:#dc4b42}
+.dbt-k{justify-self:start;padding:calc(2 * var(--t)) calc(8 * var(--t));border-radius:999px;font-size:calc(12 * var(--t));font-weight:500}
+.dbt-row.pro .dbt-k{background:#e9f7ee;color:#15803d}.dbt-row.con .dbt-k{background:#fdecea;color:#c2392f}
+.dbt-row p{margin:0;font-weight:500;color:#202327;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dbt-m{font-size:calc(13 * var(--t));color:#6b7076}

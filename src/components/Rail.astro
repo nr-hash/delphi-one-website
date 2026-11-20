@@ -1,11 +1,11 @@
 ---
 // Rail de cards con captura (el mismo de Research y Trade: .fcar + setupRails).
 // `pair`: dos cards lado a lado, sin flechas (como en el artifact para Portfolio y Olives de /creators).
-interface Card { title: string; body: string; img: string; pos?: string }
+interface Card { title: string; body: string; img: string; pos?: string; ntf?: string }
 interface Props { id: string; title: string; lede: string; cards: Card[]; pair?: boolean }
 const { id, title, lede, cards, pair = false } = Astro.props;
 const ARROW_L = '<svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4L6 9l5 5"></path></svg>';
 const ARROW_R = '<svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4l5 5-5 5"></path></svg>';
 ---
-<section class="sec" id={id}><div class="wrap"><div class="intro rv"><h2 class="h2">{title}</h2><p class="lede">{lede}</p></div></div><div class={pair ? 'fcar rv pair' : 'fcar rv'}><div class="fcar-track">{cards.map(c => <article class="fcard"><div class="ftext"><h3>{c.title}</h3><p>{c.body}</p></div><div class="appwin"><img src={`/images/v2/${c.img}.webp`} alt={`Delphi One app screenshot: ${c.title}`} class="shot" style={c.pos ? `object-position:${c.pos}` : undefined} loading="lazy" decoding="async" /></div></article>)}</div>
+<section class="sec" id={id}><div class="wrap"><div class="intro rv"><h2 class="h2">{title}</h2><p class="lede">{lede}</p></div></div><div class={pair ? 'fcar rv pair' : 'fcar rv'}><div class="fcar-track">{cards.map(c => <article class="fcard"><div class="ftext"><h3>{c.title}</h3><p>{c.body}</p></div><div class={c.ntf ? 'appwin ntf-host' : 'appwin'}><img src={c.img.includes('.') ? `/images/v2/${c.img}` : `/images/v2/${c.img}.webp`} alt={`Delphi One app screenshot: ${c.title}`} class="shot" style={c.pos ? `object-position:${c.pos}` : undefined} loading="lazy" decoding="async" />{c.ntf && <Fragment set:html={c.ntf} />}</div></article>)}</div>
       <div class="wrap"><div class="fcar-nav"><span class="cnt">1 / {cards.length}</span><button class="cbtn" data-dir="-1" aria-label="Previous card"><Fragment set:html={ARROW_L} /></button><button class="cbtn" data-dir="1" aria-label="Next card"><Fragment set:html={ARROW_R} /></button></div></div></div></section>
