@@ -51,8 +51,7 @@ Pendientes del sitio, al 17/11/2026 (actualizado en la revisión final). Marcar 
 Los textos y el diseño del handoff ya están en la rama `fixes`. Faltan las imágenes, que hay que volver a
 capturar en la app:
 
-- [ ] **"ALPHA" junto al logo** (en pausa 20/11: la app está en alpha, no en beta; no tocar por ahora) en 9 capturas: `scr_home2`, `jd2_leaderboard`, `jd3_views`, `jd4_john_maven`,
-      `tx3_wallet`, `pf_window`, `hiw3_article`, `pf_wallet2` y `d1`.
+- [x] ~~**"ALPHA" junto al logo**~~: confirmado beta (20/11). El badge pasó a "BETA" (Montserrat SemiBold, mismo color, alto y márgenes) en las 9 capturas en uso (`scr_home2`, `d1`, `hiw3_article`, `jd1_views`, `jd2_directory`, `jd3_views`, `jd4_john_maven`, `tx3_wallet`, `pf_window`) y en las 8 de `public/` que no se usan (`fr_h2`, `hiw1`, `hiw2_c`, `hiw2_home2`, `hiw3_article.webp`, `hiw4_cr2`, `hiw4_debate`, `hiw4_h`).
 - [x] ~~**Pérdidas en primer plano**~~: `scr_home2` reemplazada por la captura de Bitcoin; `tx3_wallet` y `pf_wallet2` en positivo (20/11).
 - [x] ~~**Placeholders**~~: `hiw3_article` y `tx_track_record` resueltos (20/11).
 - [x] ~~`jd1_good_judgment`~~: reemplazada por `jd1_views.jpg` (View de Bitcoin y su counter-View), 20/11.
