@@ -72,7 +72,7 @@ capturar en la app:
 - [x] ~~`tx_olives`~~: sin "a 0–100 score" en la descripción del Leaderboard (`tx_olives.jpg`), 20/11.
 - [x] ~~`views_pair`~~: captura de Nvidia con la View retitulada "Nvidia’s moat is CUDA, not silicon" (`views_pair.jpg`), 20/11.
 - [x] ~~`hiw3_article` (inbox)~~: el mismo Article como mail en la bandeja de un miembro, en HTML estilo webmail, 20/11.
-- [x] ~~**Fotos de personas**~~: Marcus, Lucía y Harry con fotos de Pexels (licencia libre): 6333968, 6889999 y 5710615, 20/11.
+- [x] ~~**Fotos de personas**~~: Marcus, Lucía y Harry con retratos de frente de Pexels (licencia libre): 6950711, 27086951 y 8172610, 20/11.
 
 ## Decisiones de copy (revisión de jerarquía y lógica)
 
