@@ -149,7 +149,7 @@ El artifact es la fuente del diseño y del copy. Cuando cambia:
     Portfolio en tablet van a 16/14;
   - hero: el botón principal se ve a 18 px (antes 13,5 px, porque escalaba con la
     mesa de trabajo); el link "Are you a creator?" y el badge bajan a 14 px;
-  - Plans: el plan destacado es Premium (gratis en beta), con el badge "Free in beta".
+  - Plans: el plan destacado es Premium (gratis en alpha), con el badge "Free while in alpha".
     Free pierde el badge "Start here". Los badges de estado ("Coming soon") pasan a
     gris neutro, para no confundirse con la recomendación.
   - todos los títulos de card (carruseles, planes, personas, callouts, cards del hero)
@@ -176,7 +176,7 @@ El artifact es la fuente del diseño y del copy. Cuando cambia:
   - Plans apilados (≤900 px): encabezado en 2 columnas, a la izquierda etiqueta, nombre y
     descripción, a la derecha precio y nota; sin los espaciadores que alinean cards lado a lado;
   - el link de Valuations se acomoda centrado y la flecha no queda sola en una línea;
-  - "BETA" y "Coming soon" suben a 12 px (estaban en 10 y 11).
+  - "ALPHA" y "Coming soon" suben a 12 px (estaban en 10 y 11).
   - hero en 2 etapas en celulares y tablets en vertical (≤900 px, pantallas de ≥560 px de alto):
     la etapa 1 llena la pantalla con el texto centrado y la ventana asomando abajo; al hacer
     scroll (`.hero-run`) el hero queda fijo, el texto se va, sube la ventana bajo el segundo

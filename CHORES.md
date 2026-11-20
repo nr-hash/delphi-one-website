@@ -51,8 +51,7 @@ Pendientes del sitio, al 17/11/2026 (actualizado en la revisión final). Marcar 
 Los textos y el diseño del handoff ya están en la rama `fixes`. Faltan las imágenes, que hay que volver a
 capturar en la app:
 
-- [ ] **"ALPHA" junto al logo** (en pausa 20/11: la app está en alpha, no en beta; no tocar por ahora) en 9 capturas: `scr_home2`, `jd2_leaderboard`, `jd3_views`, `jd4_john_maven`,
-      `tx3_wallet`, `pf_window`, `hiw3_article`, `pf_wallet2` y `d1`.
+- [x] ~~**"ALPHA" junto al logo**~~: en la rama `alpha` las capturas se quedan con "ALPHA" y el header también dice ALPHA (20/11). La versión con "BETA" está en la rama `beta`.
 - [x] ~~**Pérdidas en primer plano**~~: `scr_home2` reemplazada por la captura de Bitcoin; `tx3_wallet` y `pf_wallet2` en positivo (20/11).
 - [x] ~~**Placeholders**~~: `hiw3_article` y `tx_track_record` resueltos (20/11).
 - [x] ~~`jd1_good_judgment`~~: reemplazada por `jd1_views.jpg` (View de Bitcoin y su counter-View), 20/11.
@@ -83,7 +82,7 @@ capturar en la app:
 - [ ] **Mensajes a creadores.** Aparecen en el menú, el link de Valuations, el último
       callout de Portfolio y el selector de personas. Decidir cuáles quedan.
 - [ ] **Título de Plans.** Dice "Start free. Scale up when you're ready." pero el plan
-      destacado ahora es Premium (gratis en beta).
+      destacado ahora es Premium (gratis en alpha).
 - [ ] **Cierre.** "Investment alpha, distilled." repite el badge del principio en lugar de
       resumir la propuesta.
 - [ ] **Bajada de Valuations.** Para entrar en 2 líneas quedó a ~130 caracteres por línea

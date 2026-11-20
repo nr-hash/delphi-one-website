@@ -857,7 +857,7 @@ section[tabindex="-1"]:focus{outline:none}
 }
 
 /* ---------- Tablet review (17-nov) ---------- */
-/* plan badges never wrap ("Free in beta" broke in two at 1024px) */
+/* plan badges never wrap ("Free in alpha" broke in two at 1024px) */
 .pbadge{white-space:nowrap;flex:none}
 /* plans always read Free, Premium, Custom, also when they stack (no reordering of the featured one) */
 /* short screens up to 1366px wide (landscape tablets, small laptops): rail screenshots are capped so a
