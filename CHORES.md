@@ -66,7 +66,7 @@ capturar en la app:
 - [x] ~~`hiw3_curations`~~: carpeta "Price targets" renombrada a "Where I see Value" (`hiw3_curations.jpg`), 20/11.
 - [x] ~~`hiw3_article`~~ (placeholders): borradores "example" y "Lorem ipsum dolor" con títulos reales, 20/11.
 - [x] ~~`pf_wallet2`~~: reemplazada por la oferta de membresía de Elena Varga (`pf_membership.jpg`), 20/11.
-- [x] ~~`pf_readers2`~~: 128 subscribers, $46.3K subscribed y "Growth of $10,000" subiendo a $12.2K (coincide con +21.9%), 20/11.
+- [x] ~~`pf_readers2`~~: tag "Free" cambiado a "$15/mo" (Replicate pide membresía), 128 subscribers, $46.3K subscribed y "Growth of $10,000" subiendo a $12.2K (coincide con +21.9%), 20/11.
 - [x] ~~segunda `hiw3_curations` en Olives~~: notificación "Joe Delphi added your debate to Curations" en HTML sobre la captura, 20/11.
 - [x] ~~`d1`~~: bio neutra, sin "Oracle", banner neutro y badge "D1 Analyst · Bitcoin" (`d1.jpg`), 20/11.
 - [x] ~~`tx_olives`~~: sin "a 0–100 score" en la descripción del Leaderboard (`tx_olives.jpg`), 20/11.
