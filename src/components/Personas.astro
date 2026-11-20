@@ -1,40 +1,28 @@
 ---
 // #personas — Which one are you?: selector de lado + cards (setupCaseSwitch) y un CTA por lado (.case-lab).
-// `page` elige el elenco y el orden: la Home abre con inversores; /creators abre con creadores y usa el
-// copy de la página For Creators del artifact. La cara de cada persona es la misma en las dos páginas.
+// Un solo elenco de seis, igual en las dos páginas (cada nombre con su cara y su texto). `page` sólo
+// cambia el orden y los CTA: la Home abre con "I'm an Investor"; /creators abre con "I'm a Creator".
 interface Props { page?: 'home' | 'creators' }
 const { page = 'home' } = Astro.props;
 const REG = 'https://app.delphi.one/?nav=login&snav=register';
 type Card = { av: string; pos: string; name: string; desc: string; body: string; n: string };
 type Side = { tab: string; cards: Card[]; cta: { href: string; label: string; external?: boolean } };
 
-const HOME: Side[] = [
-  { tab: "I'm an Investor", cta: { href: REG, label: 'Pick your analysts', external: true }, cards: [
-    { av: 'av2', pos: '50% 11%', name: 'Marcus', desc: 'The Loyal Reader', n: '3', body: 'Marcus pays for three investment newsletters and still can’t tell whose ideas actually work. When his favorite analyst moves to Delphi One, Marcus goes too. Now those ideas come with a Value, a counter-View and Olives, and the analyst’s model portfolio is one click away.' },
-    { av: 'av3', pos: '63% 32%', name: 'Miles', desc: 'The Committee of One', n: '6', body: 'Miles has run his own money for twenty years, and every call is his alone. What he misses is the room: analysts pitching ideas, someone arguing the other side. On Delphi One he picks his analysts, hears their pitches and makes the call.' },
-    { av: 'av4', pos: '43% 32%', name: 'Lucía', desc: 'The Crypto Skeptic', n: '4', body: 'Lucía holds crypto and has followed enough confident voices on X to know talk is cheap. Here every analyst’s portfolio is built from real trades on-chain, and every idea comes with its counter-View. She reads the bear case before she buys.' },
-  ] },
-  { tab: "I'm a Creator", cta: { href: '/creators', label: 'See how you get paid →' }, cards: [
-    { av: 'av1', pos: '21% 32%', name: 'Harry', desc: 'The Newsletter Veteran', n: '1', body: 'Harry has written paid research for years and his subscribers renew. What he can’t show is why: there’s no record, only his word. Here his reasoning is judged on its merits, his past posts become Valuations with one click, and he prices his own memberships.' },
-    { av: 'av5', pos: '55% 0', name: 'Kai', desc: 'The Crypto Voice', n: '5', body: 'Kai covers Solana on X, and people keep asking what he holds. X can’t give him a title: there’s no #1 on Solana there. Here there’s exactly one, it goes to reasoning, not volume, and his members can Replicate his model portfolio.' },
-    { av: 'av6', pos: '85% 0', name: 'Ana', desc: 'The Rising Analyst', n: '2', body: 'Ana is sharper than most of the names with big followings, but nobody has heard of her. On X, reach wins. Here Olives judge her thinking, not her follower count, and the best analyst on an asset leads its page, whoever she is.' },
-  ] },
+const INVESTORS: Card[] = [
+  { av: 'av2', pos: '50% 11%', name: 'Marcus', desc: 'The Loyal Reader', n: '3', body: 'Marcus pays for three investment newsletters and has a favorite, but he only ever hears one side of the argument. When that analyst joins Delphi One, Marcus follows. Now the ideas come with a Value, a counter-View and Olives, and the analyst’s model portfolio is one click away.' },
+  { av: 'av3', pos: '63% 32%', name: 'Miles', desc: 'The Committee of One', n: '6', body: 'Miles has run his own money for twenty years, and every call is his alone. What he misses is the room: analysts pitching ideas, someone arguing the other side. On Delphi One he picks his analysts, hears their pitches and makes the call.' },
+  { av: 'av4', pos: '43% 32%', name: 'Lucía', desc: 'The Crypto Skeptic', n: '4', body: 'Lucía holds crypto and has followed enough confident voices on X to know talk is cheap. Here every analyst’s portfolio is built from real trades on-chain, and every idea comes with its counter-View. She reads the bear case before she buys.' },
 ];
-
-/* For Creators (artifact): copy as published there; faces follow the Home (Marcus av2, Miles av3) */
-const CREATORS: Side[] = [
-  { tab: "I'm a Creator", cta: { href: 'mailto:info@delphi.one?subject=Migrate%20my%20content%20to%20Delphi%20One', label: 'Ask us to migrate your content' }, cards: [
-    { av: 'av1', pos: '21% 32%', name: 'Harry', desc: 'who already has readers', n: '1', body: 'Harry has written paid research for years and his subscribers renew. What he can’t show is why: there’s no record, only his word. Here his reasoning is public, ranked and checkable in a minute, and he sells it in plans at his own price.' },
-    { av: 'av3', pos: '63% 32%', name: 'Miles', desc: 'the portfolio creator', n: '2', body: 'Miles runs a model portfolio and doesn’t need a following. His own analysts agree with him more than they should. Miles isn’t here to be discovered. He is here to be wrong faster.' },
-    { av: 'av5', pos: '55% 0', name: 'Kai', desc: 'the crypto creator', n: '5', body: 'Kai covers Solana on X and people keep asking what he holds. X can’t give him a title: there’s no #1 on Solana there. Here there’s exactly one, it goes to reasoning, not volume, and his model portfolio is open to Replicate.' },
-  ] },
-  { tab: "I'm an Investor", cta: { href: REG, label: 'Pick your analysts', external: true }, cards: [
-    { av: 'av2', pos: '50% 11%', name: 'Marcus', desc: 'who manages his own money', n: '3', body: 'Marcus does his own research and makes every call alone. No morning meeting, nobody to tell him what he missed. He doesn’t want an employer. He wants the meeting. Here he gets pushback worth having.' },
-    { av: 'av4', pos: '43% 32%', name: 'Lucía', desc: 'who follows before she buys', n: '4', body: 'Lucía doesn’t want to become an analyst. She wants to know which one to trust. She checks their Olives, follows three creators for free and Replicates one model portfolio.' },
-    { av: 'av6', pos: '85% 0', name: 'Ana', desc: 'the active trader', n: '6', body: 'Ana trades every week and has seen enough hot tips go wrong. Now the Debate sits beside the buy button. She reads the other side first, then decides.' },
-  ] },
+const CREATORS: Card[] = [
+  { av: 'av1', pos: '21% 32%', name: 'Harry', desc: 'The Newsletter Veteran', n: '1', body: 'Harry has written a paid Substack for years, and his subscribers renew. What he can’t show new readers is why: there’s no record, only his word. Here his reasoning is public, judged by Olives and checkable in a minute, and he offers it in memberships at his own price.' },
+  { av: 'av5', pos: '55% 0', name: 'Kai', desc: 'The Crypto Voice', n: '5', body: 'Kai covers Solana on X and people keep asking what he holds. X can’t give him a title: there’s no #1 on Solana there. Here there’s exactly one, it goes to reasoning, not volume, and his members can Replicate his portfolio in one click.' },
+  { av: 'av6', pos: '85% 0', name: 'Jane', desc: 'The Portfolio Creator', n: '2', body: 'Jane shares her model portfolio in a monthly post, and her readers copy it trade by trade, always a step behind. Here members Replicate it in one click and get an alert on every move, so her membership sells itself.' },
 ];
-const SIDES = page === 'creators' ? CREATORS : HOME;
+const INV: Side = { tab: "I'm an Investor", cta: { href: REG, label: 'Pick your analysts', external: true }, cards: INVESTORS };
+const CRE: Side = page === 'creators'
+  ? { tab: "I'm a Creator", cta: { href: 'mailto:info@delphi.one?subject=Migrate%20my%20content%20to%20Delphi%20One', label: 'Ask us to migrate your content' }, cards: CREATORS }
+  : { tab: "I'm a Creator", cta: { href: '/creators', label: 'See how you get paid →' }, cards: CREATORS };
+const SIDES = page === 'creators' ? [CRE, INV] : [INV, CRE];
 ---
 <section class="sec" id="personas"><div class="wrap"><div class="intro rv"><h2 class="h2">Which one are you?</h2></div>
     <div class="cs rv"><div class="cs-switch" id="caseSwitch" role="tablist" aria-label="Which one are you?" style="--x:0"><span class="cs-ind"></span>{SIDES.map((sd, i) => <button class="cs-opt" role="tab" id={`cs-tab-${i}`} aria-controls={`cs-pane-${i}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? '0' : '-1'}><span class="cs-t">{sd.tab}</span></button>)}</div>

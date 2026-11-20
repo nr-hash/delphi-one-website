@@ -1280,3 +1280,25 @@ section[tabindex="-1"]:focus{outline:none}
   .vb-drop{display:none}
   #mf-val .stage>:is(.bm.art,.cursor){animation:none!important;opacity:1}
 }
+
+/* ---------- Fixes de Álvaro (handoff del 19/11/2026) ---------- */
+/* Home hero: "Welcome to Delphi One." deja de ser pill: texto blanco a ~40% del título, justo encima */
+.h-badge.h-welcome{background:none;border:0;border-radius:0;padding:0!important;font-size:calc(28px / var(--s,1))!important;line-height:calc(36px / var(--s,1))!important;font-weight:600;color:#fff;margin-bottom:calc(4px / var(--s,1))}
+@media (max-width:900px){.h-badge.h-welcome{font-size:clamp(18px,4.8vw,22px)!important;line-height:1.25!important}}
+html.tp .h-badge.h-welcome{font-size:clamp(18px,4.8vw,22px)!important;line-height:1.25!important}
+/* For Creators hero: el badge "Writing on Substack or X?" sigue siendo pill, de 14 a 20px (16px en teléfonos) */
+@media (min-width:901px){
+  html:not(.tp) .pg-creators.pg-site .h-badge{font-size:calc(20px / var(--s,1));line-height:calc(28px / var(--s,1));padding:calc(10px / var(--s,1)) calc(20px / var(--s,1));gap:calc(8px / var(--s,1))}
+  html:not(.tp) .pg-creators.pg-site .h-badge img{width:calc(24px / var(--s,1));height:calc(26px / var(--s,1))}
+}
+@media (max-width:900px){.pg-creators .h-badge{font-size:16px;line-height:22px}}
+html.tp .pg-creators .h-badge{font-size:16px;line-height:22px}
+/* Cambio de página del menú (FOR CREATORS / FOR INVESTORS): divisor fino antes y flecha después,
+   del color del link; sólo en el menú de escritorio */
+@media (min-width:1101px){
+  html:not(.touch) .nav a.nav-switch{padding-right:16px}
+  html:not(.touch) .nav a.nav-switch::before{content:"";position:absolute;right:0;top:50%;width:11px;height:11px;transform:translateY(-50%);background:currentColor;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M1 6h9M6.5 2.5L10 6l-3.5 3.5' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center/contain;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M1 6h9M6.5 2.5L10 6l-3.5 3.5' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center/contain}
+  html:not(.touch) .nav a.nav-switch>span[data-t]::before{content:"";position:absolute;left:calc(-1 * clamp(8px,1.1vw,20px));top:50%;width:1px;height:16px;background:currentColor;opacity:.3;transform:translateY(-50%)}
+}
+/* títulos y bajadas de sección: balanceados, sin una palabra sola en la última línea */
+.pg-site :is(.h2,.intro .lede,.mf-head .sub,.hiw-head .lede,.mf-kicker,.mxb-s,.cs-sub){text-wrap:balance}

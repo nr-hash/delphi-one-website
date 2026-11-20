@@ -10,7 +10,7 @@ const {
   sub,
   link = true,
 } = Astro.props;
-const HOME_SUB = `Analysts build Valuations from bite-sized Views, Delphi One’s signature: an idea in 80 characters that comes with its <span class="nowrap">counter-View</span>, each side backed by Arguments. They curate the Views, Posts and Articles they judge best into their Valuations.`;
+const HOME_SUB = `Analysts build Valuations from bite-sized Views, Delphi One’s signature: an idea in 80 characters or less that comes with its <span class="nowrap">counter-View</span>, each side backed by Arguments. Analysts curate the best Views, Posts and Articles into their Valuations.`;
 ---
 <section class="sec" id="mf-val"><div class="wrap"><div class="mf-head rv"><h2 class="h2">{title}</h2><p class="sub">{sub ? sub : <Fragment set:html={HOME_SUB} />}</p>{link && (<a class="mf-link" href="/creators"><span>Are you an analyst? Get paid for your <span class="nowrap">Valuations&nbsp;<span class="arr" aria-hidden="true">→</span></span></span></a>)}</div><div class="stagebox" data-w="1200" data-h="560" data-fit="screen" data-trim="10"><div class="stage" style="width:1200px;height:560px"><svg class="vb-lines" aria-hidden="true" width="1200" height="600" viewBox="0 0 1200 600">
     <path d="M218 100 C260 100 262 170 302 170"></path><path d="M262 270 C285 270 280 260 302 260"></path><path d="M210 460 C260 460 262 420 302 420"></path>

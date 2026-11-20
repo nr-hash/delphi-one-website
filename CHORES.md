@@ -46,6 +46,26 @@ Pendientes del sitio, al 17/11/2026 (actualizado en la revisión final). Marcar 
 - [ ] **Redes del footer.** El artifact tenía "Discord" sin URL; se puso YouTube, como en
       beta. Confirmar cuál va.
 
+## Capturas pedidas por Álvaro (handoff del 19/11/2026)
+
+Los textos y el diseño del handoff ya están en la rama `fixes`. Faltan las imágenes, que hay que volver a
+capturar en la app:
+
+- [ ] **"ALPHA" junto al logo** en 9 capturas: `scr_home2`, `jd2_leaderboard`, `jd3_views`, `jd4_john_maven`,
+      `tx3_wallet`, `pf_window`, `hiw3_article`, `pf_wallet2` y `d1`.
+- [ ] **Pérdidas en primer plano** (−23.1%, −87.2%, −96.3%): `scr_home2`, `tx3_wallet`, `pf_wallet2`.
+- [ ] **Placeholders** ("Lorem ipsum dolor", "example", "No description found"): `hiw3_article`, `tx_track_record`.
+- [ ] **Home:** `jd1_good_judgment` (consenso de John Maven AI junto a una View contraria), `jd2_leaderboard`
+      (sacar "a 0–100 score"), `jd3_views` (feed de pitches o alerta de cambio de Value), `jd4_john_maven`
+      (prompts nuevos, sin "oracles"), `tx_price_value` (ticket + Valuation con Views y Arguments; "Price vs. Value"),
+      `tx_track_record` (trades de un analista humano).
+- [ ] **For Creators:** `views_pair` (View de Nvidia y su counter-View), `hiw3_curations` (renombrar "Price targets"),
+      `hiw3_article` (Article en el inbox de un miembro), `pf_readers2` (Replicate con membresía, números sanos),
+      `pf_wallet2` (oferta de membresía), segunda `hiw3_curations` en Olives (notificación de Curations), `d1`
+      (D1 Analyst con bio neutra, sin "Oracle", sin el banner).
+- [ ] **Fotos de personas:** reemplazar `av2` (Marcus: inversor famoso real) y `av4` (Lucía: persona real, con
+      certificado CFA). Revisar `av1` (Harry: apretón de manos; mejor un escritor solo).
+
 ## Decisiones de copy (revisión de jerarquía y lógica)
 
 - [ ] **Dos titulares en el hero.** "You are now a hedge fund." y "Pick analysts, not
