@@ -271,6 +271,16 @@ section.sec{padding-block:clamp(64px,7vw,150px) 0}
 .appbar{height:44px;background:var(--soft);display:flex;align-items:center;gap:6px;padding:0 16px}
 .appbar i{width:10px;height:10px;border-radius:50%;background:var(--btnline);display:block}
 .appbar span{margin-left:16px;font-size:14px;color:var(--muted)}
+/* browser bar (as in vb_window / pf_window) for the screenshots that come without one */
+.appwin.browser::before,.pg-creators .fcar.pair .appwin::before,.pg-creators .nl-shot::before,.shotwin::before,#win .mock.wide::before{content:"";display:block;height:34px;box-sizing:border-box;border-bottom:1px solid #f0f0f0;background:radial-gradient(circle at 15px 50%,#dfe1e5 4.5px,transparent 5px),radial-gradient(circle at 30px 50%,#dfe1e5 4.5px,transparent 5px),radial-gradient(circle at 45px 50%,#dfe1e5 4.5px,transparent 5px),#fafafa}
+/* For Creators: every screenshot gets the bar too (20-nov) */
+.shotwin::before{position:relative;z-index:1}
+.shotbox .shotwin img{top:34px}
+.pg-creators .ntf.ntf-olives{top:calc(35px + 100cqw * .2)}
+.pg-creators .nl-stage .mail{top:calc(35px + 56 * var(--m))}
+#win .mock.wide{filter:drop-shadow(0 18px 40px rgba(16,23,30,.14))}
+#win .mock.wide img{filter:none;border-top-left-radius:0!important;border-top-right-radius:0!important;display:block}
+#win .mock.wide::before{position:absolute;left:0;right:0;bottom:100%;border-radius:12px 12px 0 0}
 .appwin .shot{width:100%;aspect-ratio:966/560;object-fit:cover;object-position:top;background:var(--soft2)}
 @media (max-width:900px){.frow,.frow.left{grid-template-columns:minmax(0,1fr)}.frow.left .ftext{order:0}.ftext p{font-size:16px;line-height:24px}}
 
@@ -1082,6 +1092,7 @@ section[tabindex="-1"]:focus{outline:none}
   /* the D1 seat: the window capped by the screen height like the other compositions, the cards under it */
   #win .stage>.mock{width:100%!important;max-width:min(770px,calc(45vh * 1440 / 1090));max-width:min(770px,calc(45svh * 1440 / 1090))}
   #win .stage>.mock img{width:100%!important;height:auto}
+  #win .stage>.mock{position:relative;margin-top:34px}
 }
 @media (max-width:900px){
   .shotgrid{grid-template-columns:minmax(0,1fr);gap:48px;max-width:560px;margin:0 auto}
@@ -1365,18 +1376,14 @@ html.tp .pg-creators .h-badge{font-size:16px;line-height:22px}
 /* Trade card 1: the Valuation's debate (Views, counter-Views, Arguments) over the chart, next to the ticket
    (Álvaro, 20-nov). Units of the screenshot's own 1300px-wide frame so it scales with the shot. */
 .appwin.dbt-host{position:relative;container-type:inline-size}
-.dbt{--t:calc(100cqw / 1300);position:absolute;left:calc(44 * var(--t));top:calc(353 * var(--t));width:calc(736 * var(--t));min-height:calc(358 * var(--t));box-sizing:border-box;background:var(--white);border:1px solid #e3e5e8;border-radius:calc(14 * var(--t));box-shadow:0 calc(6 * var(--t)) calc(24 * var(--t)) rgba(20,24,30,.08);padding:calc(18 * var(--t)) calc(22 * var(--t)) calc(14 * var(--t));font-size:calc(15 * var(--t));line-height:1.35;color:#2f3338;text-align:left}
-.dbt-hd{display:flex;align-items:center;gap:calc(12 * var(--t));padding-bottom:calc(12 * var(--t));border-bottom:1px solid #eceef0}
-.dbt-hd img{width:calc(40 * var(--t));height:calc(40 * var(--t));border-radius:50%;object-fit:cover}
-.dbt-hd b{display:block;font-size:calc(17 * var(--t));font-weight:600;color:#14181e}
-.dbt-hd small{display:block;margin-top:calc(2 * var(--t));font-size:calc(13 * var(--t));color:#7a7f85}
-.dbt-sec{margin:calc(12 * var(--t)) 0 calc(6 * var(--t));font-size:calc(12 * var(--t));font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#8b9096}
-.dbt-row{display:grid;grid-template-columns:calc(108 * var(--t)) 1fr auto;align-items:center;gap:calc(10 * var(--t));padding:calc(8 * var(--t)) calc(12 * var(--t));margin-top:calc(6 * var(--t));border:1px solid #eceef0;border-left:calc(3 * var(--t)) solid;border-radius:calc(8 * var(--t))}
-.dbt-row.pro{border-left-color:#16a34a}.dbt-row.con{border-left-color:#dc4b42}
-.dbt-k{justify-self:start;padding:calc(2 * var(--t)) calc(8 * var(--t));border-radius:999px;font-size:calc(12 * var(--t));font-weight:500}
-.dbt-row.pro .dbt-k{background:#e9f7ee;color:#15803d}.dbt-row.con .dbt-k{background:#fdecea;color:#c2392f}
-.dbt-row p{margin:0;font-weight:500;color:#202327;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.dbt-m{font-size:calc(13 * var(--t));color:#6b7076}
+/* "Trade right next to the idea": a View and its counter-View drawn like the app's cards (jd1_views).
+   Units are app pixels (--a); the illustration, stats row and vote row are crops of the real cards. */
+.dbt{--a:calc(100cqw * 736 / 1300 / 1104);position:absolute;left:calc(100cqw * 44 / 1300);top:calc(35px + 100cqw * 342 / 1300);width:calc(1104 * var(--a));box-sizing:border-box;display:grid;grid-template-columns:1fr 1fr;gap:calc(24 * var(--a));align-items:start;padding:calc(20 * var(--a));background:var(--white);border-radius:calc(16 * var(--a));box-shadow:0 calc(10 * var(--a)) calc(40 * var(--a)) rgba(20,24,30,.14),0 0 0 1px rgba(20,24,30,.05);text-align:left}
+.vw-card{display:flex;flex-direction:column;min-width:0;border:1px solid #e7e7e7;border-radius:calc(12 * var(--a));overflow:hidden;background:var(--white);padding-bottom:calc(14 * var(--a))}
+.vw-card img{display:block;width:100%;height:auto}
+.vw-card h4{margin:calc(10 * var(--a)) calc(28 * var(--a)) 0;font-size:calc(20 * var(--a));line-height:calc(26 * var(--a));font-weight:600;color:#1f2226;letter-spacing:0}
+.vw-card p{position:relative;margin:calc(12 * var(--a)) calc(28 * var(--a)) calc(10 * var(--a));height:calc(104 * var(--a));overflow:hidden;font-size:calc(16 * var(--a));line-height:calc(26 * var(--a));color:#3d4146}
+.vw-more{position:absolute;right:0;bottom:0;padding-left:calc(28 * var(--a));background:linear-gradient(90deg,rgba(255,255,255,0),#fff calc(24 * var(--a)));font-size:calc(14 * var(--a));color:#5f6368}
 
 /* Phones: the HTML panels over the screenshots get bigger so their text can be read (20-nov). Each panel
    keeps fewer rows so it still fits inside its window. */
@@ -1384,8 +1391,11 @@ html.tp .pg-creators .h-badge{font-size:16px;line-height:22px}
   .ntf{--u:calc(100cqw / 1630 * 2.6);right:calc(100cqw * .025);top:calc(100cqw * .04)}
   .ntf .ntf-it:nth-child(n+6){display:none}
   .ntf.ntf-olives{--u:calc(100cqw / 640);right:calc(100cqw * .03);top:calc(100cqw * .12);width:94%}
+  .pg-creators .ntf.ntf-olives{top:calc(35px + 100cqw * .12)}
   .mail{--m:calc(100cqw / 600);right:calc(100cqw * .03);top:calc(100cqw * .06)}
+  .pg-creators .nl-stage .mail{top:calc(35px + 100cqw * .06)}
   .nl-stage{margin-bottom:56%}
-  .dbt{--t:calc(100cqw / 920);left:3%;top:calc(100cqw * .255);width:94%;min-height:0}
-  .dbt .dbt-row:last-child{display:none}
+  .dbt{--a:calc(100cqw * .62 / 560);left:3%;top:calc(35px + 100cqw * .07);width:calc(560 * var(--a));grid-template-columns:1fr}
+  .dbt .vw-card + .vw-card,.dbt .vw-card p{display:none}
+  .dbt .vw-card h4{margin-bottom:calc(10 * var(--a))}
 }
