@@ -1377,3 +1377,15 @@ html.tp .pg-creators .h-badge{font-size:16px;line-height:22px}
 .dbt-row.pro .dbt-k{background:#e9f7ee;color:#15803d}.dbt-row.con .dbt-k{background:#fdecea;color:#c2392f}
 .dbt-row p{margin:0;font-weight:500;color:#202327;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .dbt-m{font-size:calc(13 * var(--t));color:#6b7076}
+
+/* Phones: the HTML panels over the screenshots get bigger so their text can be read (20-nov). Each panel
+   keeps fewer rows so it still fits inside its window. */
+@media (max-width:600px){
+  .ntf{--u:calc(100cqw / 1630 * 2.6);right:calc(100cqw * .025);top:calc(100cqw * .04)}
+  .ntf .ntf-it:nth-child(n+6){display:none}
+  .ntf.ntf-olives{--u:calc(100cqw / 640);right:calc(100cqw * .03);top:calc(100cqw * .12);width:94%}
+  .mail{--m:calc(100cqw / 600);right:calc(100cqw * .03);top:calc(100cqw * .06)}
+  .nl-stage{margin-bottom:56%}
+  .dbt{--t:calc(100cqw / 920);left:3%;top:calc(100cqw * .255);width:94%;min-height:0}
+  .dbt .dbt-row:last-child{display:none}
+}
